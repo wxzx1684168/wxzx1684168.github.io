@@ -370,24 +370,26 @@ height:50vh;
     <!-- 评论插件 -->
     <!-- 来必力City版安装代码 -->
 
-    <div id="lv-container" data-id="city" data-uid= MTAyMC8zNTkyMy8xMjQ1OQ==>
-        <script type="text/javascript">
-            (function (d, s) {
-                var j, e = d.getElementsByTagName(s)[0];
-                if (typeof LivereTower === 'function') { return; }
-                j = d.createElement(s);
-                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-                j.async = true;
-
-                e.parentNode.insertBefore(j, e);
-            })(document, 'script');
-        </script>
-        <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
-    </div>
-
 <!-- City版安装代码已完成 -->
     
     
+<div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        // id: "Hello World", // 可选。默认为 location.href
+        owner: 'wxzx1684168',
+        repo: 'wxzx1684168.github.io',
+        oauth: {
+            client_id: '7280d255a529324c9198',
+            client_secret: '89fdf02f804bf55f75f10ff82fb9f433b7e336e6',
+        },
+    })
+    gitment.render('container')
+
+</script>
+
     <!--PC版-->
 
     <!--PC版-->
