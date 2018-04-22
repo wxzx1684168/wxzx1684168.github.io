@@ -358,8 +358,8 @@ height:50vh;
             <main class="main post-page">
     <article class="article-entry">
         <p>查看PE文件IMAGE_NT_HEADERS下IMAGE_OPTIONAL_HEDER的 IMPORT Table的值 </p>
-<p><img src="\\images\pasted-2.png\" alt="upload successful"><br>由上图可知 IDT的地址(RVA)为84CC (在PEView中设置视图选项为RVA)</p>
-<p><img src="\\images\image.png\" alt="overwrote existing file"><br>TestView.exe的IDT存在于.rdara节区。IDT是有IMAGE_IMPORT-descriptor(简称IID)结构体组成的数组，且数组末尾以NULL结构体结束。由于每个导入的DLL文件都对应1个IID结构体（每个IID结构体的大小为14个字节） 所以图中整个IID区域为RVA:84CC~852F(8530？ 84cc+64)</p>
+<p><img src="\\images\2018-04-23-01-15-1.png\" alt="upload successful"><br>由上图可知 IDT的地址(RVA)为84CC (在PEView中设置视图选项为RVA)</p>
+<p>TestView.exe的IDT存在于.rdara节区。IDT是有IMAGE_IMPORT-descriptor(简称IID)结构体组成的数组，且数组末尾以NULL结构体结束。由于每个导入的DLL文件都对应1个IID结构体（每个IID结构体的大小为14个字节） 所以图中整个IID区域为RVA:84CC~852F(8530？ 84cc+64)</p>
 <p>在PEView工具栏中视图改为File Offset 可以看到IDT文件便宜为76CC</p>
 <p>使用HxD工具打开TexView.exe文件 找到哦啊76CC地址处<br>IDT的文件偏移位76CC~772F（76CC+64? 7730）,整个大小为64字节，共有5个IID结构体，其中最后一个为NULL结构体，从图中可以看出IDT尾部存在其他数据，没有足够空间来添加myhack3.dll的IID结构体</p>
 <p>在这种情况下 我们要先把整个IDT转移到其他地方，然后再添加新的IID，可以用以下三种方式<br>1、查找文件中的空白区域<br>2、增加文件最后一个节区大小<br>3、在文件末尾添加新节区（个人推荐）</p>
