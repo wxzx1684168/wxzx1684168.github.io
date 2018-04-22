@@ -10,7 +10,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
     <meta name="description" content="">
-    <title>测试测试 · 花生肉泥</title>
+    <title>破解MFCApplication1 · 花生肉泥</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -191,7 +191,7 @@
                 <a href="/" >花生肉泥 Blog</a>
             </div>
             <div class="post-title">
-                <a href="#" class="post-name">测试测试</a>
+                <a href="#" class="post-name">破解MFCApplication1</a>
             </div>
     </div>
     
@@ -223,7 +223,7 @@ height:50vh;
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            测试测试
+            破解MFCApplication1
             <!-- 404 -->
             
         </h1>
@@ -241,13 +241,15 @@ height:50vh;
             
                 <div class= post-intro-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "测试">测试</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "逆向">逆向</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "破解">破解</a>
     
 </div>
             
             <div class="post-intro-meta">
                 <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                <span class="post-intro-time">2018/04/22</span>
+                <span class="post-intro-time">2016/05/31</span>
                 
                 <span id="busuanzi_container_page_pv" class="busuanzi-pv">
                     <span class="iconfont-archer">&#xe602;</span>
@@ -353,19 +355,46 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p>测试测试<br>测试测试</p>
+        <h2 id="方法一：字符串查找"><a href="#方法一：字符串查找" class="headerlink" title="方法一：字符串查找"></a>方法一：字符串查找</h2><p>首先用ollydbg打开我们要破解的软件</p>
+<p><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-02-01-1.png" alt="upload successful"></p>
+<p>按F9使程序运行起来</p>
+<p><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-02-01-2.png" alt="upload successful"><br>我们想要知道点击”买入“按钮以后，程序调用了什么方法实现的。<br>接下来开始破解：<br>首先点击“买入”按钮，可以看到</p>
+<p><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-02-01-3.png" alt="upload successful"><br>接下来我们通过</p>
+<p><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-02-01-4.png" alt="upload successful"><br>中文引擎搜索，搜索我们刚才看到有有关信息，例如“Hello”</p>
+<p><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-02-02-1.png" alt="upload successful"><br>然后双击<br><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-02-02-2.png" alt="upload successful">这个地址，跳转到MFVAppli中：</p>
+<p><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-02-02-3.png" alt="upload successful"><br>首先就在当下设置一个断点（F2），然后重新开始，<br>点击“买入”按钮时，就会暂停到如下界面</p>
+<p><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-02-02-4.png" alt="upload successful"><br>按F8单步调试，发现到01316703    FF15 70C23201   call dword ptr ds:[&lt;&amp;USER32.MessageBoxA&gt;]                               ; user32.MessageBoxA<br>的时候窗口弹了出来</p>
+<p><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-02-03-1.png" alt="upload successful"><br>所以这个01316703就是弹出窗口的函数，接下来点击确定关掉窗口后继续调试。</p>
+<p><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-02-03-2.png" alt="upload successful"><br>到retn返回</p>
+<p><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-02-03-3.png" alt="upload successful"><br>这里可以看出在10277503上面有一个call，我猜想也许就是从这里调用的，接下来取消之前的断点，再10277500上添加一个断点。然后重新开始，按F9执行，点击“买入”按钮，</p>
+<p><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-02-04-1.png" alt="upload successful"><br>程序果然断在这里，证明我的猜想是没有错的(我之前试了N多遍才试出来)<br>然后按 F7进入这个函数，可以看到</p>
+<p><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-02-04-2.png" alt="upload successful"><br>调用了MFCAppli.CMFCApplication1Dlg::OnBnClickedButton1这个方法，再接着调试下去，</p>
+<p><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-02-04-3.png" alt="upload successful"><br>这里就是我们之前找到的地方，连起来就是点击了“买入”按钮以后，程序调用MFCAppli.CMFCApplication1Dlg::OnBnClickedButton1这个方法下面的MessageBoxA函数。</p>
+<p>为了验证下正确性，找到MFCApplication1的源代码：</p>
+<p><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-02-04-4.png" alt="upload successful"><br>无误，至此查找完成。</p>
+<h2 id="方法二：按钮事件查询找"><a href="#方法二：按钮事件查询找" class="headerlink" title="方法二：按钮事件查询找"></a>方法二：按钮事件查询找</h2><p>首先同上打开软件运行起来，然后打开程序窗口<br><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-02-05-1.png" alt="upload successful"><br>可以看到如下界面</p>
+<p><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-02-05-2.png" alt="upload successful"><br>（如果没有的话右键-&gt;刷新）<br>然后我们在”买入”按钮上设一个消息断点</p>
+<p><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-02-05-3.png" alt="upload successful"><br>202的按钮弹起消息</p>
+<p><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-02-05-4.png" alt="upload successful"><br>然后点击买入按钮，程序暂停，打开内存窗口Alt+M</p>
+<p><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-02-06-1.png" alt="upload successful"><br>找到如下信息，在该信息上设置内存访问断点，记得删除之前的断点，以免影响之后的操作。</p>
+<p><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-02-06-2.png" alt="upload successful"></p>
 
     </article>
     <!-- 前后页  -->
     <ul class="post-paginator">
         <li class="next">
             
+                <div class="nextSlogan">上一篇文章</div>
+                <a href= "/2016/06/15/注入DLL/" title= 注入DLL >
+                    <div class="nextTitle">注入DLL</div>
+                </a>
+            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">下一篇文章</div>
-                <a href= "/2016/06/15/注入DLL/" title= 注入DLL >
-                    <div class="prevTitle">注入DLL</div>
+                <a href= "/2000/01/01/hello-world/" title= Hello World >
+                    <div class="prevTitle">Hello World</div>
                 </a>
             
         </li>
@@ -381,7 +410,7 @@ height:50vh;
 <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
 <script>
     var gitment = new Gitment({
-        // id: "测试测试", // 可选。默认为 location.href
+        // id: "破解MFCApplication1", // 可选。默认为 location.href
         owner: 'wxzx1684168',
         repo: 'wxzx1684168.github.io',
         oauth: {
@@ -495,7 +524,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#方法一：字符串查找"><span class="toc-number">1.</span> <span class="toc-text">方法一：字符串查找</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#方法二：按钮事件查询找"><span class="toc-number">2.</span> <span class="toc-text">方法二：按钮事件查询找</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>

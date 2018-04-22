@@ -10,7 +10,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
     <meta name="description" content="">
-    <title>花生肉泥</title>
+    <title>注入DLL · 花生肉泥</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -65,6 +65,8 @@
 
     <link rel="preload" href= /css/style.css?v=20180317 as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180317 media="(max-width: 980px)"/>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         
     <link rel="icon" href= /assets/title.ico>
     <script>
@@ -175,12 +177,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >花生肉泥 Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">注入DLL</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>花生肉泥 Blog</a>
 </header>
@@ -194,24 +207,71 @@
 
 
 
+height:50vh;
+
 >
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-placeholder"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
+            注入DLL
+            <!-- 404 -->
+            
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "逆向">逆向</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "DLL">DLL</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "注入">注入</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2016/06/15</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
         
     </div>
 </div>
@@ -295,36 +355,83 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2016/01/01/hello-world/" >
-                
-                    <span>Hello World</span>
-            </a>
-            <div class="abstract-content">
-                Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick StartCreate a new post1$ hexo new "My New Post"
-More info: Writing
-Run server1$ hexo server
-More...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/01/01</span>
-                </div>
-                <!-- tags  -->
-                
-            </div>
-        </article>
-    
-    <!-- paginator  -->
-    
-</main>
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>查看PE文件IMAGE_NT_HEADERS下IMAGE_OPTIONAL_HEDER的 IMPORT Table的值<br><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-01-15-1.png" alt="upload successful"></p>
+<p>由上图可知 IDT的地址(RVA)为84CC (在PEView中设置视图选项为RVA)<br><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-01-25-1.png" alt="upload successful"><br>TestView.exe的IDT存在于.rdara节区。IDT是有IMAGE_IMPORT-descriptor(简称IID)结构体组成的数组，且数组末尾以NULL结构体结束。由于每个导入的DLL文件都对应1个IID结构体（每个IID结构体的大小为14个字节） 所以图中整个IID区域为RVA:84CC~852F(8530？ 84cc+64)<br><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-01-25-2.png" alt="upload successful"><br><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-01-26-1.png" alt="upload successful"></p>
+<p>在PEView工具栏中视图改为File Offset 可以看到IDT文件偏移为76CC<br><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-01-26-2.png" alt="upload successful"></p>
+<p>使用HxD工具打开TexView.exe文件 找到000076CC地址处<br><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-01-27-1.png" alt="upload successful"><br>IDT的文件偏移位76CC~772F（76CC+64? 7730）,整个大小为64字节，共有5个IID结构体，其中最后一个为NULL结构体，从图中可以看出IDT尾部存在其他数据，没有足够空间来添加myhack3.dll的IID结构体</p>
+<p>在这种情况下 我们要先把整个IDT转移到其他地方，然后再添加新的IID，可以用以下三种方式<br>1、查找文件中的空白区域<br>2、增加文件最后一个节区大小<br>3、在文件末尾添加新节区（个人推荐）</p>
+<p>这里用第一种方式 查找文件中空白区域（程序运行时未使用的区域）<br><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-01-27-2.png" alt="upload successful"><br>如图  .rdata节区尾部恰好存在大片空白区域（一般来说 节区或文件尾部都存在空白区域，PE文件中这种空白区域称为Null-Padding区域）</p>
+<p>接下来要把原IDT移动到该Null-Padding区域（RVA:8C60~8DFF）中合适的位置。</p>
+<p>在此之前先确认该区域是否全是空白可用区域，注意并不是文件中的所有区域都会被无条件加载到进程的虚拟内存，只有节区头中明确记录的区域才会被加载。使用PEView工具查看文件的.rdata节区头<br><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-01-27-3.png" alt="upload successful"><br>节区头中存储着对应节区的位置、大小、属性等信息<br><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-01-28-1.png" alt="upload successful"><br>从节区头信息可以看出 .rdata节区在磁盘文件与内存中的大小是不同的<br>.rdata节区在磁盘文件中大小为2E00，而文件执行后被加载到内存时，程序实际使用的数据大小（映射大小）仅为2C56  未被使用的区域大小为1AA(2E00-2C56)，所以在这一段空白区创建IDT不会有问题<br><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-01-28-2.png" alt="upload successful"></p>
+<p>由于Null-Padding区域可用，接下来要在RVA:8C80(RAW:7E80)位置创建IDT</p>
+<p>先复制备份文件</p>
+<p>IMAGE_OPTIONAL_HEADER 的导入表结构体成员来指出IDT的位置（RVA）与大小<br><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-01-28-3.png" alt="upload successful"><br>文件中，导入表的RVA值为84CC 接下来将导入表的RVA值更改为新IDT的RVA值8C80 在Size原值64字节的基础上加14个字节（IID结构体的大小），修改为78字节<br><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-01-28-4.png" alt="upload successful"><br>以上完成导入表位置修改为RVA:8C80（RAW:7E80）地址处</p>
+<p>BOUND IMPORT TABLE(绑定导入表)是一种提高DLL加载速度的技术<br><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-01-29-1.png" alt="upload successful"><br>若想正常导入dll 需要向绑定导入表添加信息，但幸运的是，该绑定导入表是个可选项，不是必须存在的，可以删除（修改其值为0即可）以获取更大便利，当然绑定导入表完全不存在也没关系，但若存在，且信息记录错误，则会在程序运行时应发错误。本例绑定导入表各项值为0不需要修改，修改其他文件时一定要注意检查绑定导入表中的数据。</p>
+<p>创建IDT<br>先使用Hex完全复制原IDT(RAW:76CC~772F)，复制到新IDT的位置（RAW:7E80）<br><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-01-29-2.png" alt="upload successful"></p>
+<p>然后在新IDT尾部（RAW:7ED0）添加与myhack3.dll对应的IID<br><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-01-29-3.png" alt="upload successful"><br>在准确位置（RAW:7ED0）写入相关数据<br><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-01-29-4.png" alt="upload successful"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">8D00 RVA to INT</span><br><span class="line">8D10 RVA to DLL Name</span><br><span class="line">8D20 RVA to IAT</span><br></pre></td></tr></table></figure></p>
+<p>接下来设置Name、INT、IAT<br>前面天假的IID结构体成员拥有指向其他数据结构（Name、INT、IAT ）的RVA值，因此，必须准确设置这些数据结构才能保证.exe文件正常运行，由前面设置可知INT、Name、IAT的RVA/RAW值 整理如下<br><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-01-30-1.png" alt="upload successful"><br>这些地址（RVA:8D00 8D10 8D20）就位于新创建的IDT(RVA:8C80)下方，在HxD编辑器中转到7F00地址处，输入相应值<br><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-01-30-2.png" alt="upload successful"></p>
+<p>为了更好理解 使用PEView打开修改好的.exe查看同一区域<br><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-01-30-3.png" alt="upload successful"><br>8CD0地址存放着myhack3.dll的IID结构体，其中3个主要成员（RVAofINT、RVAofName、RVAofIAT）的值分别是实际INT、NAME、IAT的指针</p>
+<p>简单地说 INT（Import Name Table 导入名称表）是RVA数组，数组的各个元素都是一个RVA地址，该地址由导入函数的Ordinal（2个字节）+Func Name String结构体组成，数组的末尾为NULL，上图中INT有1个元素，其值为8D30，该地址处是要导入的函数的Ordinal与函数的名称字符串（”dummy”）</p>
+<p>Name是包含导入函数的DLL文件名称字符串，在8D10地址处可以看到“myhack3.dll”字符串</p>
+<p>IAT也是RVA数组，各元素即可拥有与INT相同的值，也可以拥有与其他不同值（若INT中的数据准确，IAT也可以拥有其他不通知）反正实际运行时，PE装载器会将虚拟内存中的IAT替换为实际函数地址</p>
+<p><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-01-31-1.png" alt="upload successful"></p>
+<p>修改IAT节区的属性值</p>
+<p>加载PE文件到内存时，PE装载器会修改IAT，写入函数的实际地址，所以相关节区一定要拥有WRITE可写属性，使用PEView查看.rdata节区头<br><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-01-31-2.png" alt="upload successful"><br>向原属性值（Characteristics）400000040添加IMAGE_SCN_MEM_WRITE(80000000)属性值，执行bit OR运算，最终属性值变为C00000040（400000040+80000000？）<br><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-01-31-3.png" alt="upload successful"><br>至此完成了DLL注入修改<br><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-01-31-4.png" alt="upload successful"><br><img src="http://p7ljrqs59.bkt.clouddn.com/2018-04-23-01-31-5.png" alt="upload successful"></p>
+<p>小结：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">先查看是否有足够空间，若有则直接向后添加，若无则寻找空白空间或新添加空间</span><br><span class="line">找到IMAGE_OPTIONAL_HEADER的RVA与大小，修改大小（原size+14*个数）（一个IID结构为14字节）</span><br><span class="line">删除绑定导入表，避免错误</span><br><span class="line">创建新IDT，先将员IDT复制到第一步找到的新地址，然后在尾部添加与你想要添加的.dll对应的IID</span><br><span class="line">设置Name、INT、IAT(注意RVA与RAW换算)</span><br><span class="line">修改IAT节区的属性值为可写</span><br></pre></td></tr></table></figure></p>
 
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">上一篇文章</div>
+                <a href= "/2018/04/22/Untitled/" title= 测试测试 >
+                    <div class="nextTitle">测试测试</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">下一篇文章</div>
+                <a href= "/2016/05/31/破解MFCApplication1/" title= 破解MFCApplication1 >
+                    <div class="prevTitle">破解MFCApplication1</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+<div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        // id: "注入DLL", // 可选。默认为 location.href
+        owner: 'wxzx1684168',
+        repo: 'wxzx1684168.github.io',
+        oauth: {
+            client_id: '7280d255a529324c9198',
+            client_secret: '89fdf02f804bf55f75f10ff82fb9f433b7e336e6',
+        },
+    })
+    gitment.render('container')
+
+</script>
+
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
             <!-- profile -->
             
         </div>
@@ -404,6 +511,24 @@ More...
     </div>
     <!-- toc -->
     
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        
+    </div>
+    
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
     <ul class="sidebar-tabs sidebar-tabs-active-0">
@@ -441,7 +566,16 @@ More...
     
     
     
-    <div class="total-archive"> 总计 : 3 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> 总计 : 4 </div>
     
     <div class="post-archive">
     
@@ -450,11 +584,6 @@ More...
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2018/04/22/注入DLL/" >注入DLL</a>
-        </li>
     
     
         <li class="archive-post-item">
@@ -472,7 +601,26 @@ More...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2016/01/01/hello-world/" >Hello World</a>
+            <span class="archive-post-date">06/15</span><a class="archive-post-title" href= "/2016/06/15/注入DLL/" >注入DLL</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/31</span><a class="archive-post-title" href= "/2016/05/31/破解MFCApplication1/" >破解MFCApplication1</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2000 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2000/01/01/hello-world/" >Hello World</a>
         </li>
     
     </div>
@@ -487,6 +635,8 @@ More...
         <span class="sidebar-tag-name" data-tags="DLL"><span class="iconfont-archer">&#xe606;</span>DLL</span>
     
         <span class="sidebar-tag-name" data-tags="注入"><span class="iconfont-archer">&#xe606;</span>注入</span>
+    
+        <span class="sidebar-tag-name" data-tags="破解"><span class="iconfont-archer">&#xe606;</span>破解</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -517,6 +667,8 @@ More...
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
     
     <script src="/node_modules/live2d-widget/node_modules/live2d-widget/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"node_modules/live2d-widget/","pluginJsPath":"node_modules/live2d-widget/lib/","pluginModelPath":"node_modules/live2d-widget-model-koharu/assets/","model":{"jsonPath":"/node_modules/live2d-widget/node_modules/live2d-widget-model-koharu/assets/koharu.model.json"},"mobile":{"show":true,"scale":0.2},"react":{"opacityDefault":1,"opacityOnHover":0},"display":{"superSample":1}});</script></body>
 </html>

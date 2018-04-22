@@ -300,23 +300,67 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2016/01/01/hello-world/" >
+            <a class="abstract-title" href = "/2016/06/15/注入DLL/" >
                 
-                    <span>Hello World</span>
+                    <span>注入DLL</span>
             </a>
             <div class="abstract-content">
-                Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick StartCreate a new post1$ hexo new "My New Post"
-More info: Writing
-Run server1$ hexo server
-More...
+                查看PE文件IMAGE_NT_HEADERS下IMAGE_OPTIONAL_HEDER的 IMPORT Table的值
+由上图可知 IDT的地址(RVA)为84CC (在PEView中设置视图选项为RVA)TestView.exe的IDT存在于.rdara节区。IDT是有IMAGE_IMPORT-descriptor(简称IID)结构体组成的数组，且数组末尾以NULL结构体结束。由于每个导入的DLL文件都对应1个IID结构体（每个IID结构体的大小为14个字节） 所以图中整个IID区域为RVA:84CC~852F(8530？ 84cc+64)
+在PEView工具栏中视图改为File Of...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/01/01</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/06/15</span>
                 </div>
                 <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "逆向">逆向</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "DLL">DLL</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "注入">注入</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2016/05/31/破解MFCApplication1/" >
+                
+                    <span>破解MFCApplication1</span>
+            </a>
+            <div class="abstract-content">
+                方法一：字符串查找首先用ollydbg打开我们要破解的软件
+
+按F9使程序运行起来
+我们想要知道点击”买入“按钮以后，程序调用了什么方法实现的。接下来开始破解：首先点击“买入”按钮，可以看到
+接下来我们通过
+中文引擎搜索，搜索我们刚才看到有有关信息，例如“Hello”
+然后双击这个地址，跳转到MFVAppli中：
+首先就在当下设置一个断点（F2），然后重新开始，点击“买入”按钮时，就会暂停到如下界面
+按F8单步调试，发现到01316703    FF15 70C23201   call dword ptr ds:[&lt;&amp;USER32.MessageBoxA&gt;]     ...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/05/31</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "逆向">逆向</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "破解">破解</a>
+    
+</div>
                 
             </div>
         </article>
@@ -441,7 +485,16 @@ More...
     
     
     
-    <div class="total-archive"> 总计 : 3 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> 总计 : 4 </div>
     
     <div class="post-archive">
     
@@ -450,11 +503,6 @@ More...
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2018/04/22/注入DLL/" >注入DLL</a>
-        </li>
     
     
         <li class="archive-post-item">
@@ -472,7 +520,26 @@ More...
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2016/01/01/hello-world/" >Hello World</a>
+            <span class="archive-post-date">06/15</span><a class="archive-post-title" href= "/2016/06/15/注入DLL/" >注入DLL</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/31</span><a class="archive-post-title" href= "/2016/05/31/破解MFCApplication1/" >破解MFCApplication1</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2000 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2000/01/01/hello-world/" >Hello World</a>
         </li>
     
     </div>
@@ -487,6 +554,8 @@ More...
         <span class="sidebar-tag-name" data-tags="DLL"><span class="iconfont-archer">&#xe606;</span>DLL</span>
     
         <span class="sidebar-tag-name" data-tags="注入"><span class="iconfont-archer">&#xe606;</span>注入</span>
+    
+        <span class="sidebar-tag-name" data-tags="破解"><span class="iconfont-archer">&#xe606;</span>破解</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
