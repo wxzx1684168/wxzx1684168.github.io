@@ -353,12 +353,52 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <p>测试测试<br>测试测试</p>
+        <h6 id="加粗"><a href="#加粗" class="headerlink" title="加粗"></a>加粗</h6><p><strong>测试测试</strong></p>
+<h6 id="标头"><a href="#标头" class="headerlink" title="标头"></a>标头</h6><ul>
+<li>测试</li>
+</ul>
+<h6 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">测试</span><br></pre></td></tr></table></figure>
+<h6 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h6><table>
+<thead>
+<tr>
+<th style="text-align:left">测试-左对齐</th>
+<th style="text-align:center">测试居中</th>
+<th style="text-align:right">测试-右对齐</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">test1</td>
+<td style="text-align:center">test1</td>
+<td style="text-align:right">test1</td>
+</tr>
+<tr>
+<td style="text-align:left">test2</td>
+<td style="text-align:center">test2</td>
+<td style="text-align:right">test2</td>
+</tr>
+</tbody>
+</table>
+<h6 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">st=&gt;start: Start</span><br><span class="line">e=&gt;end</span><br><span class="line">op=&gt;operation: My Operation</span><br><span class="line">cond=&gt;condition: Yes or No?</span><br><span class="line"></span><br><span class="line">st-&gt;op-&gt;cond</span><br><span class="line">cond(yes)-&gt;e</span><br><span class="line">cond(no)-&gt;op</span><br></pre></td></tr></table></figure>
+<h6 id="复选框"><a href="#复选框" class="headerlink" title="复选框"></a>复选框</h6><p><code>- [ ]</code> and <code>- [x]</code></p>
+<ul>
+<li style="list-style: none"><input type="checkbox" checked> test1</li>
+<li style="list-style: none"><input type="checkbox" checked> test2</li>
+<li style="list-style: none"><input type="checkbox"> test3</li>
+</ul>
+<h6 id="信息"><a href="#信息" class="headerlink" title="信息"></a>信息</h6><blockquote>
+<p><strong>Note:</strong> Currently it is only partially supported. You can’t toggle checkboxes in Evernote. You can only modify the Markdown in Marxico to do that. Next version will fix this.  </p>
+</blockquote>
 
     </article>
     <!-- 前后页  -->
     <ul class="post-paginator">
         <li class="next">
+            
+                <div class="nextSlogan">上一篇文章</div>
+                <a href= "/2018/04/23/JAVA/" title= Java中使用中文转化为拼音 >
+                    <div class="nextTitle">Java中使用中文转化为拼音</div>
+                </a>
             
         </li>
         <li class="previous">
@@ -495,7 +535,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        
+        <ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#加粗"><span class="toc-number">1.</span> <span class="toc-text">加粗</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#标头"><span class="toc-number">2.</span> <span class="toc-text">标头</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#代码块"><span class="toc-number">3.</span> <span class="toc-text">代码块</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#表格"><span class="toc-number">4.</span> <span class="toc-text">表格</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#流程图"><span class="toc-number">5.</span> <span class="toc-text">流程图</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#复选框"><span class="toc-number">6.</span> <span class="toc-text">复选框</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#信息"><span class="toc-number">7.</span> <span class="toc-text">信息</span></a></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -544,7 +584,16 @@ top:50vh;
     
     
     
-    <div class="total-archive"> 总计 : 4 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> 总计 : 5 </div>
     
     <div class="post-archive">
     
@@ -553,6 +602,11 @@ top:50vh;
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span><a class="archive-post-title" href= "/2018/04/23/JAVA/" >Java中使用中文转化为拼音</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -599,6 +653,8 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="测试"><span class="iconfont-archer">&#xe606;</span>测试</span>
     
+        <span class="sidebar-tag-name" data-tags="java"><span class="iconfont-archer">&#xe606;</span>java</span>
+    
         <span class="sidebar-tag-name" data-tags="逆向"><span class="iconfont-archer">&#xe606;</span>逆向</span>
     
         <span class="sidebar-tag-name" data-tags="DLL"><span class="iconfont-archer">&#xe606;</span>DLL</span>
@@ -613,6 +669,8 @@ top:50vh;
 </div>
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="java"><span class="iconfont-archer">&#xe60a;</span>java</span>
     
         <span class="sidebar-category-name" data-categories="逆向工程"><span class="iconfont-archer">&#xe60a;</span>逆向工程</span>
     
