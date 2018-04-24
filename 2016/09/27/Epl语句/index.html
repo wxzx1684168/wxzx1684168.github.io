@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <meta name="description" content="">
+    <title>Epl语句 · 花生肉泥</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180317 as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180317 media="(max-width: 980px)"/>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        
+    <link rel="icon" href= /assets/title.ico>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    <script src="/scripts/main.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >花生肉泥 Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Epl语句</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>花生肉泥 Blog</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            Epl语句
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Esper">Esper</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "java">java</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "股票">股票</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2016/09/27</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="1、EPL-Syntax"><a href="#1、EPL-Syntax" class="headerlink" title="1、EPL Syntax"></a>1、EPL Syntax</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">- [annotations]</span><br><span class="line">- [expression_declarations]</span><br><span class="line">- [context context_name]</span><br><span class="line">- [insert into insert_into_def]</span><br><span class="line">- select select_list</span><br><span class="line">- from stream_def [as name] [, stream_def [as name]] [,...]</span><br><span class="line">- [where search_conditions]</span><br><span class="line">- [group by grouping_expression_list]</span><br><span class="line">- [having grouping_search_conditions]</span><br><span class="line">- [output output_specification]</span><br><span class="line">- [order by order_by_expression_list]</span><br><span class="line">- [limit num_rows]</span><br></pre></td></tr></table></figure>
+<h1 id="2、Time-Periods"><a href="#2、Time-Periods" class="headerlink" title="2、Time Periods"></a>2、Time Periods</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">- time-period : [year-part] [month-part] [week-part] [day-part] [hour-part]</span><br><span class="line">- [minute-part] [seconds-part] [milliseconds-part]</span><br><span class="line">- year-part : (number|variable_name) (<span class="string">"years"</span> | <span class="string">"year"</span>)</span><br><span class="line">- month-part : (number|variable_name) (<span class="string">"months"</span> | <span class="string">"month"</span>)</span><br><span class="line">- week-part : (number|variable_name) (<span class="string">"weeks"</span> | <span class="string">"week"</span>)</span><br><span class="line">- day-part : (number|variable_name) (<span class="string">"days"</span> | <span class="string">"day"</span>)</span><br><span class="line">- hour-part : (number|variable_name) (<span class="string">"hours"</span> | <span class="string">"hour"</span>)</span><br><span class="line">- minute-part : (number|variable_name) (<span class="string">"minutes"</span> | <span class="string">"minute"</span> | <span class="string">"min"</span>)</span><br><span class="line">- seconds-part : (number|variable_name) (<span class="string">"seconds"</span> | <span class="string">"second"</span> | <span class="string">"sec"</span>)</span><br><span class="line">- milliseconds-part : (number|variable_name) (<span class="string">"milliseconds"</span> | <span class="string">"millisecond"</span> |<span class="string">"msec"</span>)</span><br></pre></td></tr></table></figure>
+<p>示例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 计算过去的5分3秒中进入该语句的Fruit事件的平均price</span></span><br><span class="line"><span class="function">select <span class="title">avg</span><span class="params">(price)</span> from Fruit.win:<span class="title">time</span><span class="params">(<span class="number">5</span> minute <span class="number">3</span> sec)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">// 每一天输出一次用户的账户总额</span></span></span><br><span class="line"><span class="function">select <span class="title">sum</span><span class="params">(account)</span> from User output every 1 day</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>注：Esper规定每月天数30天</strong></p>
+<h1 id="3、Comments"><a href="#3、Comments" class="headerlink" title="3、Comments"></a>3、Comments</h1><p>示例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">a.单行注释</span><br><span class="line"><span class="comment">// This comment extends to the end of the line.</span></span><br><span class="line"><span class="comment">// Two forward slashes with no whitespace between them begin such comments.</span></span><br><span class="line">select * from MyEvent</span><br><span class="line"></span><br><span class="line">b.多行注释</span><br><span class="line">select * from OtherEvent</span><br><span class="line"><span class="comment">/* this is a very</span></span><br><span class="line"><span class="comment">*important Event*/</span></span><br><span class="line"></span><br><span class="line">c.混合注释</span><br><span class="line">select field1 <span class="comment">// first comment</span></span><br><span class="line"><span class="comment">/* second comment */</span> field from MyEvent</span><br></pre></td></tr></table></figure></p>
+<h1 id="4、Reserved-Keywords"><a href="#4、Reserved-Keywords" class="headerlink" title="4、Reserved Keywords"></a>4、Reserved Keywords</h1><p>如果epl中的某个字段属于关键字 用<code></code>括起来<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// insert和order是关键字，EPL无效</span></span><br><span class="line">select insert from Order</span><br><span class="line"></span><br><span class="line"><span class="comment">// `insert`和`Order`是属性名和事件流名称，EPL有效</span></span><br><span class="line">select `insert` from `Order`</span><br></pre></td></tr></table></figure></p>
+<h1 id="5、Escaping-Strings"><a href="#5、Escaping-Strings" class="headerlink" title="5、Escaping Strings"></a>5、Escaping Strings</h1><p>在EPL中，字符串用单引号或双引号括起来，但若字符串包含单、双引号<br>示例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select * <span class="function">from <span class="title">OrderEvent</span><span class="params">(name=`John`)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 等同于</span></span></span><br><span class="line"><span class="function">select * from <span class="title">OrderEvent</span><span class="params">(name=<span class="string">"John"</span>)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>如果name=John’s，则需要反斜杠转义<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select * <span class="function">from <span class="title">OrderEvent</span><span class="params">(name=<span class="string">"John\"s"</span>)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 或者</span></span></span><br><span class="line"><span class="function">select * from <span class="title">OrderEvent</span><span class="params">(name=<span class="string">'john\'s'</span>)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>除了反斜杠，还可以用unicode来表示单、双引号<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select * <span class="function">from <span class="title">OrderEvent</span><span class="params">(name=<span class="string">"John\u0022s"</span>)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 或者</span></span></span><br><span class="line"><span class="function">select * from <span class="title">OrderEvent</span><span class="params">(name=<span class="string">'john\u0027s'</span>)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>注：Java编写EPL的时候，反斜杠和无含义的双引号还得转义，不然会和String的双引号冲突<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">epService.getEPAdministrator().createEPL(<span class="string">"select * from OrderEvent(name='John\\'s')"</span>);</span><br><span class="line"><span class="comment">// ... and for double quotes...</span></span><br><span class="line">epService.getEPAdministrator().createEPL(<span class="string">"select * from OrderEvent(name=\"Quote \\\"Hello\\\"\")"</span>);</span><br></pre></td></tr></table></figure></p>
+<h1 id="6、Data-Type"><a href="#6、Data-Type" class="headerlink" title="6、Data Type"></a>6、Data Type</h1><p>EPL支持Java所有数据类型，包括基本类型及其包装类，同时还支持java.math.BigInteger和java.math.BigDecimal，并能自动转换数据类型不丢失精度（比如short转int，int转short则不行），要在EPL内数据转换，可以用cast函数<br>示例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.espertech.esper.client.EPAdministrator;</span><br><span class="line"><span class="keyword">import</span> com.espertech.esper.client.EPRuntime;</span><br><span class="line"><span class="keyword">import</span> com.espertech.esper.client.EPServiceProvider;</span><br><span class="line"><span class="keyword">import</span> com.espertech.esper.client.EPServiceProviderManager;</span><br><span class="line"><span class="keyword">import</span> com.espertech.esper.client.EPStatement;</span><br><span class="line"><span class="keyword">import</span> com.espertech.esper.client.EventBean;</span><br><span class="line"><span class="keyword">import</span> com.espertech.esper.client.UpdateListener;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 可用cast函数将其他的数值数据类型转为BigDecimal。</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> luonanqin</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Banana</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> price;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getPrice</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> price;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPrice</span><span class="params">(<span class="keyword">int</span> price)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.price = price;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CastDataTypeListener1</span> <span class="keyword">implements</span> <span class="title">UpdateListener</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(EventBean[] newEvents, EventBean[] oldEvents)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (newEvents != <span class="keyword">null</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            EventBean event = newEvents[<span class="number">0</span>];</span><br><span class="line">            <span class="comment">// cast(avg(price), int)中间的空格在EPL中可以不写，但是event.get的时候必须加上，建议用as一个别名来代表转换后的值</span></span><br><span class="line">            System.out.println(<span class="string">"Average Price: "</span> + event.get(<span class="string">"cast(avg(price), int)"</span>) + <span class="string">", DataType is "</span></span><br><span class="line">                    + event.get(<span class="string">"cast(avg(price), int)"</span>).getClass().getName());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CastDataTypeListener2</span> <span class="keyword">implements</span> <span class="title">UpdateListener</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(EventBean[] newEvents, EventBean[] oldEvents)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (newEvents != <span class="keyword">null</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            EventBean event = newEvents[<span class="number">0</span>];</span><br><span class="line">            System.out.println(<span class="string">"Average Price: "</span> + event.get(<span class="string">"avg(price)"</span>) + <span class="string">", DataType is "</span> + event.get(<span class="string">"avg(price)"</span>).getClass().getName());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CastDataTypeTest</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        EPServiceProvider epService = EPServiceProviderManager.getDefaultProvider();</span><br><span class="line"></span><br><span class="line">        EPAdministrator admin = epService.getEPAdministrator();</span><br><span class="line"></span><br><span class="line">        String banana = Banana.class.getName();</span><br><span class="line">        String epl1 = <span class="string">"select cast(avg(price),int) from "</span> + banana + <span class="string">".win:length_batch(2)"</span>;</span><br><span class="line">        String epl2 = <span class="string">"select avg(price) from "</span> + banana + <span class="string">".win:length_batch(2)"</span>;</span><br><span class="line"></span><br><span class="line">        EPStatement state1 = admin.createEPL(epl1);</span><br><span class="line">        state1.addListener(<span class="keyword">new</span> CastDataTypeListener1());</span><br><span class="line">        EPStatement state2 = admin.createEPL(epl2);</span><br><span class="line">        state2.addListener(<span class="keyword">new</span> CastDataTypeListener2());</span><br><span class="line"></span><br><span class="line">        EPRuntime runtime = epService.getEPRuntime();</span><br><span class="line"></span><br><span class="line">        Banana b1 = <span class="keyword">new</span> Banana();</span><br><span class="line">        b1.setPrice(<span class="number">1</span>);</span><br><span class="line">        runtime.sendEvent(b1);</span><br><span class="line"></span><br><span class="line">        Banana b2 = <span class="keyword">new</span> Banana();</span><br><span class="line">        b2.setPrice(<span class="number">2</span>);</span><br><span class="line">        runtime.sendEvent(b2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>结果：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Average Price: <span class="number">1</span>, DataType is java.lang.Integer</span><br><span class="line">Average Price: <span class="number">1.5</span>, DataType is java.lang.Double</span><br></pre></td></tr></table></figure></p>
+<p>注：如果某个数除以０，默认会返回正无穷大或者负无穷大，可以配置用null来代替</p>
+<h1 id="7、Annotation"><a href="#7、Annotation" class="headerlink" title="7、Annotation"></a>7、Annotation</h1><p>EPL可以写注释<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 不包含参数或者单个参数的注解</span></span><br><span class="line"><span class="meta">@annotation</span>_name [(annotation_parameters)]</span><br><span class="line"></span><br><span class="line"><span class="comment">// 包含多个属性名-值对的注解</span></span><br><span class="line"><span class="meta">@annotation</span>_name (attribute_name = attribute_value, [name=value, ...])</span><br><span class="line"></span><br><span class="line"><span class="comment">// 多个注解联合使用</span></span><br><span class="line"><span class="meta">@annotation</span>_name [(annotation_parameters)] [<span class="meta">@annotation</span>_name [(annotation_parameters)]] [...]</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>@Name 指定EPL的名称，参数只有一个。例如：@Name(“MyEPL”)</li>
+<li>@Description 对EPL进行描述，参数只有一个。例如：@Description(“This is MyEPL”)</li>
+<li>@Tag 对EPL进行额外的说明，参数有两个，分别为Tag的名称和Tag的值，用逗号分隔。例如:@Tag(name=”author”,value=”luonanqin”)</li>
+<li>@Priority 指定EPL的优先级，参数只有一个，并且整数（可负可正）。例如：@Priority(10)</li>
+<li>@Drop 指定事件经过此EPL后不再参与其他的EPL计算，该注解无参数。</li>
+<li>@Hint 为EPL加上某些标记，让引擎对此EPL产生其他的操作，会改变EPL实例的内存占用，但通常不会改变输出。其参数固定，由Esper提供，之后的篇幅会穿插讲解这个注解的使用场景。</li>
+<li>@Audit EPL添加此注解后，可以额外输出EPL运行情况，有点类似日志的感觉（当然没有日志的功能全啦），具体使用场景在此先不提。</li>
+<li>@Hook 与SQL相关，这里暂且不说</li>
+<li>@EventRepresentation 这是用来指定EPL产生的计算结果事件包含的数据形式。参数只有一个，即array=true或array=false。false为默认值，代表数据形式为Map，若为true，则数据形式为数组。</li>
+</ul>
+<p>示例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.espertech.esper.client.EPAdministrator;</span><br><span class="line"><span class="keyword">import</span> com.espertech.esper.client.EPRuntime;</span><br><span class="line"><span class="keyword">import</span> com.espertech.esper.client.EPServiceProvider;</span><br><span class="line"><span class="keyword">import</span> com.espertech.esper.client.EPServiceProviderManager;</span><br><span class="line"><span class="keyword">import</span> com.espertech.esper.client.EPStatement;</span><br><span class="line"><span class="keyword">import</span> com.espertech.esper.client.EventBean;</span><br><span class="line"><span class="keyword">import</span> com.espertech.esper.client.UpdateListener;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Apple</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> price;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getPrice</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> price;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPrice</span><span class="params">(<span class="keyword">int</span> price)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.price = price;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SomeAnnotationListener</span> <span class="keyword">implements</span> <span class="title">UpdateListener</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(EventBean[] newEvents, EventBean[] oldEvents)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (newEvents != <span class="keyword">null</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            EventBean event = newEvents[<span class="number">0</span>];</span><br><span class="line">            <span class="comment">// 当加上注解@EventRepresentation(array=true)时，结果事件类型为数组而不是Map。</span></span><br><span class="line">            <span class="comment">// array=false时，也就是默认情况，结果事件类型为数组是Map。</span></span><br><span class="line">            System.out.println(<span class="string">"Sum Price: "</span> + event.get(<span class="string">"sum(price)"</span>) + <span class="string">", Event Type is "</span> + event.getEventType().getUnderlyingType());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SomeAnnotationTest</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        EPServiceProvider epService = EPServiceProviderManager.getDefaultProvider();</span><br><span class="line"></span><br><span class="line">        EPAdministrator admin = epService.getEPAdministrator();</span><br><span class="line"></span><br><span class="line">        String apple = Apple.class.getName();</span><br><span class="line">        String epl1 = <span class="string">"@Priority(10)@EventRepresentation(array=true) select sum(price) from "</span> + apple + <span class="string">".win:length_batch(2)"</span>;</span><br><span class="line">        String epl2 = <span class="string">"@Name(\"EPL2\")select sum(price) from "</span> + apple + <span class="string">".win:length_batch(2)"</span>;</span><br><span class="line">        String epl3 = <span class="string">"@Drop select sum(price) from "</span> + apple + <span class="string">".win:length_batch(2)"</span>;</span><br><span class="line"></span><br><span class="line">        UpdateListener listenenr = <span class="keyword">new</span> SomeAnnotationListener();</span><br><span class="line">        EPStatement state1 = admin.createEPL(epl1);</span><br><span class="line">        state1.addListener(listenenr);</span><br><span class="line">        EPStatement state2 = admin.createEPL(epl2);</span><br><span class="line">        state2.addListener(listenenr);</span><br><span class="line">        System.out.println(<span class="string">"epl2's name is "</span> + state2.getName());</span><br><span class="line">        EPStatement state3 = admin.createEPL(epl3);</span><br><span class="line">        state3.addListener(listenenr);</span><br><span class="line"></span><br><span class="line">        EPRuntime runtime = epService.getEPRuntime();</span><br><span class="line"></span><br><span class="line">        Apple a1 = <span class="keyword">new</span> Apple();</span><br><span class="line">        a1.setPrice(<span class="number">1</span>);</span><br><span class="line">        runtime.sendEvent(a1);</span><br><span class="line"></span><br><span class="line">        Apple a2 = <span class="keyword">new</span> Apple();</span><br><span class="line">        a2.setPrice(<span class="number">2</span>);</span><br><span class="line">        runtime.sendEvent(a2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>结果：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">epl2<span class="string">'s name is EPL2</span></span><br><span class="line"><span class="string">Sum Price: 3, Event Type is class [Ljava.lang.Object;</span></span><br><span class="line"><span class="string">Sum Price: 3, Event Type is interface java.util.Map</span></span><br><span class="line"><span class="string">Sum Price: 3, Event Type is interface java.util.Map</span></span><br></pre></td></tr></table></figure></p>
+<p>@Name和@EventRepresentation起作用了，但@Priority和@Drop没用，这是需要配置才能生效</p>
+<h1 id="8、Expression"><a href="#8、Expression" class="headerlink" title="8、Expression"></a>8、Expression</h1><p>Expression类似自定义函数，通常用Lambda表达式来建立，而Lambda表达式就一个”=&gt;”符号，表示”gose to”，符号左边表示输入参数，右边表示计算过程，计算结果就是这个表达式的返回值<br>语法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expression expression_name&#123; expression_body &#125;</span><br></pre></td></tr></table></figure></p>
+<p>expression是关键字<br>expression_name为expression的名称（唯一）<br>expression_body是expression的具体内容<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expression_body: (input_param [,input_param[,...]]) =&gt; expression</span><br></pre></td></tr></table></figure></p>
+<p>input_param必须为事件流的别名，注意不是事件流名。参数名写什么都可以，多个参数逗号分隔，并用圆括号括起来<br>示例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">experssion middle &#123;x =&gt; (x.max + x.min)/<span class="number">2</span> &#125; <span class="function">select <span class="title">middle</span><span class="params">(apple)</span> from Apple as apple</span></span><br></pre></td></tr></table></figure></p>
+<p>x：表示输入参数<br>x.max x.min：x代表的事件流属性，若事件流没有这个属性，则expression定义错误<br>express的定义必须放在句子斥千万次</p>
+<p>对于多个参数的expression定义<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">expressin sumage &#123; (x,y) =&gt; x.age+y.age &#125; <span class="function">select <span class="title">sumage</span><span class="params">(me,you)</span> from Me as me, You as you</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="Select-Clause"><a href="#Select-Clause" class="headerlink" title="Select Clause"></a>Select Clause</h1><h2 id="1、查询事件流的所有属性以及特定属性"><a href="#1、查询事件流的所有属性以及特定属性" class="headerlink" title="1、查询事件流的所有属性以及特定属性"></a>1、查询事件流的所有属性以及特定属性</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// EPL：查询完整的User对象</span></span><br><span class="line">select * from User</span><br><span class="line"><span class="comment">// 获取User对象</span></span><br><span class="line">User u = newEvent.getUnderlying();</span><br><span class="line"></span><br><span class="line"><span class="comment">// EPL：查询User的name和id，id别名为i</span></span><br><span class="line">select name, id as i from User</span><br><span class="line"><span class="comment">// 获取name和id</span></span><br><span class="line">String name = (String)newEvent.get(<span class="string">"name"</span>);</span><br><span class="line"><span class="keyword">int</span> id = (Integer)newEvent.get(<span class="string">"i"</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="2、表达式"><a href="#2、表达式" class="headerlink" title="2、表达式"></a>2、表达式</h2><p>除了查询完整对象和特定属性，EPL还支持属性值的计算，以计算后的值作为结果返回，也能设置别名<br>示例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 求三长方形的面积</span></span><br><span class="line">select length * width as area from Rectangle</span><br></pre></td></tr></table></figure></p>
+<p>除了加减乘除，还可以用事件流对象的某个方法<br>示例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 计算长方形面积</span></span><br><span class="line">select r.getArea(r.length,r.width) as area from Rectangle as r</span><br><span class="line"></span><br><span class="line">select r.getArea() as area from Rectangle as r</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Rectangle类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Rectangle</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">     <span class="keyword">private</span> <span class="keyword">int</span> length;</span><br><span class="line">     <span class="keyword">private</span> <span class="keyword">int</span> width;</span><br><span class="line"></span><br><span class="line">     <span class="comment">/* 省略getter/setter方法 */</span></span><br><span class="line"></span><br><span class="line">     <span class="comment">// 外部传入参数计算面积</span></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getArea</span><span class="params">(<span class="keyword">int</span> l,<span class="keyword">int</span> w)</span></span></span><br><span class="line"><span class="function">     </span>&#123;</span><br><span class="line">          <span class="keyword">return</span> l * w;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="comment">// 计算该对象的面积</span></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getArea</span><span class="params">()</span></span></span><br><span class="line"><span class="function">     </span>&#123;</span><br><span class="line">          <span class="keyword">return</span> length * width;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如上，一个需要传参，一个不需要，并且要注意事件流需要设置别名才能使用方法，如r.getArea()</p>
+<p>如果Rectangle没有计算面积方法，但是有一个专门计算面积的静态方法，表达式也可以调用，不过要事先加载这个包含方法的类<br>示例：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 该类用于计算面积</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ComputeArea</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">getArea</span><span class="params">(<span class="keyword">int</span> length, <span class="keyword">int</span> width)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> length*width;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 加载</span></span><br><span class="line">epService.getEPAdministrator().getConfiguration().addImport(ComputeArea.class);</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 调用ComputeArea的getArea方法计算面积</span></span><br><span class="line">select ComputeArea.getArea(length,width) from Rectangle</span><br></pre></td></tr></table></figure>
+<p><strong>注：一定要是静态方法，不然没有实例化是没法引用</strong></p>
+<h2 id="4、insert和remove事件流"><a href="#4、insert和remove事件流" class="headerlink" title="4、insert和remove事件流"></a>4、insert和remove事件流</h2><p>Esper对于事件流分输入和移出两种，分别对应监听器的两个参数newEvents和oldEvents，new通常对应事件的计算结果，old可以理解为上一次计算结果。默认情况下，只有new有值，old为null，若需要查看，则要使用一个参数</p>
+<p>select rstream * from User<br>若使用了该参数，则会将上一次计算结果放入newEvents内，而不是oldEvents（没写错，是newEvents），且无法获得当前计算结果</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">select irstream * from User</span><br><span class="line">若使用了该参数，则会将当前计算结果放入<span class="keyword">new</span>内，上一次计算结果放入old内</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select istream * from User</span><br><span class="line"><span class="comment">// 等同于</span></span><br><span class="line">select * from User</span><br></pre></td></tr></table></figure>
+<p>如果使用了该参数，会将当前结果放入new内，并无法获得上次的计算结果，同时该参数也是默认参数，可不写</p>
+<h2 id="5、Distinct"><a href="#5、Distinct" class="headerlink" title="5、Distinct"></a>5、Distinct</h2><p>distinct的用法和SQL一样<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select distinct * from User.win:time(<span class="number">3</span> sec)</span><br></pre></td></tr></table></figure></p>
+<h2 id="6、查询指定引擎的处理结果"><a href="#6、查询指定引擎的处理结果" class="headerlink" title="6、查询指定引擎的处理结果"></a>6、查询指定引擎的处理结果</h2><p>select还可以针对某个引擎进行查询，因为引擎都有自己的URI，可以在select句子中增加URI标识来指定查询拿一个引擎的事件处理情况<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引擎URI为Processor</span></span><br><span class="line">select Processor.MyEvent.myProperty from Processor.MyEvent</span><br></pre></td></tr></table></figure></p>
+<h1 id="From-Clause"><a href="#From-Clause" class="headerlink" title="From Clause"></a>From Clause</h1><h2 id="1、语法介绍"><a href="#1、语法介绍" class="headerlink" title="1、语法介绍"></a>1、语法介绍</h2><p>from主要内容是针对事件流的处理，包括事件流过滤，事件流的维持等等<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from stream_def [as name] [unidirectional] [retain-union | retain-intersection] [, stream_def [as stream_name]] [, ...]</span><br><span class="line"></span><br><span class="line"><span class="comment">// 事件流</span></span><br><span class="line">event_stream_name [(filter_criteria)] [contained_selection] [.view_spec] [.view_spec] [...]</span><br></pre></td></tr></table></figure></p>
+<h2 id="2、事件流过滤"><a href="#2、事件流过滤" class="headerlink" title="2、事件流过滤"></a>2、事件流过滤</h2><p>事件流过滤通常情况都是对其中某个或多个属性加以限制来达到过滤的目的，过滤表达式是紧跟在事件流名称之后而不是别名之后<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 只有age大于10的User对象才可查询到name值</span></span><br><span class="line"><span class="function">select name from <span class="title">User</span><span class="params">(age&gt;<span class="number">10</span>)</span> as user</span></span><br><span class="line"><span class="function"><span class="comment">// 当name=“luonanqin”时，可获得其age值</span></span></span><br><span class="line"><span class="function">select age from <span class="title">User</span><span class="params">(name=<span class="string">"luonanqin"</span>)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">// 错误写法</span></span></span><br><span class="line"><span class="function">select name from User as <span class="title">user</span><span class="params">(age&gt;<span class="number">10</span>)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>过滤表达式写法多种多样，可以用符号，又或者使用and、or、between等逻辑语言<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 查询年龄大于15小于18的学生的姓名</span></span><br><span class="line"><span class="function">select name from <span class="title">Student</span><span class="params">(age between <span class="number">15</span> and <span class="number">18</span>)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 等同于</span></span></span><br><span class="line"><span class="function">select name from <span class="title">Student</span><span class="params">(age &gt;= <span class="number">15</span> and age &lt;= <span class="number">18</span>)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 等同于</span></span></span><br><span class="line"><span class="function">select name from <span class="title">Student</span><span class="params">(age &gt;= <span class="number">15</span>, age &lt;= <span class="number">18</span>)</span></span></span><br></pre></td></tr></table></figure></p>
+<p>()<br>表示开区间，(low:high)，如(10:15),表示10到15之间，并且不包含10和15</p>
+<p>[]<br>表示一个闭区间，[low:high]，如[10:15]，表示10到15之间，并且包含10和15<br>()和[]可以混合使用，例如[10:15)或者(10:15]</p>
+<p>in<br>配合()[]进行使用，表示在某个范围内<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">select name from <span class="title">User</span><span class="params">(age in [<span class="number">10</span>:<span class="number">15</span>])</span></span></span><br></pre></td></tr></table></figure></p>
+<p>相应的，not in 表示不在此范围内</p>
+<p>in和not in可以作用于字符串<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">select age from <span class="title">User</span><span class="params">(name in (<span class="string">'张三'</span>,<span class="string">'李四'</span>)</span>)</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="静态方法过滤"><a href="#静态方法过滤" class="headerlink" title="静态方法过滤"></a>静态方法过滤</h1><p>类似于select字句中使用静态方法，过滤表达式中也可以使用，但返回值必须为布尔值，不然会报错<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 判断总数是否等于0</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IsZero</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isZero</span><span class="params">(<span class="keyword">int</span> sum)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> sum==<span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 加载</span></span><br><span class="line">epService.getEPAdministrator().getConfiguration().addImport(IsZero.class);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 查询没有钱的用户的name值（User包含name和money属性）</span></span><br><span class="line"><span class="function">select name from <span class="title">User</span><span class="params">(IsZero.isZero(money)</span>)</span></span><br></pre></td></tr></table></figure></p>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">上一篇文章</div>
+                <a href= "/2017/08/21/周易-1基本概念/" title= 周易-1基本概念 >
+                    <div class="nextTitle">周易-1基本概念</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">下一篇文章</div>
+                <a href= "/2016/09/26/进程模型/" title= 进程模型 >
+                    <div class="prevTitle">进程模型</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+<div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        // id: "Epl语句", // 可选。默认为 location.href
+        owner: 'wxzx1684168',
+        repo: 'wxzx1684168.github.io',
+        oauth: {
+            client_id: '7280d255a529324c9198',
+            client_secret: '89fdf02f804bf55f75f10ff82fb9f433b7e336e6',
+        },
+    })
+    gitment.render('container')
+
+</script>
+
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:575645523@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/wxzx1684168" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/example_qr.png" />
+                </span>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer qq" title=qq>
+                  
+                  <img class="profile-qr" src="/assets/qq_qr.jpg" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+        <font color="f5f5f5">
+		<span id="busuanzi_container_site_uv">UV: <span id="busuanzi_value_site_uv"></span>
+        </span>
+		</font>
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1、EPL-Syntax"><span class="toc-number">1.</span> <span class="toc-text">1、EPL Syntax</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2、Time-Periods"><span class="toc-number">2.</span> <span class="toc-text">2、Time Periods</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3、Comments"><span class="toc-number">3.</span> <span class="toc-text">3、Comments</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4、Reserved-Keywords"><span class="toc-number">4.</span> <span class="toc-text">4、Reserved Keywords</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5、Escaping-Strings"><span class="toc-number">5.</span> <span class="toc-text">5、Escaping Strings</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6、Data-Type"><span class="toc-number">6.</span> <span class="toc-text">6、Data Type</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7、Annotation"><span class="toc-number">7.</span> <span class="toc-text">7、Annotation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#8、Expression"><span class="toc-number">8.</span> <span class="toc-text">8、Expression</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Select-Clause"><span class="toc-number">9.</span> <span class="toc-text">Select Clause</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、查询事件流的所有属性以及特定属性"><span class="toc-number">9.1.</span> <span class="toc-text">1、查询事件流的所有属性以及特定属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、表达式"><span class="toc-number">9.2.</span> <span class="toc-text">2、表达式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、insert和remove事件流"><span class="toc-number">9.3.</span> <span class="toc-text">4、insert和remove事件流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5、Distinct"><span class="toc-number">9.4.</span> <span class="toc-text">5、Distinct</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6、查询指定引擎的处理结果"><span class="toc-number">9.5.</span> <span class="toc-text">6、查询指定引擎的处理结果</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#From-Clause"><span class="toc-number">10.</span> <span class="toc-text">From Clause</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、语法介绍"><span class="toc-number">10.1.</span> <span class="toc-text">1、语法介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、事件流过滤"><span class="toc-number">10.2.</span> <span class="toc-text">2、事件流过滤</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#静态方法过滤"><span class="toc-number">11.</span> <span class="toc-text">静态方法过滤</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">归档</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">标签</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">类别</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> 总计 : 12 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2018/04/22/测试测试/" >测试测试</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/23</span><a class="archive-post-title" href= "/2017/08/23/周易-占卦方式/" >周易-占卦方式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/22</span><a class="archive-post-title" href= "/2017/08/22/周易-2基本象征/" >周易-2基本象征</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/21</span><a class="archive-post-title" href= "/2017/08/21/周易-1基本概念/" >周易-1基本概念</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2016 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/27</span><a class="archive-post-title" href= "/2016/09/27/Epl语句/" >Epl语句</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/Esper-Demo/" >Esper Demo</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/进程模型/" >进程模型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/15</span><a class="archive-post-title" href= "/2016/06/15/注入DLL/" >注入DLL</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/31</span><a class="archive-post-title" href= "/2016/05/31/破解MFCApplication1/" >破解MFCApplication1</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2015 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/22</span><a class="archive-post-title" href= "/2015/03/22/验证用户是否登陆的拦截器/" >验证用户是否登陆的拦截器</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/22</span><a class="archive-post-title" href= "/2015/02/22/JAVA/" >Java中使用中文转化为拼音</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2000 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2000/01/01/hello-world/" >Hello World</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="Esper"><span class="iconfont-archer">&#xe606;</span>Esper</span>
+    
+        <span class="sidebar-tag-name" data-tags="java"><span class="iconfont-archer">&#xe606;</span>java</span>
+    
+        <span class="sidebar-tag-name" data-tags="股票"><span class="iconfont-archer">&#xe606;</span>股票</span>
+    
+        <span class="sidebar-tag-name" data-tags="周易"><span class="iconfont-archer">&#xe606;</span>周易</span>
+    
+        <span class="sidebar-tag-name" data-tags="易经"><span class="iconfont-archer">&#xe606;</span>易经</span>
+    
+        <span class="sidebar-tag-name" data-tags="八卦"><span class="iconfont-archer">&#xe606;</span>八卦</span>
+    
+        <span class="sidebar-tag-name" data-tags="逆向"><span class="iconfont-archer">&#xe606;</span>逆向</span>
+    
+        <span class="sidebar-tag-name" data-tags="破解"><span class="iconfont-archer">&#xe606;</span>破解</span>
+    
+        <span class="sidebar-tag-name" data-tags="测试"><span class="iconfont-archer">&#xe606;</span>测试</span>
+    
+        <span class="sidebar-tag-name" data-tags="DLL"><span class="iconfont-archer">&#xe606;</span>DLL</span>
+    
+        <span class="sidebar-tag-name" data-tags="注入"><span class="iconfont-archer">&#xe606;</span>注入</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="java"><span class="iconfont-archer">&#xe60a;</span>java</span>
+    
+        <span class="sidebar-category-name" data-categories="周易"><span class="iconfont-archer">&#xe60a;</span>周易</span>
+    
+        <span class="sidebar-category-name" data-categories="逆向工程"><span class="iconfont-archer">&#xe60a;</span>逆向工程</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: 'ZhouXin'
+    }
+</script>
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    <script src="/node_modules/live2d-widget/node_modules/live2d-widget/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"node_modules/live2d-widget/","pluginJsPath":"node_modules/live2d-widget/lib/","pluginModelPath":"node_modules/live2d-widget-model-koharu/assets/","model":{"jsonPath":"/node_modules/live2d-widget/node_modules/live2d-widget-model-koharu/assets/koharu.model.json"},"mobile":{"show":true,"scale":0.2},"react":{"opacityDefault":1,"opacityOnHover":0},"display":{"superSample":1}});</script></body>
+</html>
+
+

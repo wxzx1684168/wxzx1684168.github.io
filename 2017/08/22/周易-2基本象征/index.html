@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <meta name="description" content="">
+    <title>周易-2基本象征 · 花生肉泥</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180317 as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180317 media="(max-width: 980px)"/>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        
+    <link rel="icon" href= /assets/title.ico>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    <script src="/scripts/main.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >花生肉泥 Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">周易-2基本象征</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>花生肉泥 Blog</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            周易-2基本象征
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "周易">周易</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "易经">易经</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "八卦">八卦</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2017/08/22</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="一、乾卦的象征"><a href="#一、乾卦的象征" class="headerlink" title="一、乾卦的象征"></a>一、乾卦的象征</h1><pre><code>乾卦☰是第一卦，“乾三连”是指乾卦有三条阳爻所组成。阳爻是一条横线，中间不断裂；三条阳爻就是三连，阳爻代表主动力，是变化的主导因素，形成三阳爻的乾卦之后，又象征什么？由以下六方面来描述：
+1.在自然界，乾卦是指“天”。有天有地（地由坤卦来象征），万物才可能在其中生存发展。
+2.基本性质是“健”，就是刚健不已的生命创造力，缺少此一生命创造力，万物无从产生。
+3.在家庭中，乾卦指“父”。所谓“乾坤生六子”，一家八口，其实是古代的标准家庭结构
+4.在身体上，乾卦是指“首”（头部），毋庸置疑。
+5.在动物中，乾卦是指“马”，因为马能健行。
+6.延伸所指，乾卦代表了：圆（天圆地方），君（作为领袖），金与玉（因为贵重），大赤（大红色，代表正宗）等等
+</code></pre><h1 id="二、坤卦的象征"><a href="#二、坤卦的象征" class="headerlink" title="二、坤卦的象征"></a>二、坤卦的象征</h1><pre><code>坤卦☷是由三个阴爻所组成，阴爻是一条横线，中间断裂，所以坤卦的画法是“六断”，阳爻代表主动力，阴爻自然是受动力。有主动也有受动，才有变化的可能。有创造也有发展，万物才可生生不息：
+1.在自然界，坤卦是指“地”。乾为天，坤为地，这二者使万物既有生存空间，又有能量来源。
+2.基本性质是“顺”，要顺从天的指引，并且柔顺对待万物，对一切都逆来顺受。
+3.在家庭中，坤卦是指“母”，负责养育子女。
+4.在身体上，坤卦是指“腹”，可容纳亦可孕育。
+5.在动物中，坤卦是指“牛”，因为牛性温顺，又能负重致远。
+6.延伸所指，坤代表了：众人（相对于君而言），布帛（母亲要织布，并且布可包物），锅（煮饭之用），吝啬（本身只顺承而不创造，必须省俭），大车（可以载重），黑色土地，等等。
+</code></pre><h1 id="三、震卦的象征"><a href="#三、震卦的象征" class="headerlink" title="三、震卦的象征"></a>三、震卦的象征</h1><pre><code>震卦☳排在第三，因为他代表父母之后的长男。物以稀为贵，爻以少为主；因此在一阳二阴的组合中，阳为主，代表这是个阳性卦。并且阳爻在最底下（既第一个位置），所以称为长男：
+1.在自然界，震卦是指“雷”。在天地形成之后，要靠雷声来震动及唤醒万物的生机。
+2.基本性质是“动”。阳爻在下，充满动力
+3.在家庭中，是长男
+4.在身体上，是“足”，有足才能行动。
+5.在动物中，震卦是指“龙”。龙充满各种潜能，长男也必须接位，未来不可限量。
+6.延伸所指，震卦代表了：青黄色（古代有青龙白虎之说），大路（开阔大道），急躁（行动多而思考少），善鸣马（震为雷鸣，又可行动），反向而生的禾稼（先生根再张枝干），等等
+</code></pre><h1 id="四、巽卦的象征"><a href="#四、巽卦的象征" class="headerlink" title="四、巽卦的象征"></a>四、巽卦的象征</h1><pre><code>巽卦☴代表长女，因为他是由一阴二阳所组成，并且阴爻在最底下的第一个位置。巽卦又象征“风”，因为在三爻中，上面二条阳爻代表充实而不动的天体，地下的阴爻则是空虚而容许空气流动，以致形成了风的现象：
+1.在自然界，巽卦是指“风”
+2.基本性质是“入”，因为风就是空气流动，而空气无所不入，一般又把这个“入”描写为顺利，一帆风顺
+3.在家庭中，巽卦是指长女
+4.在身体上，巽卦是指“股”，亦既大腿部分，因为它介于足与上半身之间，可以联系而不能采取行动。
+5.在动物中，巽卦是指“鸡”，古代风神皆为鸟形，而鸡为鸟类。
+6.延伸所指，巽卦还代表：木（可以开花结果），绳直（木干为直），长与高（皆与木有关），进退不定（有如风向不定），没有结果（不定则无结果），白色（木心为白，而风本无色），多白眼（嫌弃别人），近利市三倍（投资顺利，收获可期）
+</code></pre><h1 id="五、坎卦的象征"><a href="#五、坎卦的象征" class="headerlink" title="五、坎卦的象征"></a>五、坎卦的象征</h1><pre><code>坎卦☵如果竖直起来，就是象形字的水，坎卦由一阳二阴所组成，所以是阳性卦，并且阳爻在由下往上第二个位置，所以称为中男：
+1.在自然界，坎卦是指“水”
+2.基本性质是“陷”，水深难测，水流危险，有如陷阱。今日还在使用“坎陷”一词
+3.在家庭中，是指中男
+4.在身体上，坎卦是指“耳”，因为耳能聚集声音，正如水能聚在低处一般。
+5.在动物中，坎卦是指“豕（shi）”，因为大猪喜欢呆在潮湿之地。
+6.延伸所指，坎卦还代表：沟渠，隐伏，弓或车轮，月亮，强盗，多忧愁，心病，美脊马，拉车的马，多灾多难的车，坚实多刺的树，等等
+</code></pre><h1 id="六、离卦的象征"><a href="#六、离卦的象征" class="headerlink" title="六、离卦的象征"></a>六、离卦的象征</h1><pre><code>离卦☲与坎卦相对，所以代表了“火”，他是一阴二阳，属于阴性卦，阴爻在由下往上第二位，所以是中女。他的各种象征如下：
+1.在自然界，它是指“火”
+2.基本性质是“丽”，丽是指附丽或依附，亦即火总是依附在木柴或蜡烛上，而不会独自燃烧。
+3.在家庭中，是指中女。
+4.在身体上，离卦是指“目”，因为火代表光明，而光明显然与眼睛有关。
+5.在动物中，离卦是指“稚”。山林中的野鸡，羽毛颜色艳丽，有如火光闪烁，
+6.延伸所指，离卦还代表：日，电（闪电之光），盔甲，戈兵武器（火能防卫，也能伤人），龟（可以用来占卜，显示未来），甲壳类，叶子脱落而枯槁的树木，等等
+</code></pre><h1 id="七、艮卦的象征"><a href="#七、艮卦的象征" class="headerlink" title="七、艮卦的象征"></a>七、艮卦的象征</h1><pre><code>艮卦☶的卦象下虚上实，有如我们看到山都是注意山的棱线或山的曲线，他是一阳二阴，并且阳爻在由下往上的第三位，所以代表少男
+1.在自然界，它是指“山”
+2.基本性质是“止”，因为古人遇到山则止，无法跨越，并且他是少男，在阳性爻方面到此为止
+3.在家庭中，艮卦是指少男
+4.在身体上，艮卦是指“手”，因为人会伸手阻挡别人的侵犯。
+5.在动物中，艮卦是指“狗”，因为狗能看门，阻止陌生人。
+6.延伸所指，艮卦还代表：小路（相对于震卦的大陆），小石（由脚下小石多），门阙（不让外人进入），守门人，植物果实（终于有了结果），黑嘴禽兽（阳爻在上，有如硬的嘴在外），坚硬多节的树，等等
+</code></pre><h1 id="八、兑卦的象征"><a href="#八、兑卦的象征" class="headerlink" title="八、兑卦的象征"></a>八、兑卦的象征</h1><pre><code>兑卦☱由一阴二阳组成，是阴性卦，并且阴爻位于由下往上第三位，所以代表少女， 它也是基本八卦的最后一个：
+1.在自然界，兑卦是指“泽”，沼泽的水是平静安全的，也是人类与其他生物所需要的
+2.基本性质是“说”，这是喜悦的“悦”字，见到沼泽，对于逐水草而居的古人，自然欣喜有加。
+3.在家庭中，它是指少女
+4.在身体上，兑卦是指“口”，因为口能说话唱歌，使人愉悦。
+5.在动物中，它是指“羊”，古人造字时，以“羊大”为“美”，少女亦让人欣赏
+6.延伸所指，兑卦还代表：口舌是非（说话也可能形成各种风波），毁折（有了缺口），脱落（不完整），巫（可以预言），妾（年轻女子）
+</code></pre><p>基本八卦每一卦都有十个以上的象征，在解卦时，自然形成许多复杂的可能性。<br>每一卦的象征有好有坏，有时还自相矛盾。<br>危机也是转机，人在忧患中才会提高警觉，由此转危为安</p>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">上一篇文章</div>
+                <a href= "/2017/08/23/周易-占卦方式/" title= 周易-占卦方式 >
+                    <div class="nextTitle">周易-占卦方式</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">下一篇文章</div>
+                <a href= "/2017/08/21/周易-1基本概念/" title= 周易-1基本概念 >
+                    <div class="prevTitle">周易-1基本概念</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+<div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        // id: "周易-2基本象征", // 可选。默认为 location.href
+        owner: 'wxzx1684168',
+        repo: 'wxzx1684168.github.io',
+        oauth: {
+            client_id: '7280d255a529324c9198',
+            client_secret: '89fdf02f804bf55f75f10ff82fb9f433b7e336e6',
+        },
+    })
+    gitment.render('container')
+
+</script>
+
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:575645523@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/wxzx1684168" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/example_qr.png" />
+                </span>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer qq" title=qq>
+                  
+                  <img class="profile-qr" src="/assets/qq_qr.jpg" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+        <font color="f5f5f5">
+		<span id="busuanzi_container_site_uv">UV: <span id="busuanzi_value_site_uv"></span>
+        </span>
+		</font>
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、乾卦的象征"><span class="toc-number">1.</span> <span class="toc-text">一、乾卦的象征</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二、坤卦的象征"><span class="toc-number">2.</span> <span class="toc-text">二、坤卦的象征</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三、震卦的象征"><span class="toc-number">3.</span> <span class="toc-text">三、震卦的象征</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#四、巽卦的象征"><span class="toc-number">4.</span> <span class="toc-text">四、巽卦的象征</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#五、坎卦的象征"><span class="toc-number">5.</span> <span class="toc-text">五、坎卦的象征</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#六、离卦的象征"><span class="toc-number">6.</span> <span class="toc-text">六、离卦的象征</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#七、艮卦的象征"><span class="toc-number">7.</span> <span class="toc-text">七、艮卦的象征</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#八、兑卦的象征"><span class="toc-number">8.</span> <span class="toc-text">八、兑卦的象征</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">归档</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">标签</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">类别</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> 总计 : 12 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2018/04/22/测试测试/" >测试测试</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/23</span><a class="archive-post-title" href= "/2017/08/23/周易-占卦方式/" >周易-占卦方式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/22</span><a class="archive-post-title" href= "/2017/08/22/周易-2基本象征/" >周易-2基本象征</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/21</span><a class="archive-post-title" href= "/2017/08/21/周易-1基本概念/" >周易-1基本概念</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2016 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/27</span><a class="archive-post-title" href= "/2016/09/27/Epl语句/" >Epl语句</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/Esper-Demo/" >Esper Demo</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/进程模型/" >进程模型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/15</span><a class="archive-post-title" href= "/2016/06/15/注入DLL/" >注入DLL</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/31</span><a class="archive-post-title" href= "/2016/05/31/破解MFCApplication1/" >破解MFCApplication1</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2015 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/22</span><a class="archive-post-title" href= "/2015/03/22/验证用户是否登陆的拦截器/" >验证用户是否登陆的拦截器</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/22</span><a class="archive-post-title" href= "/2015/02/22/JAVA/" >Java中使用中文转化为拼音</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2000 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2000/01/01/hello-world/" >Hello World</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="Esper"><span class="iconfont-archer">&#xe606;</span>Esper</span>
+    
+        <span class="sidebar-tag-name" data-tags="java"><span class="iconfont-archer">&#xe606;</span>java</span>
+    
+        <span class="sidebar-tag-name" data-tags="股票"><span class="iconfont-archer">&#xe606;</span>股票</span>
+    
+        <span class="sidebar-tag-name" data-tags="周易"><span class="iconfont-archer">&#xe606;</span>周易</span>
+    
+        <span class="sidebar-tag-name" data-tags="易经"><span class="iconfont-archer">&#xe606;</span>易经</span>
+    
+        <span class="sidebar-tag-name" data-tags="八卦"><span class="iconfont-archer">&#xe606;</span>八卦</span>
+    
+        <span class="sidebar-tag-name" data-tags="逆向"><span class="iconfont-archer">&#xe606;</span>逆向</span>
+    
+        <span class="sidebar-tag-name" data-tags="破解"><span class="iconfont-archer">&#xe606;</span>破解</span>
+    
+        <span class="sidebar-tag-name" data-tags="测试"><span class="iconfont-archer">&#xe606;</span>测试</span>
+    
+        <span class="sidebar-tag-name" data-tags="DLL"><span class="iconfont-archer">&#xe606;</span>DLL</span>
+    
+        <span class="sidebar-tag-name" data-tags="注入"><span class="iconfont-archer">&#xe606;</span>注入</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="java"><span class="iconfont-archer">&#xe60a;</span>java</span>
+    
+        <span class="sidebar-category-name" data-categories="周易"><span class="iconfont-archer">&#xe60a;</span>周易</span>
+    
+        <span class="sidebar-category-name" data-categories="逆向工程"><span class="iconfont-archer">&#xe60a;</span>逆向工程</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: 'ZhouXin'
+    }
+</script>
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    <script src="/node_modules/live2d-widget/node_modules/live2d-widget/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"node_modules/live2d-widget/","pluginJsPath":"node_modules/live2d-widget/lib/","pluginModelPath":"node_modules/live2d-widget-model-koharu/assets/","model":{"jsonPath":"/node_modules/live2d-widget/node_modules/live2d-widget-model-koharu/assets/koharu.model.json"},"mobile":{"show":true,"scale":0.2},"react":{"opacityDefault":1,"opacityOnHover":0},"display":{"superSample":1}});</script></body>
+</html>
+
+

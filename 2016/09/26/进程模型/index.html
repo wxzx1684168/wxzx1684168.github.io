@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <meta name="description" content="">
+    <title>进程模型 · 花生肉泥</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180317 as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180317 media="(max-width: 980px)"/>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        
+    <link rel="icon" href= /assets/title.ico>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    <script src="/scripts/main.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >花生肉泥 Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">进程模型</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>花生肉泥 Blog</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            进程模型
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Esper">Esper</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "java">java</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "股票">股票</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2016/09/26</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="1、UpdateListener"><a href="#1、UpdateListener" class="headerlink" title="1、UpdateListener"></a>1、UpdateListener</h1><p>是Esper提供的一个借口，用于监听某个EPL在引擎中的运行情况，即事件进入并产生结果后会通知UpdateListener</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.espertech.esper.client.EventBean;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UpdateListener</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(EventBean[] newEvents, EventBean[] oldEvents)</span></span></span><br><span class="line"><span class="function">     </span>&#123;</span><br><span class="line">          <span class="comment">/*code...*/</span></span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接口就一个update方法，包括两个EventBean数组。EventBean中有一个最常用的get方法，用来得到EPL中某个字段的值。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">EPL:select name from User</span><br><span class="line"><span class="comment">// 假设newEvents长度为一</span></span><br><span class="line">newEvents[<span class="number">0</span>].get(<span class="string">"name"</span>) <span class="comment">// 能得到进入User时间的name的属性值</span></span><br><span class="line"></span><br><span class="line">EPL: <span class="function">select <span class="title">count</span><span class="params">(*)</span> from user.win:<span class="title">time</span><span class="params">(<span class="number">5</span> sec)</span></span></span><br><span class="line"><span class="function"><span class="comment">// 假设newEvents长度为一</span></span></span><br><span class="line"><span class="function">newEvents[0].<span class="title">get</span><span class="params">(<span class="string">"count(*)"</span>)</span> <span class="comment">// 能得到5秒内进入引擎的User事件数量有多少</span></span></span><br><span class="line"><span class="function">get方法最常用，此外还有geyUnderlying等方法</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="2、Insert-and-Remove-Stream"><a href="#2、Insert-and-Remove-Stream" class="headerlink" title="2、Insert and Remove Stream"></a>2、Insert and Remove Stream</h1><p>insert表示进入引擎，remove表示移出引擎，事件在Esper中会因为某类EPL才会经历这两种状态，对应于UpdateListener借口就是newEvents和oldEvents，因为处于这两种状态的事件不一定只有一个，所以newEvents和oldEvents就是数组形式<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EPL: select * from User</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://p7ljrqs59.bkt.clouddn.com/15245563843896gamzd24.png?imageslim" alt="paste image"><br>从图可以看出，随着时间推移，每个进入引擎的事件W都是newEvents，即Insert Stream（事件W后括号里的值为属性值 ）<br>那为什么oldEvents什么都没有，因为EPL的关系<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EOL:select * from User.win:length(<span class="number">5</span>)</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://p7ljrqs59.bkt.clouddn.com/15245564591003ephokse.png?imageslim" alt="paste image"><br>注：win:length(5)是个view，大概意思是Esper开放一个空间并最多可同时存放5个事件(此空间就是大小为5的数组)<br>     由图可知，length window可存放w1，w2等事件，在W6事件进入之前，每个事件进入都属于newEvents，知道W6进入后，length window不能容纳w1-w6的事件，必须把w1事件移出，即w1为oldEvents。length window就像一个队列，每当事件进入队列时，就会触发UpdateListener并告知有新事件进入。当队列满了，再进入一个新事件时，Esper会触发updateListener告知所有新事件进入并且有旧事件移出。</p>
+<p>实际上EPL触发监听器都只能看到newEvents，看不到oldEvents。如果想看，EPL要改一下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EPL:select irstream * from User.win:length(<span class="number">5</span>)</span><br></pre></td></tr></table></figure></p>
+<p>默认情况下，Esper认为你只想让newEvents触发监听器，即istream(insert stream)。如果想让oldEvents触发监听器，那么为rstream(remove stream)。如果两个都想，那么为irstream。当然这个默认情况是可以配置的，以后会说到这个问题。</p>
+<h1 id="3、Filter-and-Where-Clause"><a href="#3、Filter-and-Where-Clause" class="headerlink" title="3、Filter and Where-Clause"></a>3、Filter and Where-Clause</h1><p>EPL有两种过滤事件的方式，一种是过滤事件进去view，即Filter。另一种是让事件进入view，但不触发UpdateListener，即where字句。<br>Filter：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Apple事件进入Esper，只有amount大于200才能进入win:length,并且length长度为5</span></span><br><span class="line">EPL:select * <span class="function">from <span class="title">Apple</span><span class="params">(amount&gt;<span class="number">200</span>)</span>.win:<span class="title">length</span><span class="params">(<span class="number">5</span>)</span></span></span><br></pre></td></tr></table></figure></p>
+<p><img src="http://p7ljrqs59.bkt.clouddn.com/152455647278072p8ykkv.png?imageslim" alt="paste image"><br>从上图看出，只有amount大于200，Esper才允许Apple事件进入view，并且作为一个newEvents触发UpdateListener</p>
+<p>Where-Clause：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Apple事件进入Esper并进入win:length(5)，但只有amount大于200才能触发UpdateListener</span></span><br><span class="line">EPL:select * from Apple.win:length(<span class="number">5</span>) where amount&gt;<span class="number">200</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="http://p7ljrqs59.bkt.clouddn.com/1524556483878uirh1qef.png?imageslim" alt="paste image"></p>
+<h1 id="4、Aggregation-and-Grouping"><a href="#4、Aggregation-and-Grouping" class="headerlink" title="4、Aggregation and Grouping"></a>4、Aggregation and Grouping</h1><p>EPL是类SQL语句，所以也有聚合和分组功能，语法和SQL基本一样<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 统计进入的5个Apple事件，amount的总数是多少</span></span><br><span class="line"><span class="function">select <span class="title">sum</span><span class="params">(amount)</span> from Apple.win:<span class="title">length_batch</span><span class="params">(<span class="number">5</span>)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">// 统计进入的5个Apple事件，amount的总数是多少，并按照price分组</span></span></span><br><span class="line"><span class="function">select price,<span class="title">sum</span><span class="params">(amount)</span> from Apple.win:<span class="title">length_batch</span><span class="params">(<span class="number">5</span>)</span> group by price</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="comment">// 统计进入的5个Apple事件，amount的总数和name，并按照price分组</span></span></span><br><span class="line"><span class="function">select price,name,<span class="title">sum</span><span class="params">(amount)</span> from Apple.win:<span class="title">length_batch</span><span class="params">(<span class="number">5</span>)</span> group by price</span></span><br></pre></td></tr></table></figure></p>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">上一篇文章</div>
+                <a href= "/2016/09/27/Epl语句/" title= Epl语句 >
+                    <div class="nextTitle">Epl语句</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">下一篇文章</div>
+                <a href= "/2016/09/26/Esper-Demo/" title= Esper Demo >
+                    <div class="prevTitle">Esper Demo</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+<div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        // id: "进程模型", // 可选。默认为 location.href
+        owner: 'wxzx1684168',
+        repo: 'wxzx1684168.github.io',
+        oauth: {
+            client_id: '7280d255a529324c9198',
+            client_secret: '89fdf02f804bf55f75f10ff82fb9f433b7e336e6',
+        },
+    })
+    gitment.render('container')
+
+</script>
+
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:575645523@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/wxzx1684168" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/example_qr.png" />
+                </span>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer qq" title=qq>
+                  
+                  <img class="profile-qr" src="/assets/qq_qr.jpg" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+        <font color="f5f5f5">
+		<span id="busuanzi_container_site_uv">UV: <span id="busuanzi_value_site_uv"></span>
+        </span>
+		</font>
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1、UpdateListener"><span class="toc-number">1.</span> <span class="toc-text">1、UpdateListener</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2、Insert-and-Remove-Stream"><span class="toc-number">2.</span> <span class="toc-text">2、Insert and Remove Stream</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3、Filter-and-Where-Clause"><span class="toc-number">3.</span> <span class="toc-text">3、Filter and Where-Clause</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4、Aggregation-and-Grouping"><span class="toc-number">4.</span> <span class="toc-text">4、Aggregation and Grouping</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">归档</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">标签</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">类别</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> 总计 : 12 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2018/04/22/测试测试/" >测试测试</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/23</span><a class="archive-post-title" href= "/2017/08/23/周易-占卦方式/" >周易-占卦方式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/22</span><a class="archive-post-title" href= "/2017/08/22/周易-2基本象征/" >周易-2基本象征</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/21</span><a class="archive-post-title" href= "/2017/08/21/周易-1基本概念/" >周易-1基本概念</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2016 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/27</span><a class="archive-post-title" href= "/2016/09/27/Epl语句/" >Epl语句</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/Esper-Demo/" >Esper Demo</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/进程模型/" >进程模型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/15</span><a class="archive-post-title" href= "/2016/06/15/注入DLL/" >注入DLL</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/31</span><a class="archive-post-title" href= "/2016/05/31/破解MFCApplication1/" >破解MFCApplication1</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2015 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/22</span><a class="archive-post-title" href= "/2015/03/22/验证用户是否登陆的拦截器/" >验证用户是否登陆的拦截器</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/22</span><a class="archive-post-title" href= "/2015/02/22/JAVA/" >Java中使用中文转化为拼音</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2000 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2000/01/01/hello-world/" >Hello World</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="Esper"><span class="iconfont-archer">&#xe606;</span>Esper</span>
+    
+        <span class="sidebar-tag-name" data-tags="java"><span class="iconfont-archer">&#xe606;</span>java</span>
+    
+        <span class="sidebar-tag-name" data-tags="股票"><span class="iconfont-archer">&#xe606;</span>股票</span>
+    
+        <span class="sidebar-tag-name" data-tags="周易"><span class="iconfont-archer">&#xe606;</span>周易</span>
+    
+        <span class="sidebar-tag-name" data-tags="易经"><span class="iconfont-archer">&#xe606;</span>易经</span>
+    
+        <span class="sidebar-tag-name" data-tags="八卦"><span class="iconfont-archer">&#xe606;</span>八卦</span>
+    
+        <span class="sidebar-tag-name" data-tags="逆向"><span class="iconfont-archer">&#xe606;</span>逆向</span>
+    
+        <span class="sidebar-tag-name" data-tags="破解"><span class="iconfont-archer">&#xe606;</span>破解</span>
+    
+        <span class="sidebar-tag-name" data-tags="测试"><span class="iconfont-archer">&#xe606;</span>测试</span>
+    
+        <span class="sidebar-tag-name" data-tags="DLL"><span class="iconfont-archer">&#xe606;</span>DLL</span>
+    
+        <span class="sidebar-tag-name" data-tags="注入"><span class="iconfont-archer">&#xe606;</span>注入</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="java"><span class="iconfont-archer">&#xe60a;</span>java</span>
+    
+        <span class="sidebar-category-name" data-categories="周易"><span class="iconfont-archer">&#xe60a;</span>周易</span>
+    
+        <span class="sidebar-category-name" data-categories="逆向工程"><span class="iconfont-archer">&#xe60a;</span>逆向工程</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: 'ZhouXin'
+    }
+</script>
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    <script src="/node_modules/live2d-widget/node_modules/live2d-widget/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"node_modules/live2d-widget/","pluginJsPath":"node_modules/live2d-widget/lib/","pluginModelPath":"node_modules/live2d-widget-model-koharu/assets/","model":{"jsonPath":"/node_modules/live2d-widget/node_modules/live2d-widget-model-koharu/assets/koharu.model.json"},"mobile":{"show":true,"scale":0.2},"react":{"opacityDefault":1,"opacityOnHover":0},"display":{"superSample":1}});</script></body>
+</html>
+
+
