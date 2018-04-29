@@ -353,7 +353,8 @@ height:50vh;
         <div class="container container-unloaded">
             <main class="main post-page">
     <article class="article-entry">
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">package com.mju.zx.servlet;</span><br><span class="line">import net.sourceforge.pinyin4j.PinyinHelper;</span><br><span class="line">import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;</span><br><span class="line">import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;</span><br><span class="line">import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;</span><br><span class="line">/**</span><br><span class="line">* 需要用到的jar包：pinyin4j-2.5.0.jar</span><br><span class="line">* @author Administrator</span><br><span class="line">*</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">public class Hanyu &#123;</span><br><span class="line">    private HanyuPinyinOutputFormat format = null;</span><br><span class="line">    private String[] pinyin;</span><br><span class="line">    public Hanyu()</span><br><span class="line">    &#123;</span><br><span class="line">        format = new HanyuPinyinOutputFormat();</span><br><span class="line">        format.setToneType(HanyuPinyinToneType.WITHOUT_TONE);</span><br><span class="line">        pinyin = null;</span><br><span class="line">    &#125;</span><br><span class="line">public String getCharacterPinYin(char c)</span><br><span class="line">	&#123;</span><br><span class="line">	try</span><br><span class="line">		&#123;</span><br><span class="line">			pinyin = PinyinHelper.toHanyuPinyinStringArray(c, format);</span><br><span class="line">		&#125;</span><br><span class="line">	catch(BadHanyuPinyinOutputFormatCombination e)</span><br><span class="line">		&#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		// 如果c不是汉字，toHanyuPinyinStringArray会返回null</span><br><span class="line">		if(pinyin == null) return null;</span><br><span class="line">		// 只取一个发音，如果是多音字，仅取第一个发音</span><br><span class="line">		return pinyin[0];  </span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public String getStringPinYin(String str)</span><br><span class="line">    &#123;</span><br><span class="line">              StringBuilder sb = new StringBuilder();</span><br><span class="line">              String tempPinyin = null;</span><br><span class="line">              for(int i = 0; i &lt; str.length(); ++i)</span><br><span class="line">              &#123;</span><br><span class="line">                       tempPinyin =getCharacterPinYin(str.charAt(i));</span><br><span class="line">                       if(tempPinyin == null)</span><br><span class="line">                       &#123;</span><br><span class="line">                                // 如果str.charAt(i)非汉字，则保持原样</span><br><span class="line">                               sb.append(str.charAt(i));</span><br><span class="line">                       &#125;</span><br><span class="line">                       else</span><br><span class="line">                       &#123;</span><br><span class="line">                               sb.append(tempPinyin);</span><br><span class="line">                       &#125;</span><br><span class="line">              &#125;</span><br><span class="line">              System.out.println(&quot;getCharacterPinYin=&quot;+sb.toString());</span><br><span class="line">              return sb.toString();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>附件：<a href="/downloads/commons-lang3-3.1.jar">commons-lang3-3.1.jar</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">package com.mju.zx.servlet;</span><br><span class="line">import net.sourceforge.pinyin4j.PinyinHelper;</span><br><span class="line">import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;</span><br><span class="line">import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;</span><br><span class="line">import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;</span><br><span class="line">/**</span><br><span class="line">* 需要用到的jar包：pinyin4j-2.5.0.jar</span><br><span class="line">* @author Administrator</span><br><span class="line">*</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">public class Hanyu &#123;</span><br><span class="line">    private HanyuPinyinOutputFormat format = null;</span><br><span class="line">    private String[] pinyin;</span><br><span class="line">    public Hanyu()</span><br><span class="line">    &#123;</span><br><span class="line">        format = new HanyuPinyinOutputFormat();</span><br><span class="line">        format.setToneType(HanyuPinyinToneType.WITHOUT_TONE);</span><br><span class="line">        pinyin = null;</span><br><span class="line">    &#125;</span><br><span class="line">public String getCharacterPinYin(char c)</span><br><span class="line">	&#123;</span><br><span class="line">	try</span><br><span class="line">		&#123;</span><br><span class="line">			pinyin = PinyinHelper.toHanyuPinyinStringArray(c, format);</span><br><span class="line">		&#125;</span><br><span class="line">	catch(BadHanyuPinyinOutputFormatCombination e)</span><br><span class="line">		&#123;</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		// 如果c不是汉字，toHanyuPinyinStringArray会返回null</span><br><span class="line">		if(pinyin == null) return null;</span><br><span class="line">		// 只取一个发音，如果是多音字，仅取第一个发音</span><br><span class="line">		return pinyin[0];  </span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">public String getStringPinYin(String str)</span><br><span class="line">    &#123;</span><br><span class="line">              StringBuilder sb = new StringBuilder();</span><br><span class="line">              String tempPinyin = null;</span><br><span class="line">              for(int i = 0; i &lt; str.length(); ++i)</span><br><span class="line">              &#123;</span><br><span class="line">                       tempPinyin =getCharacterPinYin(str.charAt(i));</span><br><span class="line">                       if(tempPinyin == null)</span><br><span class="line">                       &#123;</span><br><span class="line">                                // 如果str.charAt(i)非汉字，则保持原样</span><br><span class="line">                               sb.append(str.charAt(i));</span><br><span class="line">                       &#125;</span><br><span class="line">                       else</span><br><span class="line">                       &#123;</span><br><span class="line">                               sb.append(tempPinyin);</span><br><span class="line">                       &#125;</span><br><span class="line">              &#125;</span><br><span class="line">              System.out.println(&quot;getCharacterPinYin=&quot;+sb.toString());</span><br><span class="line">              return sb.toString();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
     </article>
     <!-- 前后页  -->
     <ul class="post-paginator">
@@ -640,7 +641,144 @@ top:50vh;
     
     
     
-    <div class="total-archive"> 总计 : 12 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> 总计 : 21 </div>
     
     <div class="post-archive">
     
@@ -649,6 +787,41 @@ top:50vh;
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/Lua中-和/" >Lua中.和:</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/Lua语句段/" >Lua语句段</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/Lua面向对象编程/" >Lua面向对象程序设计</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/Lua元方法/" >Lua元方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/Lua标准库-table库/" >Lua标准库-table库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/Lua循环优化/" >Lua循环优化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/Lua匹配符/" >Lua匹配符</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -695,12 +868,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/Esper-Demo/" >Esper Demo</a>
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/进程模型/" >进程模型</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/进程模型/" >进程模型</a>
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/Esper-Demo/" >Esper Demo</a>
         </li>
     
     
@@ -714,6 +887,11 @@ top:50vh;
         </li>
     
     
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/26</span><a class="archive-post-title" href= "/2016/05/26/Win32基本程序概念/" >Win32基本程序概念</a>
+        </li>
+    
+    
     
     
     
@@ -721,6 +899,11 @@ top:50vh;
     
     <div class="archive-year"> 2015 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/23</span><a class="archive-post-title" href= "/2015/07/23/EOS创建Helloworld/" >EOS创建Helloworld</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -751,11 +934,17 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="Esper"><span class="iconfont-archer">&#xe606;</span>Esper</span>
+        <span class="sidebar-tag-name" data-tags="EOS"><span class="iconfont-archer">&#xe606;</span>EOS</span>
     
         <span class="sidebar-tag-name" data-tags="java"><span class="iconfont-archer">&#xe606;</span>java</span>
     
+        <span class="sidebar-tag-name" data-tags="Esper"><span class="iconfont-archer">&#xe606;</span>Esper</span>
+    
         <span class="sidebar-tag-name" data-tags="股票"><span class="iconfont-archer">&#xe606;</span>股票</span>
+    
+        <span class="sidebar-tag-name" data-tags="lua"><span class="iconfont-archer">&#xe606;</span>lua</span>
+    
+        <span class="sidebar-tag-name" data-tags="win32"><span class="iconfont-archer">&#xe606;</span>win32</span>
     
         <span class="sidebar-tag-name" data-tags="周易"><span class="iconfont-archer">&#xe606;</span>周易</span>
     
@@ -765,13 +954,13 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="逆向"><span class="iconfont-archer">&#xe606;</span>逆向</span>
     
-        <span class="sidebar-tag-name" data-tags="破解"><span class="iconfont-archer">&#xe606;</span>破解</span>
-    
-        <span class="sidebar-tag-name" data-tags="测试"><span class="iconfont-archer">&#xe606;</span>测试</span>
-    
         <span class="sidebar-tag-name" data-tags="DLL"><span class="iconfont-archer">&#xe606;</span>DLL</span>
     
         <span class="sidebar-tag-name" data-tags="注入"><span class="iconfont-archer">&#xe606;</span>注入</span>
+    
+        <span class="sidebar-tag-name" data-tags="测试"><span class="iconfont-archer">&#xe606;</span>测试</span>
+    
+        <span class="sidebar-tag-name" data-tags="破解"><span class="iconfont-archer">&#xe606;</span>破解</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -781,6 +970,10 @@ top:50vh;
     <div class="sidebar-categories-name">
     
         <span class="sidebar-category-name" data-categories="java"><span class="iconfont-archer">&#xe60a;</span>java</span>
+    
+        <span class="sidebar-category-name" data-categories="lua"><span class="iconfont-archer">&#xe60a;</span>lua</span>
+    
+        <span class="sidebar-category-name" data-categories="win32"><span class="iconfont-archer">&#xe60a;</span>win32</span>
     
         <span class="sidebar-category-name" data-categories="周易"><span class="iconfont-archer">&#xe60a;</span>周易</span>
     
