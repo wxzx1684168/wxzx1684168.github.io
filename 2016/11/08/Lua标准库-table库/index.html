@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <meta name="description" content="">
+    <title>Lua标准库-table库 · 花生肉泥</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180317 as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180317 media="(max-width: 980px)"/>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        
+    <link rel="icon" href= /assets/title.ico>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    <script src="/scripts/main.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >花生肉泥 Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Lua标准库-table库</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>花生肉泥 Blog</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            Lua标准库-table库
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "lua">lua</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2016/11/08</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>lua标准库之table库</p>
+<h3 id="table库的概念"><a href="#table库的概念" class="headerlink" title="table库的概念"></a>table库的概念</h3><p>是由一些操作table的辅助函数组成</p>
+<p>作用一：对lua中的表的大小给出一个合理的解释，如getn，#table等</p>
+<p>作用二：提供一些插入删除元素以及元素排序的函数，如insert，remove等</p>
+<p>Lua5.1中字符串库的所有函数如下表：先定义一张表 t = {1,2,3}</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">函数</th>
+<th style="text-align:left">描述</th>
+<th style="text-align:left">示例</th>
+<th style="text-align:left">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">#</td>
+<td style="text-align:left">取表长</td>
+<td style="text-align:left">#t</td>
+<td style="text-align:left">3</td>
+</tr>
+<tr>
+<td style="text-align:left">getn</td>
+<td style="text-align:left">取表长</td>
+<td style="text-align:left">Table.getn(t)</td>
+<td style="text-align:left">3</td>
+</tr>
+<tr>
+<td style="text-align:left">setn</td>
+<td style="text-align:left">设置table中的元素个数</td>
+<td style="text-align:left">Table.setn(t,4)</td>
+<td style="text-align:left">4</td>
+</tr>
+<tr>
+<td style="text-align:left">maxn</td>
+<td style="text-align:left">返回表中最大key</td>
+<td style="text-align:left">Table.maxn(t)</td>
+<td style="text-align:left">3</td>
+</tr>
+<tr>
+<td style="text-align:left">concat</td>
+<td style="text-align:left">表连接</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">insert</td>
+<td style="text-align:left">往表的指定位置插入key</td>
+<td style="text-align:left">table.insert(t,4)</td>
+<td style="text-align:left">{1,2,3,4}</td>
+</tr>
+<tr>
+<td style="text-align:left">remove</td>
+<td style="text-align:left">删除表的指定位</td>
+<td style="text-align:left">table.remove(table,3)</td>
+<td style="text-align:left">{1,2,3}</td>
+</tr>
+<tr>
+<td style="text-align:left">sort</td>
+<td style="text-align:left">给表排序，默认升序</td>
+<td style="text-align:left">table.sort(t)</td>
+<td style="text-align:left">{1,2,3}</td>
+</tr>
+</tbody>
+</table>
+<h3 id="取表长"><a href="#取表长" class="headerlink" title="取表长"></a>取表长</h3><p>两种方法#和getn</p>
+<p>#：返回表的长度（只返回变量是数字的和当nil在非最后一个元素的位置）</p>
+<p>table.getn(t)：返回表中元素的个数（只返回变量是数字的） 在lua5.3中已不可使用<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> t = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,&#125;</span><br><span class="line"><span class="built_in">print</span>(#t)     <span class="comment">-- 7</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">table</span>.<span class="built_in">getn</span>(t))     <span class="comment">-- 7</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="table-insert"><a href="#table-insert" class="headerlink" title="table.insert"></a>table.insert</h3><p>往指定表插入一个元素，有不带参数和带参数两种方法</p>
+<h4 id="不带参数-插入位置就是最后一个位置"><a href="#不带参数-插入位置就是最后一个位置" class="headerlink" title="不带参数:插入位置就是最后一个位置"></a>不带参数:插入位置就是最后一个位置</h4><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> t =&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;</span><br><span class="line"><span class="built_in">table</span>.<span class="built_in">insert</span>(t,<span class="number">20</span>)</span><br><span class="line"><span class="keyword">for</span> i,v <span class="built_in">pairs</span>(t) <span class="keyword">do</span></span><br><span class="line">     <span class="built_in">print</span>(<span class="string">"第"</span> .. i .. <span class="string">"个元素的值为："</span> .. v .. <span class="string">"。"</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 输出结果</span></span><br><span class="line"><span class="comment">-- 第1个元素的值为1。</span></span><br><span class="line"><span class="comment">-- 第2个元素的值为2。</span></span><br><span class="line"><span class="comment">-- 第3个元素的值为3。</span></span><br><span class="line"><span class="comment">-- 第4个元素的值为20。</span></span><br></pre></td></tr></table></figure>
+<h4 id="带参数，可以指定插入到第几个位置"><a href="#带参数，可以指定插入到第几个位置" class="headerlink" title="带参数，可以指定插入到第几个位置"></a>带参数，可以指定插入到第几个位置</h4><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> t = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;</span><br><span class="line"><span class="built_in">table</span>.<span class="built_in">insert</span>(t,<span class="number">2</span>,<span class="number">20</span>)</span><br><span class="line"><span class="keyword">for</span> i,v <span class="keyword">in</span> <span class="built_in">pairs</span>(t) <span class="keyword">do</span></span><br><span class="line">     <span class="built_in">print</span> (<span class="string">"第"</span> .. i .. <span class="string">"个元素的值为："</span> .. v .. <span class="string">"。"</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 输出结果</span></span><br><span class="line"><span class="comment">--  第1个元素的值为1。</span></span><br><span class="line"><span class="comment">--  第2个元素的值为20。</span></span><br><span class="line"><span class="comment">--  第3个元素的值为2。</span></span><br><span class="line"><span class="comment">--  第4个元素的值为3。</span></span><br></pre></td></tr></table></figure>
+<h3 id="table-remove"><a href="#table-remove" class="headerlink" title="table.remove"></a>table.remove</h3><p>从指定列表删除一个元素</p>
+<h4 id="不带参数：默认删除最后一个参数"><a href="#不带参数：默认删除最后一个参数" class="headerlink" title="不带参数：默认删除最后一个参数"></a>不带参数：默认删除最后一个参数</h4><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> t = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;</span><br><span class="line"><span class="built_in">table</span>.<span class="built_in">remove</span>(t)</span><br><span class="line"><span class="keyword">for</span> i,v <span class="built_in">pairs</span>(t) <span class="keyword">do</span></span><br><span class="line">     <span class="built_in">print</span> (<span class="string">"第"</span> .. i .. <span class="string">"个元素的值为："</span> .. v .. <span class="string">"。"</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 输出结果</span></span><br><span class="line"><span class="comment">--  第1个元素的值为1。</span></span><br><span class="line"><span class="comment">--  第2个元素的值为2。</span></span><br></pre></td></tr></table></figure>
+<h4 id="带参数：可以指定删除某个位置"><a href="#带参数：可以指定删除某个位置" class="headerlink" title="带参数：可以指定删除某个位置"></a>带参数：可以指定删除某个位置</h4><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> t = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;</span><br><span class="line"><span class="built_in">table</span>.<span class="built_in">remove</span>(t,<span class="number">1</span>)</span><br><span class="line"><span class="keyword">for</span> i,v <span class="keyword">in</span> <span class="built_in">pairs</span>(t) <span class="keyword">do</span></span><br><span class="line">     <span class="built_in">print</span> (<span class="string">"第"</span> .. i .. <span class="string">"个元素的值为："</span> .. v .. <span class="string">"。"</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 输出结果</span></span><br><span class="line"><span class="comment">--  第1个元素的值为2。</span></span><br><span class="line"><span class="comment">--  第2个元素的值为3。</span></span><br></pre></td></tr></table></figure>
+<h3 id="table-sort"><a href="#table-sort" class="headerlink" title="table.sort"></a>table.sort</h3><p>table.sort(表名，排序函数)</p>
+<p>对指定表进行排序操作，有不带排序函数和带排序函数两种</p>
+<h4 id="不带排序函数：默认升序，从小到大"><a href="#不带排序函数：默认升序，从小到大" class="headerlink" title="不带排序函数：默认升序，从小到大"></a>不带排序函数：默认升序，从小到大</h4><h4 id="带排序函数：自定义函数"><a href="#带排序函数：自定义函数" class="headerlink" title="带排序函数：自定义函数"></a>带排序函数：自定义函数</h4><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> s = <span class="string">""</span></span><br><span class="line"><span class="keyword">local</span> t = &#123;<span class="number">1</span>,<span class="number">4</span>,<span class="number">7</span>,<span class="number">3</span>,<span class="number">11</span>,<span class="number">9</span>,<span class="number">8</span>,&#125;</span><br><span class="line"><span class="built_in">table</span>.<span class="built_in">sort</span>(t)</span><br><span class="line"><span class="keyword">for</span> i = <span class="number">1</span>,#t <span class="keyword">do</span></span><br><span class="line">     s = s .. <span class="string">","</span> .. t[i]</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line">s = <span class="string">""</span></span><br><span class="line"><span class="built_in">table</span>.<span class="built_in">sort</span>(t,<span class="function"><span class="keyword">function</span><span class="params">(a,b)</span></span> <span class="keyword">return</span> a&gt;b <span class="keyword">end</span>)</span><br><span class="line"><span class="keyword">for</span> i = <span class="number">1</span>,#t <span class="keyword">do</span></span><br><span class="line">     s = s .. <span class="string">","</span> .. t[i]</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">=====结果=====</span><br><span class="line">,<span class="number">1</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">11</span></span><br><span class="line">,<span class="number">11</span>,<span class="number">9</span>,<span class="number">8</span>,<span class="number">7</span>,<span class="number">4</span>,<span class="number">3</span>,<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">a = &#123;<span class="string">"banana"</span>,<span class="string">"orange"</span>,<span class="string">"apple"</span>,<span class="string">"grapes"</span>&#125;</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"排序前"</span>)</span><br><span class="line"><span class="keyword">for</span> k,v <span class="keyword">in</span> <span class="built_in">ipairs</span>(a) <span class="keyword">do</span></span><br><span class="line">     <span class="built_in">print</span>(k,v)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="built_in">table</span>.<span class="built_in">sort</span>(a)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"排序后"</span>)</span><br><span class="line"><span class="keyword">for</span> k,v <span class="keyword">in</span> <span class="built_in">ipairs</span>(a) <span class="keyword">do</span></span><br><span class="line">     <span class="built_in">print</span>(k,v)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">=====结果=====</span><br><span class="line">排序前</span><br><span class="line"><span class="number">1</span>     banana</span><br><span class="line"><span class="number">2</span>     orange</span><br><span class="line"><span class="number">3</span>     apple</span><br><span class="line"><span class="number">4</span>     grapes</span><br><span class="line">排序后</span><br><span class="line"><span class="number">1</span>     apple</span><br><span class="line"><span class="number">2</span>     banana</span><br><span class="line"><span class="number">3</span>     grapes</span><br><span class="line"><span class="number">4</span>     orange</span><br></pre></td></tr></table></figure>
+<h3 id="table-concat"><a href="#table-concat" class="headerlink" title="table.concat"></a>table.concat</h3><p>table.concat(表名，分隔符)<br>连接表中的元素，那么输出的是字符串类型<br>第一个参数为要连接的表<br>第二个参数为连接时使用的分隔符<br>有第二个参数不写和写两种的方法</p>
+<p>分隔符不写：直接连接，输出结果为字符串<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> s = <span class="string">""</span></span><br><span class="line"><span class="keyword">local</span> t = &#123;<span class="number">1</span>,<span class="number">4</span>,<span class="number">7</span>,<span class="number">3</span>,<span class="number">11</span>,<span class="number">9</span>,<span class="number">8</span>&#125;</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(<span class="built_in">table</span>.<span class="built_in">concat</span>(t)))     <span class="comment">-- string</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">table</span>.<span class="built_in">concat</span>(t))     <span class="comment">-- 14731198</span></span><br></pre></td></tr></table></figure></p>
+<p>有分隔符<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> s = <span class="string">""</span></span><br><span class="line"><span class="keyword">local</span> t = &#123;<span class="number">1</span>,<span class="number">4</span>,<span class="number">7</span>,<span class="number">3</span>,<span class="number">11</span>,<span class="number">9</span>,<span class="number">8</span>&#125;</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(<span class="built_in">table</span>.<span class="built_in">concat</span>(t,<span class="string">""</span>)))     <span class="comment">-- string</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">table</span>.<span class="built_in">concat</span>(t,<span class="string">"."</span>))     <span class="comment">-- 1.4.7.3.11.9.8</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">table</span>.<span class="built_in">concat</span>(t,<span class="string">"\t"</span>))     <span class="comment">-- 1     4     7     3     11     9     8</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">table</span>.<span class="built_in">concat</span>(t,<span class="string">"~-~"</span>))     <span class="comment">-- 1 ~-~4 ~-~7 ~-~3 ~-~11 ~-~9 ~-~8</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="table的结构"><a href="#table的结构" class="headerlink" title="table的结构"></a>table的结构</h3><p>构造器是创建和初始化表的表达式<br>表是lua特有的功能强大的东西。最简单的构造函数是{}，用来创建一个空表，可以直接初始化数组<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 初始化表</span></span><br><span class="line">mytable = &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">--指定值</span></span><br><span class="line">mytable[<span class="number">1</span>] = <span class="string">"lua"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 移除引用</span></span><br><span class="line">mytable = <span class="literal">nil</span></span><br></pre></td></tr></table></figure></p>
+<p>lua垃圾回收会释放内存</p>
+<p>当我们为table a 并设置元素，然后a复制给b，则a与b都指向同一个内存<br>如果a设置为nil，则b同样能访问table元素<br>如果没有指定的变量指向，lua的垃圾回收机制会清理对应的内存<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--[简单的table]</span></span><br><span class="line">mytable = &#123;&#125;</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"mytable 的类型是"</span>,<span class="built_in">type</span>(mytable)) <span class="comment">--mytable的类型是table</span></span><br><span class="line">mytable[<span class="number">1</span>] = <span class="string">"Lua"</span></span><br><span class="line">mytable[<span class="string">"wow"</span>] = <span class="string">"修改前"</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"mytable索引为1的元素是："</span>,mytable[<span class="number">1</span>]) <span class="comment">--mytable索引为1的元素是：Lua</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"mytable索引为wow的元素是："</span>,mytable[<span class="string">"wow"</span>]) <span class="comment">--mytable索引为wow的元素是：修改前</span></span><br><span class="line"><span class="comment">-- [alternatetable 和 mytable 的是指向同一个table]</span></span><br><span class="line">alternatetable = mytable</span><br><span class="line"><span class="built_in">print</span>(<span class="string">"alternatetable索引为wow的元素是:"</span>,alternatetable[<span class="string">"wow"</span>]) <span class="comment">--alternatetable索引为wow的元素是:修改前</span></span><br><span class="line">alternatetable[<span class="string">"wow"</span>] = <span class="string">"修改后"</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"mytable索引为wow的元素是："</span>,mytable[<span class="string">"wow"</span>]) <span class="comment">-- mytable索引为wow的元素是： 修改后</span></span><br><span class="line"><span class="comment">-- [释放变量]</span></span><br><span class="line">alternatetable = <span class="literal">nil</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"alternatetable 是："</span>,alternatetable) <span class="comment">--alternatetable 是：nil</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"mytable索引为wow的元素是："</span>,mytable[<span class="string">"wow"</span>]) <span class="comment">-- mytable索引为wow的元素是：修改后</span></span><br><span class="line">mytable = <span class="literal">nil</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">"mytable 是："</span>,mytable) <span class="comment">--mytable 是：nil</span></span><br></pre></td></tr></table></figure></p>
+<p>判断table是否是空表<br>可以用next函数来判断空表，next(table,[,index])第一个参数是表，第二个参数是标的索引值。返回索引和对应的值，当不传入index，默认index为表的首位索引<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> t = &#123;&#125;</span><br><span class="line"><span class="keyword">if</span> <span class="literal">nil</span> ~= t <span class="keyword">and</span> <span class="string">"table"</span> == <span class="built_in">type</span>(t) <span class="keyword">then</span></span><br><span class="line">     <span class="built_in">print</span>(<span class="built_in">next</span>(t))     <span class="comment">-- nil</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> t = &#123;<span class="number">10</span>&#125;</span><br><span class="line"><span class="keyword">if</span> <span class="literal">nil</span> ~= t <span class="keyword">and</span> <span class="string">"table"</span> == <span class="built_in">type</span>(t) <span class="keyword">then</span></span><br><span class="line">     <span class="built_in">print</span>(<span class="built_in">next</span>(t))     <span class="comment">-- 1     10</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>注意：next如果传入的参数不是tbale或者为nil，脚本会报错，所以上面要加上这个两个判断</p>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">上一篇文章</div>
+                <a href= "/2016/11/08/Lua标准库-math库/" title= Lua标准库-math库 >
+                    <div class="nextTitle">Lua标准库-math库</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">下一篇文章</div>
+                <a href= "/2016/11/07/Lua语法基础/" title= Lua语法基础 >
+                    <div class="prevTitle">Lua语法基础</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+<div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        // id: "Lua标准库-table库", // 可选。默认为 location.href
+        owner: 'wxzx1684168',
+        repo: 'wxzx1684168.github.io',
+        oauth: {
+            client_id: '7280d255a529324c9198',
+            client_secret: '89fdf02f804bf55f75f10ff82fb9f433b7e336e6',
+        },
+    })
+    gitment.render('container')
+
+</script>
+
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:575645523@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/wxzx1684168" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/example_qr.png" />
+                </span>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer qq" title=qq>
+                  
+                  <img class="profile-qr" src="/assets/qq_qr.jpg" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+        <font color="f5f5f5">
+		<span id="busuanzi_container_site_uv">UV: <span id="busuanzi_value_site_uv"></span>
+        </span>
+		</font>
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#table库的概念"><span class="toc-number">1.</span> <span class="toc-text">table库的概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#取表长"><span class="toc-number">2.</span> <span class="toc-text">取表长</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#table-insert"><span class="toc-number">3.</span> <span class="toc-text">table.insert</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#不带参数-插入位置就是最后一个位置"><span class="toc-number">3.1.</span> <span class="toc-text">不带参数:插入位置就是最后一个位置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#带参数，可以指定插入到第几个位置"><span class="toc-number">3.2.</span> <span class="toc-text">带参数，可以指定插入到第几个位置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#table-remove"><span class="toc-number">4.</span> <span class="toc-text">table.remove</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#不带参数：默认删除最后一个参数"><span class="toc-number">4.1.</span> <span class="toc-text">不带参数：默认删除最后一个参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#带参数：可以指定删除某个位置"><span class="toc-number">4.2.</span> <span class="toc-text">带参数：可以指定删除某个位置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#table-sort"><span class="toc-number">5.</span> <span class="toc-text">table.sort</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#不带排序函数：默认升序，从小到大"><span class="toc-number">5.1.</span> <span class="toc-text">不带排序函数：默认升序，从小到大</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#带排序函数：自定义函数"><span class="toc-number">5.2.</span> <span class="toc-text">带排序函数：自定义函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#table-concat"><span class="toc-number">6.</span> <span class="toc-text">table.concat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#table的结构"><span class="toc-number">7.</span> <span class="toc-text">table的结构</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">归档</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">标签</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">类别</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> 总计 : 32 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2018/04/22/测试测试/" >测试测试</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/23</span><a class="archive-post-title" href= "/2017/08/23/周易-占卦方式/" >周易-占卦方式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/22</span><a class="archive-post-title" href= "/2017/08/22/周易-2基本象征/" >周易-2基本象征</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/21</span><a class="archive-post-title" href= "/2017/08/21/周易-1基本概念/" >周易-1基本概念</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2016 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/25</span><a class="archive-post-title" href= "/2016/11/25/Lua面向对象编程/" >Lua面向对象程序设计</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/25</span><a class="archive-post-title" href= "/2016/11/25/Lua元方法/" >Lua元方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/24</span><a class="archive-post-title" href= "/2016/11/24/Lua循环优化/" >Lua循环优化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/23</span><a class="archive-post-title" href= "/2016/11/23/Lua匹配符/" >Lua匹配符</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2016/11/09/Lua中-和/" >Lua中.和:</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2016/11/08/Lua标准库-string库/" >Lua标准库-string库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2016/11/08/Lua标准库-math库/" >Lua标准库-math库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2016/11/08/Lua标准库-table库/" >Lua标准库-table库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua表达式/" >Lua表达式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua值与类型/" >Lua值与类型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua元表/" >Lua元表</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua变量/" >Lua变量</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua函数/" >Lua函数</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua语法基础/" >Lua语法基础</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua模块与包/" >Lua模块与包</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua语句段/" >Lua语句段</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/27</span><a class="archive-post-title" href= "/2016/09/27/Epl语句/" >Epl语句</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/Esper-Demo/" >Esper Demo</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/进程模型/" >进程模型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/15</span><a class="archive-post-title" href= "/2016/06/15/注入DLL/" >注入DLL</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/31</span><a class="archive-post-title" href= "/2016/05/31/破解MFCApplication1/" >破解MFCApplication1</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/26</span><a class="archive-post-title" href= "/2016/05/26/Win32基本程序概念/" >Win32基本程序概念</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/25</span><a class="archive-post-title" href= "/2016/05/25/破解MFC弹出窗口/" >破解MFC弹出窗口</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/18</span><a class="archive-post-title" href= "/2016/05/18/分析TCP协议/" >分析TCP协议</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2015 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/23</span><a class="archive-post-title" href= "/2015/07/23/EOS创建Helloworld/" >EOS创建Helloworld</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/22</span><a class="archive-post-title" href= "/2015/03/22/验证用户是否登陆的拦截器/" >验证用户是否登陆的拦截器</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/22</span><a class="archive-post-title" href= "/2015/02/22/JAVA/" >Java中使用中文转化为拼音</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2000 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2000/01/01/hello-world/" >Hello World</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="EOS"><span class="iconfont-archer">&#xe606;</span>EOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="java"><span class="iconfont-archer">&#xe606;</span>java</span>
+    
+        <span class="sidebar-tag-name" data-tags="Esper"><span class="iconfont-archer">&#xe606;</span>Esper</span>
+    
+        <span class="sidebar-tag-name" data-tags="股票"><span class="iconfont-archer">&#xe606;</span>股票</span>
+    
+        <span class="sidebar-tag-name" data-tags="lua"><span class="iconfont-archer">&#xe606;</span>lua</span>
+    
+        <span class="sidebar-tag-name" data-tags="win32"><span class="iconfont-archer">&#xe606;</span>win32</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络工程"><span class="iconfont-archer">&#xe606;</span>网络工程</span>
+    
+        <span class="sidebar-tag-name" data-tags="TCP"><span class="iconfont-archer">&#xe606;</span>TCP</span>
+    
+        <span class="sidebar-tag-name" data-tags="周易"><span class="iconfont-archer">&#xe606;</span>周易</span>
+    
+        <span class="sidebar-tag-name" data-tags="易经"><span class="iconfont-archer">&#xe606;</span>易经</span>
+    
+        <span class="sidebar-tag-name" data-tags="八卦"><span class="iconfont-archer">&#xe606;</span>八卦</span>
+    
+        <span class="sidebar-tag-name" data-tags="逆向"><span class="iconfont-archer">&#xe606;</span>逆向</span>
+    
+        <span class="sidebar-tag-name" data-tags="DLL"><span class="iconfont-archer">&#xe606;</span>DLL</span>
+    
+        <span class="sidebar-tag-name" data-tags="注入"><span class="iconfont-archer">&#xe606;</span>注入</span>
+    
+        <span class="sidebar-tag-name" data-tags="破解"><span class="iconfont-archer">&#xe606;</span>破解</span>
+    
+        <span class="sidebar-tag-name" data-tags="MFC"><span class="iconfont-archer">&#xe606;</span>MFC</span>
+    
+        <span class="sidebar-tag-name" data-tags="测试"><span class="iconfont-archer">&#xe606;</span>测试</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="java"><span class="iconfont-archer">&#xe60a;</span>java</span>
+    
+        <span class="sidebar-category-name" data-categories="lua"><span class="iconfont-archer">&#xe60a;</span>lua</span>
+    
+        <span class="sidebar-category-name" data-categories="win32"><span class="iconfont-archer">&#xe60a;</span>win32</span>
+    
+        <span class="sidebar-category-name" data-categories="网络工程"><span class="iconfont-archer">&#xe60a;</span>网络工程</span>
+    
+        <span class="sidebar-category-name" data-categories="周易"><span class="iconfont-archer">&#xe60a;</span>周易</span>
+    
+        <span class="sidebar-category-name" data-categories="逆向工程"><span class="iconfont-archer">&#xe60a;</span>逆向工程</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: 'ZhouXin'
+    }
+</script>
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    <script src="/node_modules/live2d-widget/node_modules/live2d-widget/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"node_modules/live2d-widget/","pluginJsPath":"node_modules/live2d-widget/lib/","pluginModelPath":"node_modules/live2d-widget-model-koharu/assets/","model":{"jsonPath":"/node_modules/live2d-widget/node_modules/live2d-widget-model-koharu/assets/koharu.model.json"},"mobile":{"show":true,"scale":0.2},"react":{"opacityDefault":1,"opacityOnHover":0},"display":{"superSample":1}});</script></body>
+</html>
+
+

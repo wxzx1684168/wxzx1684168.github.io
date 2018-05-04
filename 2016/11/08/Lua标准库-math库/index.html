@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <meta name="description" content="">
+    <title>Lua标准库-math库 · 花生肉泥</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180317 as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180317 media="(max-width: 980px)"/>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        
+    <link rel="icon" href= /assets/title.ico>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    <script src="/scripts/main.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >花生肉泥 Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Lua标准库-math库</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>花生肉泥 Blog</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            Lua标准库-math库
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "lua">lua</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2016/11/08</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>lua标准库之数学库</p>
+<h3 id="数学库概念"><a href="#数学库概念" class="headerlink" title="数学库概念"></a>数学库概念</h3><p>数学库由算术函数的标准集合组成；比如三角函数（sin、cos、tan、asin、acos、etc）<br>幂指函数（exp、log、log10），舍入函数（floor、ceil）、max、min，加上一个变量pi，数学库也定义了一个幂操作符 ^ </p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">函数</th>
+<th style="text-align:center">描述</th>
+<th style="text-align:center">示例</th>
+<th style="text-align:center">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">abs</td>
+<td style="text-align:center">取绝对值</td>
+<td style="text-align:center">math.abs(-15)</td>
+<td style="text-align:center">15</td>
+</tr>
+<tr>
+<td style="text-align:center">acos</td>
+<td style="text-align:center">反余弦函数</td>
+<td style="text-align:center">math.acos(0.5)</td>
+<td style="text-align:center">1.04719755</td>
+</tr>
+<tr>
+<td style="text-align:center">asin</td>
+<td style="text-align:center">反正弦函数</td>
+<td style="text-align:center">math.asin(0.5)</td>
+<td style="text-align:center">0.52359877</td>
+</tr>
+<tr>
+<td style="text-align:center">atan2</td>
+<td style="text-align:center">x / y的反正切值</td>
+<td style="text-align:center">math.atan2(90.0, 45.0)</td>
+<td style="text-align:center">1.10714871</td>
+</tr>
+<tr>
+<td style="text-align:center">atan</td>
+<td style="text-align:center">反正切函数</td>
+<td style="text-align:center">math.atan(0.5)</td>
+<td style="text-align:center">0.463647609</td>
+</tr>
+<tr>
+<td style="text-align:center">ceil</td>
+<td style="text-align:center">不小于x的最大整数</td>
+<td style="text-align:center">math.ceil(5.8)</td>
+<td style="text-align:center">6</td>
+</tr>
+<tr>
+<td style="text-align:center">cosh</td>
+<td style="text-align:center">双曲线余弦函数</td>
+<td style="text-align:center">math.cosh(0.5)</td>
+<td style="text-align:center">1.276259652</td>
+</tr>
+<tr>
+<td style="text-align:center">cos</td>
+<td style="text-align:center">余弦函数</td>
+<td style="text-align:center">math.cos(0.5)</td>
+<td style="text-align:center">0.87758256</td>
+</tr>
+<tr>
+<td style="text-align:center">deg</td>
+<td style="text-align:center">弧度转角度</td>
+<td style="text-align:center">math.deg(math.pi)</td>
+<td style="text-align:center">180</td>
+</tr>
+<tr>
+<td style="text-align:center">exp</td>
+<td style="text-align:center">计算以e为底x次方值</td>
+<td style="text-align:center">math.exp(2)</td>
+<td style="text-align:center">2.718281828</td>
+</tr>
+<tr>
+<td style="text-align:center">floor</td>
+<td style="text-align:center">不大于x的最大整数</td>
+<td style="text-align:center">math.floor(5.6)</td>
+<td style="text-align:center">5</td>
+</tr>
+<tr>
+<td style="text-align:center">fmod （mod）</td>
+<td style="text-align:center">取模运算</td>
+<td style="text-align:center">math.mod(14, 5)</td>
+<td style="text-align:center">4</td>
+</tr>
+<tr>
+<td style="text-align:center">frexp</td>
+<td style="text-align:center">把双精度数val分解为数字部分（尾数）和以2为底的指数n，即val=x*2n</td>
+<td style="text-align:center">math.frexp(10.0)</td>
+<td style="text-align:center">0.625    4</td>
+</tr>
+<tr>
+<td style="text-align:center">ldexp</td>
+<td style="text-align:center">计算value * 2的n次方</td>
+<td style="text-align:center">math.ldexp(10.0, 3)</td>
+<td style="text-align:center">80 = 10 * (2 ^3)</td>
+</tr>
+<tr>
+<td style="text-align:center">log10</td>
+<td style="text-align:center">计算以10为基数的对数</td>
+<td style="text-align:center">math.log10(100)</td>
+<td style="text-align:center">2</td>
+</tr>
+<tr>
+<td style="text-align:center">log</td>
+<td style="text-align:center">计算一个数字的自然对数</td>
+<td style="text-align:center">math.log(2.71)</td>
+<td style="text-align:center">0.9969</td>
+</tr>
+<tr>
+<td style="text-align:center">max</td>
+<td style="text-align:center">取得参数中最大值</td>
+<td style="text-align:center">math.max(2.71, 100, -98, 23)</td>
+<td style="text-align:center">100</td>
+</tr>
+<tr>
+<td style="text-align:center">min</td>
+<td style="text-align:center">取得参数中最小值</td>
+<td style="text-align:center">math.min(2.71, 100, -98, 23)</td>
+<td style="text-align:center">-98</td>
+</tr>
+<tr>
+<td style="text-align:center">modf</td>
+<td style="text-align:center">把数分为整数和小数</td>
+<td style="text-align:center">math.modf(15.98)</td>
+<td style="text-align:center">15    98</td>
+</tr>
+<tr>
+<td style="text-align:center">pow</td>
+<td style="text-align:center">得到x的y次方</td>
+<td style="text-align:center">math.pow(2, 5)</td>
+<td style="text-align:center">32</td>
+</tr>
+<tr>
+<td style="text-align:center">rad</td>
+<td style="text-align:center">角度转弧度</td>
+<td style="text-align:center">math.rad(180)</td>
+<td style="text-align:center">3.14159265358</td>
+</tr>
+<tr>
+<td style="text-align:center">random</td>
+<td style="text-align:center">获取随机数</td>
+<td style="text-align:center">math.random(1, 100) math.random(100)</td>
+<td style="text-align:center">获取1-100的随机数</td>
+</tr>
+<tr>
+<td style="text-align:center">randomseed</td>
+<td style="text-align:center">设置随机数种子</td>
+<td style="text-align:center">math.randomseed(os.time())</td>
+<td style="text-align:center">在使用math.random函数之前必须使用此函数设置随机数种子</td>
+</tr>
+<tr>
+<td style="text-align:center">sinh</td>
+<td style="text-align:center">双曲线正弦函数</td>
+<td style="text-align:center">math.sinh(0.5)</td>
+<td style="text-align:center">0.5210953</td>
+</tr>
+<tr>
+<td style="text-align:center">sin</td>
+<td style="text-align:center">正弦函数</td>
+<td style="text-align:center">math.sin(math.rad(30))</td>
+<td style="text-align:center">0.5</td>
+</tr>
+<tr>
+<td style="text-align:center">sqrt</td>
+<td style="text-align:center">开平方函数</td>
+<td style="text-align:center">math.sqrt(16)</td>
+<td style="text-align:center">4</td>
+</tr>
+<tr>
+<td style="text-align:center">tanh</td>
+<td style="text-align:center">双曲线正切函数</td>
+<td style="text-align:center">math.tanh(0.5)</td>
+<td style="text-align:center">0.46211715</td>
+</tr>
+<tr>
+<td style="text-align:center">tan</td>
+<td style="text-align:center">正切函数</td>
+<td style="text-align:center">math.tan(0.5)</td>
+<td style="text-align:center">0.5463024</td>
+</tr>
+</tbody>
+</table>
+<h3 id="math-random"><a href="#math-random" class="headerlink" title="math.random"></a>math.random</h3><p>产生伪随机数，有三种调用方式<br>第一：不带参数，产生[0，1)范围内的随机数<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="built_in">math</span>.<span class="built_in">random</span>())     <span class="comment">-- 0.0012512588885159</span></span><br></pre></td></tr></table></figure></p>
+<p>第二：带一个参数n，将产生1到n内的随机数（包括1和n）<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="built_in">math</span>.<span class="built_in">random</span>(<span class="number">80</span>))     <span class="comment">-- 45</span></span><br></pre></td></tr></table></figure></p>
+<p>第三：带两个参数m和n，将产生m到n内的随机数（包含m和n）<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="built_in">math</span>.<span class="built_in">random</span>(<span class="number">1</span>,<span class="number">80</span>))     <span class="comment">-- 16</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="math-randomseed"><a href="#math-randomseed" class="headerlink" title="math.randomseed"></a>math.randomseed</h3><p>random的伪随机原理：在程序开始时，他是使用固定的种子初始化随机数发生器，使得每次运行都会拥有相同的关卡<br>解决方法，使用系统时间作为种子，通常放在脚本最开始的位置math.randomseed(os.time())<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">math</span>.<span class="built_in">randomseed</span>(<span class="built_in">os</span>.<span class="built_in">time</span>())</span><br><span class="line"><span class="keyword">for</span> i  = <span class="number">1</span>,<span class="number">5</span> <span class="keyword">do</span></span><br><span class="line">     <span class="built_in">print</span>(<span class="built_in">math</span>.<span class="built_in">random</span>(<span class="number">1</span>,<span class="number">10</span>))</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="math-abs"><a href="#math-abs" class="headerlink" title="math.abs"></a>math.abs</h3><p>math.abs(X) 返回X的绝对值，通常在时间戳的计算上使用率最高<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> n = <span class="built_in">os</span>.<span class="built_in">time</span>()</span><br><span class="line"><span class="keyword">for</span> k = <span class="number">1</span>,<span class="number">10000000000</span> <span class="keyword">do</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">local</span> new = <span class="built_in">os</span>.<span class="built_in">time</span>()</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">math</span>.<span class="built_in">abs</span>(new-n))     <span class="comment">-- 30(单位秒)</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="math-floor"><a href="#math-floor" class="headerlink" title="math.floor"></a>math.floor</h3><p>math.floor(X) 函数返回不大于参数X的最大整数<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="built_in">math</span>.<span class="built_in">floor</span>(<span class="number">5.2</span>))     <span class="comment">-- 5</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">math</span>.<span class="built_in">floor</span>(<span class="number">-5.2</span>))     <span class="comment">-- -6</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="math-ceil"><a href="#math-ceil" class="headerlink" title="math.ceil"></a>math.ceil</h3><p>math.ceil(X) 函数返回不小于参数X的最大整数<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="built_in">math</span>.<span class="built_in">ceil</span>(<span class="number">5.2</span>))     <span class="comment">-- 6</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">math</span>.<span class="built_in">ceil</span>(<span class="number">-5.2</span>))     <span class="comment">-- -5</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="math-sqrt"><a href="#math-sqrt" class="headerlink" title="math.sqrt"></a>math.sqrt</h3><p>math.sqrt(X) 返回参数X的平方根或1/2方根 如果X为负，产生域错误<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(maht.<span class="built_in">sqrt</span>(<span class="number">16</span>))     <span class="comment">-- 4</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="math-fmod"><a href="#math-fmod" class="headerlink" title="math.fmod"></a>math.fmod</h3><p>math.fmod(X,Y) 返回参数X/Y的余数<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="built_in">math</span>.<span class="built_in">fmod</span>(<span class="number">55</span>,<span class="number">50</span>))     <span class="comment">--5</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="math-modf"><a href="#math-modf" class="headerlink" title="math.modf"></a>math.modf</h3><p>math.modf(X) 将参数X分割为整数和小数，返回两个值<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="built_in">math</span>.<span class="built_in">modf</span>(<span class="number">5.3</span>))     <span class="comment">--5 0.3</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="math-max"><a href="#math-max" class="headerlink" title="math.max"></a>math.max</h3><p>math.max(X…)函数返回所有参数最大值<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="built_in">math</span>.<span class="built_in">max</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>))     <span class="comment">-- 5</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="math-mim"><a href="#math-mim" class="headerlink" title="math.mim"></a>math.mim</h3><p>math.min(X…)函数返回所有参数的最小值<br><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="built_in">math</span>.<span class="built_in">min</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>))     <span class="comment">-- 1</span></span><br></pre></td></tr></table></figure></p>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">上一篇文章</div>
+                <a href= "/2016/11/08/Lua标准库-string库/" title= Lua标准库-string库 >
+                    <div class="nextTitle">Lua标准库-string库</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">下一篇文章</div>
+                <a href= "/2016/11/08/Lua标准库-table库/" title= Lua标准库-table库 >
+                    <div class="prevTitle">Lua标准库-table库</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+<div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        // id: "Lua标准库-math库", // 可选。默认为 location.href
+        owner: 'wxzx1684168',
+        repo: 'wxzx1684168.github.io',
+        oauth: {
+            client_id: '7280d255a529324c9198',
+            client_secret: '89fdf02f804bf55f75f10ff82fb9f433b7e336e6',
+        },
+    })
+    gitment.render('container')
+
+</script>
+
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:575645523@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/wxzx1684168" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/example_qr.png" />
+                </span>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer qq" title=qq>
+                  
+                  <img class="profile-qr" src="/assets/qq_qr.jpg" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+        <font color="f5f5f5">
+		<span id="busuanzi_container_site_uv">UV: <span id="busuanzi_value_site_uv"></span>
+        </span>
+		</font>
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#数学库概念"><span class="toc-number">1.</span> <span class="toc-text">数学库概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#math-random"><span class="toc-number">2.</span> <span class="toc-text">math.random</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#math-randomseed"><span class="toc-number">3.</span> <span class="toc-text">math.randomseed</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#math-abs"><span class="toc-number">4.</span> <span class="toc-text">math.abs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#math-floor"><span class="toc-number">5.</span> <span class="toc-text">math.floor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#math-ceil"><span class="toc-number">6.</span> <span class="toc-text">math.ceil</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#math-sqrt"><span class="toc-number">7.</span> <span class="toc-text">math.sqrt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#math-fmod"><span class="toc-number">8.</span> <span class="toc-text">math.fmod</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#math-modf"><span class="toc-number">9.</span> <span class="toc-text">math.modf</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#math-max"><span class="toc-number">10.</span> <span class="toc-text">math.max</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#math-mim"><span class="toc-number">11.</span> <span class="toc-text">math.mim</span></a></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">归档</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">标签</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">类别</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> 总计 : 32 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2018/04/22/测试测试/" >测试测试</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/23</span><a class="archive-post-title" href= "/2017/08/23/周易-占卦方式/" >周易-占卦方式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/22</span><a class="archive-post-title" href= "/2017/08/22/周易-2基本象征/" >周易-2基本象征</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/21</span><a class="archive-post-title" href= "/2017/08/21/周易-1基本概念/" >周易-1基本概念</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2016 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/25</span><a class="archive-post-title" href= "/2016/11/25/Lua面向对象编程/" >Lua面向对象程序设计</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/25</span><a class="archive-post-title" href= "/2016/11/25/Lua元方法/" >Lua元方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/24</span><a class="archive-post-title" href= "/2016/11/24/Lua循环优化/" >Lua循环优化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/23</span><a class="archive-post-title" href= "/2016/11/23/Lua匹配符/" >Lua匹配符</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2016/11/09/Lua中-和/" >Lua中.和:</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2016/11/08/Lua标准库-string库/" >Lua标准库-string库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2016/11/08/Lua标准库-math库/" >Lua标准库-math库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2016/11/08/Lua标准库-table库/" >Lua标准库-table库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua表达式/" >Lua表达式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua值与类型/" >Lua值与类型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua元表/" >Lua元表</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua变量/" >Lua变量</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua函数/" >Lua函数</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua语法基础/" >Lua语法基础</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua模块与包/" >Lua模块与包</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua语句段/" >Lua语句段</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/27</span><a class="archive-post-title" href= "/2016/09/27/Epl语句/" >Epl语句</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/Esper-Demo/" >Esper Demo</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/进程模型/" >进程模型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/15</span><a class="archive-post-title" href= "/2016/06/15/注入DLL/" >注入DLL</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/31</span><a class="archive-post-title" href= "/2016/05/31/破解MFCApplication1/" >破解MFCApplication1</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/26</span><a class="archive-post-title" href= "/2016/05/26/Win32基本程序概念/" >Win32基本程序概念</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/25</span><a class="archive-post-title" href= "/2016/05/25/破解MFC弹出窗口/" >破解MFC弹出窗口</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/18</span><a class="archive-post-title" href= "/2016/05/18/分析TCP协议/" >分析TCP协议</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2015 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/23</span><a class="archive-post-title" href= "/2015/07/23/EOS创建Helloworld/" >EOS创建Helloworld</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/22</span><a class="archive-post-title" href= "/2015/03/22/验证用户是否登陆的拦截器/" >验证用户是否登陆的拦截器</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/22</span><a class="archive-post-title" href= "/2015/02/22/JAVA/" >Java中使用中文转化为拼音</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2000 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2000/01/01/hello-world/" >Hello World</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="EOS"><span class="iconfont-archer">&#xe606;</span>EOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="java"><span class="iconfont-archer">&#xe606;</span>java</span>
+    
+        <span class="sidebar-tag-name" data-tags="Esper"><span class="iconfont-archer">&#xe606;</span>Esper</span>
+    
+        <span class="sidebar-tag-name" data-tags="股票"><span class="iconfont-archer">&#xe606;</span>股票</span>
+    
+        <span class="sidebar-tag-name" data-tags="lua"><span class="iconfont-archer">&#xe606;</span>lua</span>
+    
+        <span class="sidebar-tag-name" data-tags="win32"><span class="iconfont-archer">&#xe606;</span>win32</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络工程"><span class="iconfont-archer">&#xe606;</span>网络工程</span>
+    
+        <span class="sidebar-tag-name" data-tags="TCP"><span class="iconfont-archer">&#xe606;</span>TCP</span>
+    
+        <span class="sidebar-tag-name" data-tags="周易"><span class="iconfont-archer">&#xe606;</span>周易</span>
+    
+        <span class="sidebar-tag-name" data-tags="易经"><span class="iconfont-archer">&#xe606;</span>易经</span>
+    
+        <span class="sidebar-tag-name" data-tags="八卦"><span class="iconfont-archer">&#xe606;</span>八卦</span>
+    
+        <span class="sidebar-tag-name" data-tags="逆向"><span class="iconfont-archer">&#xe606;</span>逆向</span>
+    
+        <span class="sidebar-tag-name" data-tags="DLL"><span class="iconfont-archer">&#xe606;</span>DLL</span>
+    
+        <span class="sidebar-tag-name" data-tags="注入"><span class="iconfont-archer">&#xe606;</span>注入</span>
+    
+        <span class="sidebar-tag-name" data-tags="破解"><span class="iconfont-archer">&#xe606;</span>破解</span>
+    
+        <span class="sidebar-tag-name" data-tags="MFC"><span class="iconfont-archer">&#xe606;</span>MFC</span>
+    
+        <span class="sidebar-tag-name" data-tags="测试"><span class="iconfont-archer">&#xe606;</span>测试</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="java"><span class="iconfont-archer">&#xe60a;</span>java</span>
+    
+        <span class="sidebar-category-name" data-categories="lua"><span class="iconfont-archer">&#xe60a;</span>lua</span>
+    
+        <span class="sidebar-category-name" data-categories="win32"><span class="iconfont-archer">&#xe60a;</span>win32</span>
+    
+        <span class="sidebar-category-name" data-categories="网络工程"><span class="iconfont-archer">&#xe60a;</span>网络工程</span>
+    
+        <span class="sidebar-category-name" data-categories="周易"><span class="iconfont-archer">&#xe60a;</span>周易</span>
+    
+        <span class="sidebar-category-name" data-categories="逆向工程"><span class="iconfont-archer">&#xe60a;</span>逆向工程</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: 'ZhouXin'
+    }
+</script>
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    <script src="/node_modules/live2d-widget/node_modules/live2d-widget/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"node_modules/live2d-widget/","pluginJsPath":"node_modules/live2d-widget/lib/","pluginModelPath":"node_modules/live2d-widget-model-koharu/assets/","model":{"jsonPath":"/node_modules/live2d-widget/node_modules/live2d-widget-model-koharu/assets/koharu.model.json"},"mobile":{"show":true,"scale":0.2},"react":{"opacityDefault":1,"opacityOnHover":0},"display":{"superSample":1}});</script></body>
+</html>
+
+

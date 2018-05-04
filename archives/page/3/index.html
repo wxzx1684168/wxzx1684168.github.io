@@ -300,23 +300,336 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2000/01/01/hello-world/" >
+            <a class="abstract-title" href = "/2016/09/27/Epl语句/" >
                 
-                    <span>Hello World</span>
+                    <span>Epl语句</span>
             </a>
             <div class="abstract-content">
-                Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick StartCreate a new post1$ hexo new "My New Post"
-More info: Writing
-Run server1$ hexo server
-More...
+                1、EPL Syntax123456789101112- [annotations]- [expression_declarations]- [context context_name]- [insert into insert_into_def]- select select_list- from stream_def [as name] [, stream_def [as name]] [,...]- [where search_conditions]- [group by grouping_expression_list]- [having grouping_search_cond...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2000/01/01</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/09/27</span>
                 </div>
                 <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "java">java</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Esper">Esper</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "股票">股票</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2016/09/26/进程模型/" >
+                
+                    <span>进程模型</span>
+            </a>
+            <div class="abstract-content">
+                1、UpdateListener是Esper提供的一个借口，用于监听某个EPL在引擎中的运行情况，即事件进入并产生结果后会通知UpdateListener
+123456789import com.espertech.esper.client.EventBean;public interface UpdateListener&#123;     public void update(EventBean[] newEvents, EventBean[] oldEvents)     &#123;          /*code...*/     &#125;&#125;
+接口就一个updat...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/09/26</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "java">java</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Esper">Esper</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "股票">股票</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2016/09/26/Esper-Demo/" >
+                
+                    <span>Esper Demo</span>
+            </a>
+            <div class="abstract-content">
+                123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899package com.zx;import com.espertech.esper.client.*;import java.util.Random;import java.util.Date; public cla...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/09/26</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "java">java</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Esper">Esper</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "股票">股票</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2016/06/15/注入DLL/" >
+                
+                    <span>注入DLL</span>
+            </a>
+            <div class="abstract-content">
+                查看PE文件IMAGE_NT_HEADERS下IMAGE_OPTIONAL_HEDER的 IMPORT Table的值
+由上图可知 IDT的地址(RVA)为84CC (在PEView中设置视图选项为RVA)TestView.exe的IDT存在于.rdara节区。IDT是有IMAGE_IMPORT-descriptor(简称IID)结构体组成的数组，且数组末尾以NULL结构体结束。由于每个导入的DLL文件都对应1个IID结构体（每个IID结构体的大小为14个字节） 所以图中整个IID区域为RVA:84CC~852F(8530？ 84cc+64)
+在PEView工具栏中视图改为File Of...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/06/15</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "逆向">逆向</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "DLL">DLL</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "注入">注入</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2016/05/31/破解MFCApplication1/" >
+                
+                    <span>破解MFCApplication1</span>
+            </a>
+            <div class="abstract-content">
+                方法一：字符串查找首先用ollydbg打开我们要破解的软件
+
+按F9使程序运行起来
+我们想要知道点击”买入“按钮以后，程序调用了什么方法实现的。接下来开始破解：首先点击“买入”按钮，可以看到
+接下来我们通过
+中文引擎搜索，搜索我们刚才看到有有关信息，例如“Hello”
+然后双击这个地址，跳转到MFVAppli中：
+首先就在当下设置一个断点（F2），然后重新开始，点击“买入”按钮时，就会暂停到如下界面
+按F8单步调试，发现到01316703    FF15 70C23201   call dword ptr ds:[&lt;&amp;USER32.MessageBoxA&gt;]     ...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/05/31</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "逆向">逆向</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "破解">破解</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2016/05/26/Win32基本程序概念/" >
+                
+                    <span>Win32基本程序概念</span>
+            </a>
+            <div class="abstract-content">
+                Win32程序开发流程Windows程序分为[程序代码]和[UI（User Interface）资源]两大部分，两部分最后以RC编译器整合为一个完整的EXE文件，所谓UI资源是指功能菜单、对话框外貌、程序图标、光标形状等等东西。这些UI资源的实际内容（二进制代码）系借助各种工具产生，并以各种拓展名存在，如.ioc、.bmp、.cur等等。程序员必须在一个所谓的资源描述档（.rc）中描述他们。RC编译器（RC.EXE）读取RC档的描述后将所有UI资源档集中制作出一个.RES档，再与程序代码结合在一起，这才是一个完整的Windows可执行档。
+需要什么函数库（.LIB）LIBC.LIB - ...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/05/26</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "win32">win32</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2016/05/25/破解MFC弹出窗口/" >
+                
+                    <span>破解MFC弹出窗口</span>
+            </a>
+            <div class="abstract-content">
+                MFCApplication1.exe52ZBOllydbg.rar
+以上是所用到的工具
+首先打开ollydbg软件，界面如下
+
+然后文件&gt;打开 要破解的软件 我这里用的是MFCApplication1.exe
+
+打开以后界面如图所示：
+
+F9软件运行起来以后，查看窗口界面：
+
+如下所示
+
+若没有信息 右键&gt;刷新
+接下来选择 买入按钮 因为我么要找的就是当用户点击买入按钮的时候 系统调用了什么方法，信息是怎么传递的
+右键&gt;在ClassProc上设消息断点
+消息设置的是202 鼠标左键弹起事件
+
+设置完以后 打开断点窗口如下图所示
+打完断点后 F9继续运行 会被中断
+接下...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/05/25</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "逆向">逆向</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "破解">破解</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "MFC">MFC</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2016/05/18/分析TCP协议/" >
+                
+                    <span>分析TCP协议</span>
+            </a>
+            <div class="abstract-content">
+                传输层：
+
+本地端口号： Src Port(53142)
+目的端口号： Dst Port(8002)
+序号：Sequence number：32591(相对序列号)
+下一序号：Next Sequence number：32836(相对序列号)
+确认号：Acknowledgement number：44665(相对确认序号)
+首部长度：Header Length：20 字节
+Flags: 标示一些标示位，三次握手
+Urgent 紧急标示，当值为1时表示此报文段中有需要紧急处理
+Acknowledgment 确认标示，值为1时确认号有效，值为0时确认号无效。
+Push 推送标示
+Reset ...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/05/18</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "网络工程">网络工程</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "TCP">TCP</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2015/07/23/EOS创建Helloworld/" >
+                
+                    <span>EOS创建Helloworld</span>
+            </a>
+            <div class="abstract-content">
+                1、打开EOS Studio 软件
+2、创建项目选择[文件/新建/EOS项目]菜单，系统弹出”新建EOS项目”向导。选择创建”空项目”，点击&lt;下一步&gt;按钮，弹出”新建EOS项目”界面，如下图所示。
+
+配置项目信息。将”项目名称”修改为”helloworld”，其他的参数不需要修改。单击&lt;完成&gt;按钮。系统返回EOS开发透视图，创建的项目显示在”资源管理器”视图中，如下图所示。
+
+3、创建构建包打开”创建构件包”向导。选中”helloworld”项目，单击鼠标右键，选择[创建/构件包]快捷菜单项。系统弹出”新建构件包”界面，如下图所示。
+修改配置信息。将”构件包名”修...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2015/07/23</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "EOS">EOS</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "java">java</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2015/03/22/验证用户是否登陆的拦截器/" >
+                
+                    <span>验证用户是否登陆的拦截器</span>
+            </a>
+            <div class="abstract-content">
+                需要用到的jar包:commons-lang3-3.1.jar
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293package com.mju.zx.filter;import java.io.IOException;import java.net.URLEncoder;import j...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2015/03/22</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "java">java</a>
+    
+</div>
                 
             </div>
         </article>
@@ -324,7 +637,7 @@ More...
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/page/2/">&#60; PREV</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span>
+        <a class="extend prev" rel="prev" href="/archives/page/2/">&#60; PREV</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" href="/archives/page/4/">NEXT &#62;</a>
     </nav>
     
 </main>
@@ -715,7 +1028,130 @@ More...
     
     
     
-    <div class="total-archive"> 总计 : 21 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> 总计 : 32 </div>
     
     <div class="post-archive">
     
@@ -724,41 +1160,6 @@ More...
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/Lua中-和/" >Lua中.和:</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/Lua面向对象编程/" >Lua面向对象程序设计</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/Lua元方法/" >Lua元方法</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/Lua标准库-table库/" >Lua标准库-table库</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/Lua循环优化/" >Lua循环优化</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/Lua匹配符/" >Lua匹配符</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/Lua语句段/" >Lua语句段</a>
-        </li>
     
     
         <li class="archive-post-item">
@@ -800,17 +1201,97 @@ More...
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">11/25</span><a class="archive-post-title" href= "/2016/11/25/Lua面向对象编程/" >Lua面向对象程序设计</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/25</span><a class="archive-post-title" href= "/2016/11/25/Lua元方法/" >Lua元方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/24</span><a class="archive-post-title" href= "/2016/11/24/Lua循环优化/" >Lua循环优化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/23</span><a class="archive-post-title" href= "/2016/11/23/Lua匹配符/" >Lua匹配符</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2016/11/09/Lua中-和/" >Lua中.和:</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2016/11/08/Lua标准库-string库/" >Lua标准库-string库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2016/11/08/Lua标准库-math库/" >Lua标准库-math库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2016/11/08/Lua标准库-table库/" >Lua标准库-table库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua表达式/" >Lua表达式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua值与类型/" >Lua值与类型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua元表/" >Lua元表</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua变量/" >Lua变量</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua函数/" >Lua函数</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua语法基础/" >Lua语法基础</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua模块与包/" >Lua模块与包</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua语句段/" >Lua语句段</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">09/27</span><a class="archive-post-title" href= "/2016/09/27/Epl语句/" >Epl语句</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/进程模型/" >进程模型</a>
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/Esper-Demo/" >Esper Demo</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/Esper-Demo/" >Esper Demo</a>
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/进程模型/" >进程模型</a>
         </li>
     
     
@@ -826,6 +1307,16 @@ More...
     
         <li class="archive-post-item">
             <span class="archive-post-date">05/26</span><a class="archive-post-title" href= "/2016/05/26/Win32基本程序概念/" >Win32基本程序概念</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/25</span><a class="archive-post-title" href= "/2016/05/25/破解MFC弹出窗口/" >破解MFC弹出窗口</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/18</span><a class="archive-post-title" href= "/2016/05/18/分析TCP协议/" >分析TCP协议</a>
         </li>
     
     
@@ -883,6 +1374,10 @@ More...
     
         <span class="sidebar-tag-name" data-tags="win32"><span class="iconfont-archer">&#xe606;</span>win32</span>
     
+        <span class="sidebar-tag-name" data-tags="网络工程"><span class="iconfont-archer">&#xe606;</span>网络工程</span>
+    
+        <span class="sidebar-tag-name" data-tags="TCP"><span class="iconfont-archer">&#xe606;</span>TCP</span>
+    
         <span class="sidebar-tag-name" data-tags="周易"><span class="iconfont-archer">&#xe606;</span>周易</span>
     
         <span class="sidebar-tag-name" data-tags="易经"><span class="iconfont-archer">&#xe606;</span>易经</span>
@@ -895,9 +1390,11 @@ More...
     
         <span class="sidebar-tag-name" data-tags="注入"><span class="iconfont-archer">&#xe606;</span>注入</span>
     
-        <span class="sidebar-tag-name" data-tags="测试"><span class="iconfont-archer">&#xe606;</span>测试</span>
-    
         <span class="sidebar-tag-name" data-tags="破解"><span class="iconfont-archer">&#xe606;</span>破解</span>
+    
+        <span class="sidebar-tag-name" data-tags="MFC"><span class="iconfont-archer">&#xe606;</span>MFC</span>
+    
+        <span class="sidebar-tag-name" data-tags="测试"><span class="iconfont-archer">&#xe606;</span>测试</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -911,6 +1408,8 @@ More...
         <span class="sidebar-category-name" data-categories="lua"><span class="iconfont-archer">&#xe60a;</span>lua</span>
     
         <span class="sidebar-category-name" data-categories="win32"><span class="iconfont-archer">&#xe60a;</span>win32</span>
+    
+        <span class="sidebar-category-name" data-categories="网络工程"><span class="iconfont-archer">&#xe60a;</span>网络工程</span>
     
         <span class="sidebar-category-name" data-categories="周易"><span class="iconfont-archer">&#xe60a;</span>周易</span>
     

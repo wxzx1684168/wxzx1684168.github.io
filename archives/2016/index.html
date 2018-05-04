@@ -300,27 +300,24 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2016/09/27/Epl语句/" >
+            <a class="abstract-title" href = "/2016/11/25/Lua元方法/" >
                 
-                    <span>Epl语句</span>
+                    <span>Lua元方法</span>
             </a>
             <div class="abstract-content">
-                1、EPL Syntax123456789101112- [annotations]- [expression_declarations]- [context context_name]- [insert into insert_into_def]- select select_list- from stream_def [as name] [, stream_def [as name]] [,...]- [where search_conditions]- [group by grouping_expression_list]- [having grouping_search_cond...
+                lua在创建新的table时不会创建元表，比如12local t = &#123;&#125;print(getmetatable(t))     --&gt;nil
+我们是使用getmetatable来获取一个table或者userdata类型变量的元表，当创建新的table变量时，使用getmetatable去获得元表，将返回nil，同理可以用setmetatable去设置一个table或userdata类型变量的元表，代码如下：123456local t = &#123;&#125;print(getmetatable(t))     --&gt;nillocal t1 = &#1...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/09/27</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/11/25</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "java">java</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Esper">Esper</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "股票">股票</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "lua">lua</a>
     
 </div>
                 
@@ -330,29 +327,26 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2016/09/26/进程模型/" >
+            <a class="abstract-title" href = "/2016/11/25/Lua面向对象编程/" >
                 
-                    <span>进程模型</span>
+                    <span>Lua面向对象程序设计</span>
             </a>
             <div class="abstract-content">
-                1、UpdateListener是Esper提供的一个借口，用于监听某个EPL在引擎中的运行情况，即事件进入并产生结果后会通知UpdateListener
-123456789import com.espertech.esper.client.EventBean;public interface UpdateListener&#123;     public void update(EventBean[] newEvents, EventBean[] oldEvents)     &#123;          /*code...*/     &#125;&#125;
-接口就一个updat...
+                类lua不存在类的概念，每个对象定义他自己的行为并拥有自己的形状（shape）。然而，依据基于原型的语言，在lua中仿效类的概念并不难。
+在lua中，使用继承的思想，很容易实现prototype（原型），如果我们有两个对象a和b，我们想让b作为a的原型，只需要1setmetatable(a,&#123;__index = b&#125;)
+这样，对象a调用任何不存在的成员函数都会到对象b中去找，术语上，可以将b看做类，a看做对象。
+例：为了使得新创建的对象拥有和Account相似的行为。我们使用__index metamethod，使新的对象继承Account，注意一个小小的优化，我们不...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/09/26</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/11/25</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "java">java</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Esper">Esper</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "股票">股票</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "lua">lua</a>
     
 </div>
                 
@@ -362,27 +356,23 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2016/09/26/Esper-Demo/" >
+            <a class="abstract-title" href = "/2016/11/24/Lua循环优化/" >
                 
-                    <span>Esper Demo</span>
+                    <span>Lua循环优化</span>
             </a>
             <div class="abstract-content">
-                123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899package com.zx;import com.espertech.esper.client.*;import java.util.Random;import java.util.Date; public cla...
+                关于大量字符串连接 （速度提升100倍）123456789101112131415161718-- 大字符串连接中 避免用..连接，应该用table来模拟buffer，然后concata = os.clock()local s = ''for i=1,100000 do    s = s .. 'a'endb = os.clock()print(b-a)    -- 1.708秒a = os.clock()local s = ''local t = &#123;&#125;for i=1,100000 do    t[#t+1] = 'a'ends = table.concat(t,''...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/09/26</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/11/24</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "java">java</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Esper">Esper</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "股票">股票</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "lua">lua</a>
     
 </div>
                 
@@ -392,65 +382,85 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2016/06/15/注入DLL/" >
+            <a class="abstract-title" href = "/2016/11/23/Lua匹配符/" >
                 
-                    <span>注入DLL</span>
+                    <span>Lua匹配符</span>
             </a>
             <div class="abstract-content">
-                查看PE文件IMAGE_NT_HEADERS下IMAGE_OPTIONAL_HEDER的 IMPORT Table的值
-由上图可知 IDT的地址(RVA)为84CC (在PEView中设置视图选项为RVA)TestView.exe的IDT存在于.rdara节区。IDT是有IMAGE_IMPORT-descriptor(简称IID)结构体组成的数组，且数组末尾以NULL结构体结束。由于每个导入的DLL文件都对应1个IID结构体（每个IID结构体的大小为14个字节） 所以图中整个IID区域为RVA:84CC~852F(8530？ 84cc+64)
-在PEView工具栏中视图改为File Of...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/06/15</span>
-                </div>
-                <!-- tags  -->
                 
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "逆向">逆向</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "DLL">DLL</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "注入">注入</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2016/05/31/破解MFCApplication1/" >
-                
-                    <span>破解MFCApplication1</span>
-            </a>
-            <div class="abstract-content">
-                方法一：字符串查找首先用ollydbg打开我们要破解的软件
 
-按F9使程序运行起来
-我们想要知道点击”买入“按钮以后，程序调用了什么方法实现的。接下来开始破解：首先点击“买入”按钮，可以看到
-接下来我们通过
-中文引擎搜索，搜索我们刚才看到有有关信息，例如“Hello”
-然后双击这个地址，跳转到MFVAppli中：
-首先就在当下设置一个断点（F2），然后重新开始，点击“买入”按钮时，就会暂停到如下界面
-按F8单步调试，发现到01316703    FF15 70C23201   call dword ptr ds:[&lt;&amp;USER32.MessageBoxA&gt;]     ...
+
+字符类
+说明
+
+
+
+
+.
+与任何字符配对
+
+
+%a
+与任何字母配对
+
+
+%c
+与任何控制符配对（例如\n）
+
+
+%d
+与任何数字配对
+
+
+%l
+与任何小写字母配对
+
+
+%p
+与任何标点（punctuation）配对
+
+
+%s
+与空白字符配对
+
+
+%u
+与任何大写字母配对
+
+
+%w
+与任何字母/数字配对
+
+
+%x
+与任何十六进制数配对
+
+
+%z
+与任何代表0的字符配对
+
+
+%x
+与字符x配对，主要用来处理表达式中有功能的字符，例如%%与%配对
+
+
+[数个字符类]
+与任何[]中包含的字符配对，例如[%w_]与任何字母/数字，或下划线配对
+
+
+[^数个字符类]
+与任何不包含在[]中的字符...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/05/31</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/11/23</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "逆向">逆向</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "破解">破解</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "lua">lua</a>
     
 </div>
                 
@@ -460,24 +470,269 @@
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2016/05/26/Win32基本程序概念/" >
+            <a class="abstract-title" href = "/2016/11/09/Lua中-和/" >
                 
-                    <span>Win32基本程序概念</span>
+                    <span>Lua中.和:</span>
             </a>
             <div class="abstract-content">
-                Win32程序开发流程Windows程序分为[程序代码]和[UI（User Interface）资源]两大部分，两部分最后以RC编译器整合为一个完整的EXE文件，所谓UI资源是指功能菜单、对话框外貌、程序图标、光标形状等等东西。这些UI资源的实际内容（二进制代码）系借助各种工具产生，并以各种拓展名存在，如.ioc、.bmp、.cur等等。程序员必须在一个所谓的资源描述档（.rc）中描述他们。RC编译器（RC.EXE）读取RC档的描述后将所有UI资源档集中制作出一个.RES档，再与程序代码结合在一起，这才是一个完整的Windows可执行档。
-需要什么函数库（.LIB）LIBC.LIB - ...
+                在lua开发中我们经常会混淆这两者之间的区别，下面通过一个示例来解释：12345678910111213141516171819202122Class = &#123;&#125;Class.__index = Class function Class.new(x,y)    local cls = &#123;&#125;    setmetatable(cls, Class)    cls.x = x    cls.y = y    return clsendfunction Class:test()-- 等价于-- function Class.test(self)    prin...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/05/26</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/11/09</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "win32">win32</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "lua">lua</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2016/11/08/Lua标准库-string库/" >
+                
+                    <span>Lua标准库-string库</span>
+            </a>
+            <div class="abstract-content">
+                string库概念lua解释器对字符串支持有限，一个程序可以创建字符并连接字符串，但是不能截取子串，检查字符串的大小，内容等，操作字符串的功能基本来自string库
+lua5.1中字符串库的所有函数如下
+
+
+
+函数
+描述
+示例
+结果
+
+
+
+
+len
+计算字符串长度
+string.len(“abcd”)
+4
+
+
+rep
+返回字符串s的n个拷贝
+string.rep(“abcd”,2)
+abcdabcd
+
+
+lower
+返回字符串全部字母大写
+string.lower(“AbcD”)
+abcd
+
+
+upper
+返回字符串全部字母小写
+string.upper(“AbcD”)
+ABCD
+
+
+f...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/11/08</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "lua">lua</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2016/11/08/Lua标准库-math库/" >
+                
+                    <span>Lua标准库-math库</span>
+            </a>
+            <div class="abstract-content">
+                lua标准库之数学库
+数学库概念数学库由算术函数的标准集合组成；比如三角函数（sin、cos、tan、asin、acos、etc）幂指函数（exp、log、log10），舍入函数（floor、ceil）、max、min，加上一个变量pi，数学库也定义了一个幂操作符 ^ 
+
+
+
+函数
+描述
+示例
+结果
+
+
+
+
+abs
+取绝对值
+math.abs(-15)
+15
+
+
+acos
+反余弦函数
+math.acos(0.5)
+1.04719755
+
+
+asin
+反正弦函数
+math.asin(0.5)
+0.52359877
+
+
+atan2
+x / y的反正切值
+math.atan2(90.0, 45...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/11/08</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "lua">lua</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2016/11/08/Lua标准库-table库/" >
+                
+                    <span>Lua标准库-table库</span>
+            </a>
+            <div class="abstract-content">
+                lua标准库之table库
+table库的概念是由一些操作table的辅助函数组成
+作用一：对lua中的表的大小给出一个合理的解释，如getn，#table等
+作用二：提供一些插入删除元素以及元素排序的函数，如insert，remove等
+Lua5.1中字符串库的所有函数如下表：先定义一张表 t = {1,2,3}
+
+
+
+函数
+描述
+示例
+结果
+
+
+
+
+#
+取表长
+#t
+3
+
+
+getn
+取表长
+Table.getn(t)
+3
+
+
+setn
+设置table中的元素个数
+Table.setn(t,4)
+4
+
+
+maxn
+返回表中最大key
+Table.maxn(t)
+3
+
+
+concat
+...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/11/08</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "lua">lua</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2016/11/07/Lua语法基础/" >
+                
+                    <span>Lua语法基础</span>
+            </a>
+            <div class="abstract-content">
+                词法约定标识符标识符可以是任意非数字开头的字母、数字、下划线组成的字符串
+标识符用来命名变量，或作为表的域名
+Lua是一个大小写敏感的语言
+1234andAndAND三者不一样
+关键字一下列出了lua的保留关键字。保留关键字不能作为常量或者变量或者其他用户自定义标识符123456and          break     do          elseelseif       end       false       forfunction     if        in          localnil          not       or          repea...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/11/07</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "lua">lua</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="abstract-title" href = "/2016/11/07/Lua模块与包/" >
+                
+                    <span>Lua模块与包</span>
+            </a>
+            <div class="abstract-content">
+                lua的模块是由变量，函数等已知元素组成的table，因此创建一个模块很简单，就是创建一个table，然后把需要导出的常量，函数放入其中，最后返回这个table就行。
+例：123456789101112131415161718192021-- 文件名为module.lua-- 定义一个名为module的模块module = &#123;&#125;-- 定义一个常量module.constant = "这是一个常量"-- 定义一个函数function module.func1()     io.write("这是一个公有函数！")endlocal function func2()    ...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/11/07</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "lua">lua</a>
     
 </div>
                 
@@ -485,6 +740,10 @@
         </article>
     
     <!-- paginator  -->
+    
+    <nav class="page-nav">
+        <span class="page-number current">1</span><a class="page-number" href="/archives/2016/page/2/">2</a><a class="page-number" href="/archives/2016/page/3/">3</a><a class="extend next" rel="next" href="/archives/2016/page/2/">NEXT &#62;</a>
+    </nav>
     
 </main>
 
@@ -874,7 +1133,130 @@
     
     
     
-    <div class="total-archive"> 总计 : 21 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> 总计 : 32 </div>
     
     <div class="post-archive">
     
@@ -883,41 +1265,6 @@
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/Lua中-和/" >Lua中.和:</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/Lua面向对象编程/" >Lua面向对象程序设计</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/Lua元方法/" >Lua元方法</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/Lua标准库-table库/" >Lua标准库-table库</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/Lua循环优化/" >Lua循环优化</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/Lua匹配符/" >Lua匹配符</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">04/30</span><a class="archive-post-title" href= "/2018/04/30/Lua语句段/" >Lua语句段</a>
-        </li>
     
     
         <li class="archive-post-item">
@@ -959,17 +1306,97 @@
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">11/25</span><a class="archive-post-title" href= "/2016/11/25/Lua面向对象编程/" >Lua面向对象程序设计</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/25</span><a class="archive-post-title" href= "/2016/11/25/Lua元方法/" >Lua元方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/24</span><a class="archive-post-title" href= "/2016/11/24/Lua循环优化/" >Lua循环优化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/23</span><a class="archive-post-title" href= "/2016/11/23/Lua匹配符/" >Lua匹配符</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2016/11/09/Lua中-和/" >Lua中.和:</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2016/11/08/Lua标准库-string库/" >Lua标准库-string库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2016/11/08/Lua标准库-math库/" >Lua标准库-math库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2016/11/08/Lua标准库-table库/" >Lua标准库-table库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua表达式/" >Lua表达式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua值与类型/" >Lua值与类型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua元表/" >Lua元表</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua变量/" >Lua变量</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua函数/" >Lua函数</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua语法基础/" >Lua语法基础</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua模块与包/" >Lua模块与包</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua语句段/" >Lua语句段</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">09/27</span><a class="archive-post-title" href= "/2016/09/27/Epl语句/" >Epl语句</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/进程模型/" >进程模型</a>
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/Esper-Demo/" >Esper Demo</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/Esper-Demo/" >Esper Demo</a>
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/进程模型/" >进程模型</a>
         </li>
     
     
@@ -985,6 +1412,16 @@
     
         <li class="archive-post-item">
             <span class="archive-post-date">05/26</span><a class="archive-post-title" href= "/2016/05/26/Win32基本程序概念/" >Win32基本程序概念</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/25</span><a class="archive-post-title" href= "/2016/05/25/破解MFC弹出窗口/" >破解MFC弹出窗口</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/18</span><a class="archive-post-title" href= "/2016/05/18/分析TCP协议/" >分析TCP协议</a>
         </li>
     
     
@@ -1042,6 +1479,10 @@
     
         <span class="sidebar-tag-name" data-tags="win32"><span class="iconfont-archer">&#xe606;</span>win32</span>
     
+        <span class="sidebar-tag-name" data-tags="网络工程"><span class="iconfont-archer">&#xe606;</span>网络工程</span>
+    
+        <span class="sidebar-tag-name" data-tags="TCP"><span class="iconfont-archer">&#xe606;</span>TCP</span>
+    
         <span class="sidebar-tag-name" data-tags="周易"><span class="iconfont-archer">&#xe606;</span>周易</span>
     
         <span class="sidebar-tag-name" data-tags="易经"><span class="iconfont-archer">&#xe606;</span>易经</span>
@@ -1054,9 +1495,11 @@
     
         <span class="sidebar-tag-name" data-tags="注入"><span class="iconfont-archer">&#xe606;</span>注入</span>
     
-        <span class="sidebar-tag-name" data-tags="测试"><span class="iconfont-archer">&#xe606;</span>测试</span>
-    
         <span class="sidebar-tag-name" data-tags="破解"><span class="iconfont-archer">&#xe606;</span>破解</span>
+    
+        <span class="sidebar-tag-name" data-tags="MFC"><span class="iconfont-archer">&#xe606;</span>MFC</span>
+    
+        <span class="sidebar-tag-name" data-tags="测试"><span class="iconfont-archer">&#xe606;</span>测试</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -1070,6 +1513,8 @@
         <span class="sidebar-category-name" data-categories="lua"><span class="iconfont-archer">&#xe60a;</span>lua</span>
     
         <span class="sidebar-category-name" data-categories="win32"><span class="iconfont-archer">&#xe60a;</span>win32</span>
+    
+        <span class="sidebar-category-name" data-categories="网络工程"><span class="iconfont-archer">&#xe60a;</span>网络工程</span>
     
         <span class="sidebar-category-name" data-categories="周易"><span class="iconfont-archer">&#xe60a;</span>周易</span>
     
