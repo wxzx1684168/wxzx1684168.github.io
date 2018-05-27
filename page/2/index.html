@@ -315,6 +315,32 @@ height:50vh;
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2016/11/09/Lua中-和/" >
+                
+                    <span>Lua中.和:</span>
+            </a>
+            <div class="abstract-content">
+                在lua开发中我们经常会混淆这两者之间的区别，下面通过一个示例来解释：12345678910111213141516171819202122Class = &#123;&#125;Class.__index = Class function Class.new(x,y)    local cls = &#123;&#125;    setmetatable(cls, Class)    cls.x = x    cls.y = y    return clsendfunction Class:test()-- 等价于-- function Class.test(self)    prin...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/11/09</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "lua">lua</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2016/11/08/Lua标准库-string库/" >
                 
                     <span>Lua标准库-string库</span>
@@ -661,81 +687,6 @@ setmetatable(table,metatable)：对指定table设置元表（metatable），如�
 getmetatable(table)：返回对象的元表
 元表创建lua在创建新的table时不会创建元表12local t = &#123;1,2&#125;print(getmetatable(t))     -- nil
 使用getmetat...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/11/07</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "lua">lua</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2016/11/07/Lua表达式/" >
-                
-                    <span>Lua表达式</span>
-            </a>
-            <div class="abstract-content">
-                算术运算符下表列出了lua语言中常用算术运算符(设定A的值为10，B的值为20)
-
-
-
-操作符
-描述
-示例
-
-
-
-
-+
-加法
-A + B 输出 30
-
-
--
-减法
-A - B 输出 -10
-
-
-*
-乘法
-A * B 输出 200
-
-
-/
-除法
-B / A 输出 2
-
-
-%
-取余
-B % A 输出 0
-
-
-^
-乘幂
-A ^ 2 输出 100
-
-
--
-负号
--A 输出 -10
-
-
-
-关系运算符lua中的关系运算符有：123456&lt;     &gt;&lt;=     &gt;=     ==   ~=
-这些操作符返回结果为false或者true
-==和~=比较两个值，如果两个值类型不同...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
@@ -1422,7 +1373,28 @@ A ^ 2 输出 100
     
     
     
-    <div class="total-archive"> 总计 : 33 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> 总计 : 34 </div>
     
     <div class="post-archive">
     
@@ -1431,6 +1403,11 @@ A ^ 2 输出 100
     
     <div class="archive-year"> 2018 </div>
     <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/27</span><a class="archive-post-title" href= "/2018/05/27/基于sklearn的股票预测/" >基于sklearn的股票预测</a>
+        </li>
     
     
         <li class="archive-post-item">
@@ -1517,17 +1494,7 @@ A ^ 2 输出 100
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua语法基础/" >Lua语法基础</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua值与类型/" >Lua值与类型</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua表达式/" >Lua表达式</a>
         </li>
     
     
@@ -1537,12 +1504,22 @@ A ^ 2 输出 100
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua函数/" >Lua函数</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua语法基础/" >Lua语法基础</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua变量/" >Lua变量</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua函数/" >Lua函数</a>
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua表达式/" >Lua表达式</a>
         </li>
     
     
@@ -1638,17 +1615,27 @@ A ^ 2 输出 100
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="EOS"><span class="iconfont-archer">&#xe606;</span>EOS</span>
+        <span class="sidebar-tag-name" data-tags="Esper"><span class="iconfont-archer">&#xe606;</span>Esper</span>
     
         <span class="sidebar-tag-name" data-tags="java"><span class="iconfont-archer">&#xe606;</span>java</span>
-    
-        <span class="sidebar-tag-name" data-tags="Esper"><span class="iconfont-archer">&#xe606;</span>Esper</span>
     
         <span class="sidebar-tag-name" data-tags="股票"><span class="iconfont-archer">&#xe606;</span>股票</span>
     
         <span class="sidebar-tag-name" data-tags="lua"><span class="iconfont-archer">&#xe606;</span>lua</span>
     
+        <span class="sidebar-tag-name" data-tags="EOS"><span class="iconfont-archer">&#xe606;</span>EOS</span>
+    
         <span class="sidebar-tag-name" data-tags="win32"><span class="iconfont-archer">&#xe606;</span>win32</span>
+    
+        <span class="sidebar-tag-name" data-tags="python"><span class="iconfont-archer">&#xe606;</span>python</span>
+    
+        <span class="sidebar-tag-name" data-tags="数学"><span class="iconfont-archer">&#xe606;</span>数学</span>
+    
+        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络工程"><span class="iconfont-archer">&#xe606;</span>网络工程</span>
+    
+        <span class="sidebar-tag-name" data-tags="TCP"><span class="iconfont-archer">&#xe606;</span>TCP</span>
     
         <span class="sidebar-tag-name" data-tags="周易"><span class="iconfont-archer">&#xe606;</span>周易</span>
     
@@ -1656,27 +1643,17 @@ A ^ 2 输出 100
     
         <span class="sidebar-tag-name" data-tags="八卦"><span class="iconfont-archer">&#xe606;</span>八卦</span>
     
-        <span class="sidebar-tag-name" data-tags="网络工程"><span class="iconfont-archer">&#xe606;</span>网络工程</span>
-    
-        <span class="sidebar-tag-name" data-tags="TCP"><span class="iconfont-archer">&#xe606;</span>TCP</span>
-    
         <span class="sidebar-tag-name" data-tags="逆向"><span class="iconfont-archer">&#xe606;</span>逆向</span>
-    
-        <span class="sidebar-tag-name" data-tags="破解"><span class="iconfont-archer">&#xe606;</span>破解</span>
-    
-        <span class="sidebar-tag-name" data-tags="测试"><span class="iconfont-archer">&#xe606;</span>测试</span>
-    
-        <span class="sidebar-tag-name" data-tags="MFC"><span class="iconfont-archer">&#xe606;</span>MFC</span>
     
         <span class="sidebar-tag-name" data-tags="DLL"><span class="iconfont-archer">&#xe606;</span>DLL</span>
     
         <span class="sidebar-tag-name" data-tags="注入"><span class="iconfont-archer">&#xe606;</span>注入</span>
     
-        <span class="sidebar-tag-name" data-tags="python"><span class="iconfont-archer">&#xe606;</span>python</span>
+        <span class="sidebar-tag-name" data-tags="破解"><span class="iconfont-archer">&#xe606;</span>破解</span>
     
-        <span class="sidebar-tag-name" data-tags="数学"><span class="iconfont-archer">&#xe606;</span>数学</span>
+        <span class="sidebar-tag-name" data-tags="MFC"><span class="iconfont-archer">&#xe606;</span>MFC</span>
     
-        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
+        <span class="sidebar-tag-name" data-tags="测试"><span class="iconfont-archer">&#xe606;</span>测试</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -1691,13 +1668,13 @@ A ^ 2 输出 100
     
         <span class="sidebar-category-name" data-categories="win32"><span class="iconfont-archer">&#xe60a;</span>win32</span>
     
-        <span class="sidebar-category-name" data-categories="周易"><span class="iconfont-archer">&#xe60a;</span>周易</span>
+        <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     
         <span class="sidebar-category-name" data-categories="网络工程"><span class="iconfont-archer">&#xe60a;</span>网络工程</span>
     
-        <span class="sidebar-category-name" data-categories="逆向工程"><span class="iconfont-archer">&#xe60a;</span>逆向工程</span>
+        <span class="sidebar-category-name" data-categories="周易"><span class="iconfont-archer">&#xe60a;</span>周易</span>
     
-        <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
+        <span class="sidebar-category-name" data-categories="逆向工程"><span class="iconfont-archer">&#xe60a;</span>逆向工程</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>

@@ -10,7 +10,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
     <meta name="description" content="">
-    <title>花生肉泥</title>
+    <title>基于sklearn的股票预测 · 花生肉泥</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -65,6 +65,8 @@
 
     <link rel="preload" href= /css/style.css?v=20180317 as="style" onload="this.onload=null;this.rel='stylesheet'">
     <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180317 media="(max-width: 980px)"/>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         
     <link rel="icon" href= /assets/title.ico>
     <script>
@@ -175,12 +177,23 @@
 </head>
 
     
+        <body class="post-body">
+    
     
 <header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >花生肉泥 Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">基于sklearn的股票预测</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>花生肉泥 Blog</a>
 </header>
@@ -194,24 +207,71 @@
 
 
 
+height:50vh;
+
 >
     
     <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
             
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-placeholder"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
+            基于sklearn的股票预测
+            <!-- 404 -->
+            
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+            
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "股票">股票</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "python">python</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "机器学习">机器学习</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2018/05/27</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
         
     </div>
 </div>
@@ -295,364 +355,60 @@
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>先挖个坑</p>
+<p>大概流程：</p>
+<blockquote>
+<p>1、股票信息获取（爬虫）<br>2、pandas处理数据<br>3、将数据80%用于预测，20%对比<br>4、用sklearn库中的线性回归LinearRegression进行训练并预测股票走势</p>
+</blockquote>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">下一篇文章</div>
+                <a href= "/2018/05/27/python最小二乘法/" title= python最小二乘法 >
+                    <div class="prevTitle">python最小二乘法</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
     
     
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2016/11/07/Lua值与类型/" >
-                
-                    <span>Lua值与类型</span>
-            </a>
-            <div class="abstract-content">
-                Lua基础语法之值与类型Lua是一种动态类型语言。这意味着变量没有类型，只有值才有类型，所有的值都可以被放在变量里，当做参数传递到另一个函数中，并被函数作为结果返回。1234567print(type("hello world"))     -- stringprint(type(10.4*3))                -- numberprint(type(print))                  -- functionprint(type(type))                  -- functionprint(type(true))             ...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/11/07</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "lua">lua</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2016/11/07/Lua变量/" >
-                
-                    <span>Lua变量</span>
-            </a>
-            <div class="abstract-content">
-                lua中有三种变量：全局变量，局部变量，还有table的域
-在变量的首次赋值之前，变量的值均为nil
-全局变量全局变量不需要声明，给一个变量赋值后即创建了这个全局变量，访问一个没有初始化的全局变量也不会出错，只不过得到的结果是：nil123print(a)     -- nila = 1print(a)     -- 1
-当你想删除一个全局变量，只需要将变量赋值为nil
-当且仅当一个变量不等于nil时，这个变量存在
-局部变量局部变量有其作用范围，局部变量可以被定义在它作用范围中的函数自由使用，局部变量可以在语句块总任何地方申明，应该尽可能的使用局部变量，好处有两个
-1.避免命名冲突
-2....
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/11/07</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "lua">lua</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2016/11/07/Lua函数/" >
-                
-                    <span>Lua函数</span>
-            </a>
-            <div class="abstract-content">
-                函数的构建lua编程语言函数定义格式如下：1234optional_function_scope function function_name (argument1,argument2,argument3...,argumentn)     function_body     return result_parames_comma_separatedend
-【解析】
-optional_function_scope：该参数是否选的制定函数是全局函数还是局部函数，未设置该参数默认为全局函数，如果你需要设置函数为局部函数需要关键字local
-function_name：指定函数名称
-argum...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/11/07</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "lua">lua</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2016/11/07/Lua元表/" >
-                
-                    <span>Lua元表</span>
-            </a>
-            <div class="abstract-content">
-                Metatable元表lua中的每个值都可以用一个metatable
-两个table类型的变量，你是无法直接用 + 操作的，如果你定义了一个指定的函数，就可以进行了
-setmetatable(table,metatable)：对指定table设置元表（metatable），如果元表中存在__metatable键值，setmetatable会失败
-getmetatable(table)：返回对象的元表
-元表创建lua在创建新的table时不会创建元表12local t = &#123;1,2&#125;print(getmetatable(t))     -- nil
-使用getmetat...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/11/07</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "lua">lua</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2016/11/07/Lua表达式/" >
-                
-                    <span>Lua表达式</span>
-            </a>
-            <div class="abstract-content">
-                算术运算符下表列出了lua语言中常用算术运算符(设定A的值为10，B的值为20)
+<div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        // id: "基于sklearn的股票预测", // 可选。默认为 location.href
+        owner: 'wxzx1684168',
+        repo: 'wxzx1684168.github.io',
+        oauth: {
+            client_id: '7280d255a529324c9198',
+            client_secret: '89fdf02f804bf55f75f10ff82fb9f433b7e336e6',
+        },
+    })
+    gitment.render('container')
+
+</script>
+
+    <!--PC版-->
+
+    <!--PC版-->
 
 
-
-操作符
-描述
-示例
-
-
-
-
-+
-加法
-A + B 输出 30
-
-
--
-减法
-A - B 输出 -10
-
-
-*
-乘法
-A * B 输出 200
-
-
-/
-除法
-B / A 输出 2
-
-
-%
-取余
-B % A 输出 0
-
-
-^
-乘幂
-A ^ 2 输出 100
-
-
--
-负号
--A 输出 -10
-
-
-
-关系运算符lua中的关系运算符有：123456&lt;     &gt;&lt;=     &gt;=     ==   ~=
-这些操作符返回结果为false或者true
-==和~=比较两个值，如果两个值类型不同...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/11/07</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "lua">lua</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2016/11/07/Lua语句段/" >
-                
-                    <span>Lua语句段</span>
-            </a>
-            <div class="abstract-content">
-                chunk语句组chunk是一系列语句，lua执行的每一块语句，比如一个文件或者交互模式下的每一行都是一个chunk
-语句块显式的语句块对于控制变量的作用范围很有用，有时候，显式的语句块被用来在另一个语句块中插入retuen或是break
-赋值语句lua允许多重赋值，因此，赋值的语法定义是等号左边放一系列变量，而等号右边放一系列的表达式，两边的元素都用逗号间开1local a,b,c,d,e = 1,2,3,4,5,6
-当变量个数和值的个数不一致时：if 变量个数 &gt; 值的个数     按变量个数补足nilif 变量个数 &lt; 值的个数     多余的值会被忽略备注：lua会先...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/11/07</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "lua">lua</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2016/09/27/Epl语句/" >
-                
-                    <span>Epl语句</span>
-            </a>
-            <div class="abstract-content">
-                1、EPL Syntax123456789101112- [annotations]- [expression_declarations]- [context context_name]- [insert into insert_into_def]- select select_list- from stream_def [as name] [, stream_def [as name]] [,...]- [where search_conditions]- [group by grouping_expression_list]- [having grouping_search_cond...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/09/27</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Esper">Esper</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "java">java</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "股票">股票</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2016/09/26/进程模型/" >
-                
-                    <span>进程模型</span>
-            </a>
-            <div class="abstract-content">
-                1、UpdateListener是Esper提供的一个借口，用于监听某个EPL在引擎中的运行情况，即事件进入并产生结果后会通知UpdateListener
-123456789import com.espertech.esper.client.EventBean;public interface UpdateListener&#123;     public void update(EventBean[] newEvents, EventBean[] oldEvents)     &#123;          /*code...*/     &#125;&#125;
-接口就一个updat...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/09/26</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Esper">Esper</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "java">java</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "股票">股票</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2016/09/26/Esper-Demo/" >
-                
-                    <span>Esper Demo</span>
-            </a>
-            <div class="abstract-content">
-                123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899package com.zx;import com.espertech.esper.client.*;import java.util.Random;import java.util.Date; public cla...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/09/26</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Esper">Esper</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "java">java</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "股票">股票</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2016/06/15/注入DLL/" >
-                
-                    <span>注入DLL</span>
-            </a>
-            <div class="abstract-content">
-                查看PE文件IMAGE_NT_HEADERS下IMAGE_OPTIONAL_HEDER的 IMPORT Table的值
-由上图可知 IDT的地址(RVA)为84CC (在PEView中设置视图选项为RVA)TestView.exe的IDT存在于.rdara节区。IDT是有IMAGE_IMPORT-descriptor(简称IID)结构体组成的数组，且数组末尾以NULL结构体结束。由于每个导入的DLL文件都对应1个IID结构体（每个IID结构体的大小为14个字节） 所以图中整个IID区域为RVA:84CC~852F(8530？ 84cc+64)
-在PEView工具栏中视图改为File Of...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/06/15</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "逆向">逆向</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "DLL">DLL</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "注入">注入</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    <!-- paginator  -->
-    
-    <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/2016/">&#60; PREV</a><a class="page-number" href="/archives/2016/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/2016/page/3/">3</a><a class="extend next" rel="next" href="/archives/2016/page/3/">NEXT &#62;</a>
-    </nav>
-    
+    <!-- 评论 -->
 </main>
-
             <!-- profile -->
             
         </div>
@@ -733,6 +489,24 @@ A ^ 2 输出 100
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -1542,6 +1316,8 @@ A ^ 2 输出 100
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
     
     <script src="/node_modules/live2d-widget/node_modules/live2d-widget/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"node_modules/live2d-widget/","pluginJsPath":"node_modules/live2d-widget/lib/","pluginModelPath":"node_modules/live2d-widget-model-koharu/assets/","model":{"jsonPath":"/node_modules/live2d-widget/node_modules/live2d-widget-model-koharu/assets/koharu.model.json"},"mobile":{"show":true,"scale":0.2},"react":{"opacityDefault":1,"opacityOnHover":0},"display":{"superSample":1}});</script></body>
 </html>
