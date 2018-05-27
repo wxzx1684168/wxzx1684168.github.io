@@ -360,7 +360,7 @@ height:50vh;
         <p>最近忽然对机器学习方面比较感兴趣，于是接触了一下，一眼望过去感觉对我这种学渣太不友好了，不多深入了解了一下发现其实并不难，这里总结一下学习最小二乘法的拟合直线和样本点图。</p>
 <h3 id="关于最小二乘法"><a href="#关于最小二乘法" class="headerlink" title="关于最小二乘法"></a>关于最小二乘法</h3><p>最小二乘法是机器学习中最基本的数学优化方法之一。例如，线性回归中拟合参数求解，一般就会使用到最小二乘法，其过程如下：</p>
 <p>对于线性方程：<br><img src="\images\pasted-87.png" alt="upload successful"><br>其中，w1为自变量对应的系数，w0常数也就是截距项。此时，如果我们令其平方损失函数为：<br><img src="\images\pasted-89.png" alt="upload successful"><br>为了求出平方损失函数的最小值，即对上式进行求偏导数：<br><img src="\images\pasted-90.png" alt="upload successful"><br>最终通过令偏导数等于 0 来得到参数的取值为：<br><img src="\images\pasted-92.png" alt="upload successful"><br>其中，xi和yi分别对应着第i个样本数据的特征xi和yi取值。</p>
-<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><p>虽然这一大堆看起来很麻烦，不过分析一下，关于这个线性方程我们要求的就只有w1，w0的值而已。因为这里比较简单，所以没有用到第三方库来求xi和yi的值，通过自己手动实现。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">linear_plot</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># 一个随机的样本数据</span></span><br><span class="line">    data = [</span><br><span class="line">        [<span class="number">5.06</span>, <span class="number">5.79</span>], [<span class="number">4.92</span>, <span class="number">6.61</span>], [<span class="number">4.67</span>, <span class="number">5.48</span>], [<span class="number">4.56</span>, <span class="number">6.11</span>], [<span class="number">4.26</span>, <span class="number">6.39</span>],</span><br><span class="line">        [<span class="number">4.07</span>, <span class="number">4.84</span>], [<span class="number">4.01</span>, <span class="number">4.16</span>], [<span class="number">4.01</span>, <span class="number">5.55</span>], [<span class="number">3.66</span>, <span class="number">5.05</span>], [<span class="number">3.43</span>, <span class="number">4.34</span>],</span><br><span class="line">        [<span class="number">3.12</span>, <span class="number">3.24</span>], [<span class="number">3.02</span>, <span class="number">4.80</span>], [<span class="number">2.87</span>, <span class="number">4.01</span>], [<span class="number">2.64</span>, <span class="number">3.17</span>], [<span class="number">2.48</span>, <span class="number">1.61</span>],</span><br><span class="line">        [<span class="number">2.48</span>, <span class="number">2.62</span>], [<span class="number">2.02</span>, <span class="number">2.50</span>], [<span class="number">1.95</span>, <span class="number">3.59</span>], [<span class="number">1.79</span>, <span class="number">1.49</span>], [<span class="number">1.54</span>, <span class="number">2.10</span>]</span><br><span class="line">    ]</span><br><span class="line">    <span class="comment"># 用numpy来将样本数据的x，y分离开来</span></span><br><span class="line">    Xi = np.array([])</span><br><span class="line">    Yi = np.array([])</span><br><span class="line"></span><br><span class="line">    lenn = len(data)</span><br><span class="line">    sumX = <span class="number">0.0</span></span><br><span class="line">    sumY = <span class="number">0.0</span></span><br><span class="line">    sumXY = <span class="number">0.0</span></span><br><span class="line">    sumX2 = <span class="number">0.0</span></span><br><span class="line">    <span class="comment"># 手动计算w0，w1的值</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(lenn):</span><br><span class="line">        print(data[i])</span><br><span class="line">        Xi = np.append(Xi, data[i][<span class="number">0</span>])</span><br><span class="line">        Yi = np.append(Yi, data[i][<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">        sumX += data[i][<span class="number">0</span>]</span><br><span class="line">        sumY += data[i][<span class="number">1</span>]</span><br><span class="line">        sumXY += data[i][<span class="number">0</span>] * data[i][<span class="number">1</span>]</span><br><span class="line">        sumX2 += data[i][<span class="number">0</span>] * data[i][<span class="number">0</span>]</span><br><span class="line">    <span class="comment"># 这里保留5位小数</span></span><br><span class="line">    w0 = round((sumX2 * sumY - sumX * sumXY) / (lenn * sumX2 - (sumX * sumX)), <span class="number">5</span>)</span><br><span class="line">    w1 = round((lenn * sumXY - sumX * sumY) / (lenn * sumX2 - (sumX * sumX)), <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    print(w0)</span></span><br><span class="line"><span class="string">    print(w1)</span></span><br><span class="line"><span class="string">    print(Xi)</span></span><br><span class="line"><span class="string">    print(Yi)</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 开始绘制样本点图</span></span><br><span class="line">    fig = plt.figure()</span><br><span class="line">    <span class="comment"># 指定字体，不然中文会出错</span></span><br><span class="line">    plt.rcParams[<span class="string">'font.sans-serif'</span>] = [<span class="string">'SimHei'</span>]</span><br><span class="line">    plt.scatter(Xi, Yi, color=<span class="string">"green"</span>, label=<span class="string">'样本数据'</span>, linewidth=<span class="number">2</span>)</span><br><span class="line">    plt.plot(w1, w0)</span><br><span class="line">    x = np.linspace(<span class="number">0</span>, <span class="number">8</span>, <span class="number">2</span>)</span><br><span class="line">    y = w0 + w1 * x</span><br><span class="line">    <span class="comment"># 绘制拟合直线</span></span><br><span class="line">    plt.plot(x, y, color=<span class="string">"red"</span>, label=<span class="string">'拟合直线'</span>, linewidth=<span class="number">2</span>)</span><br><span class="line">    plt.legend(loc=<span class="string">'lower right'</span>)  <span class="comment"># 绘制图例</span></span><br><span class="line"></span><br><span class="line">    plt.show()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">linear_plot()</span><br></pre></td></tr></table></figure></p>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><p>虽然这一大堆看起来很麻烦，不过分析一下，关于这个线性方程我们要求的就只有w1，w0的值而已。因为这里比较简单，所以没有用到第三方库来求xi和yi的值，通过自己手动实现。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">linear_plot</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="comment"># 一个随机的样本数据</span></span><br><span class="line">    data = [</span><br><span class="line">        [<span class="number">5.06</span>, <span class="number">5.79</span>], [<span class="number">4.92</span>, <span class="number">6.61</span>], [<span class="number">4.67</span>, <span class="number">5.48</span>], [<span class="number">4.56</span>, <span class="number">6.11</span>], [<span class="number">4.26</span>, <span class="number">6.39</span>],</span><br><span class="line">        [<span class="number">4.07</span>, <span class="number">4.84</span>], [<span class="number">4.01</span>, <span class="number">4.16</span>], [<span class="number">4.01</span>, <span class="number">5.55</span>], [<span class="number">3.66</span>, <span class="number">5.05</span>], [<span class="number">3.43</span>, <span class="number">4.34</span>],</span><br><span class="line">        [<span class="number">3.12</span>, <span class="number">3.24</span>], [<span class="number">3.02</span>, <span class="number">4.80</span>], [<span class="number">2.87</span>, <span class="number">4.01</span>], [<span class="number">2.64</span>, <span class="number">3.17</span>], [<span class="number">2.48</span>, <span class="number">1.61</span>],</span><br><span class="line">        [<span class="number">2.48</span>, <span class="number">2.62</span>], [<span class="number">2.02</span>, <span class="number">2.50</span>], [<span class="number">1.95</span>, <span class="number">3.59</span>], [<span class="number">1.79</span>, <span class="number">1.49</span>], [<span class="number">1.54</span>, <span class="number">2.10</span>]</span><br><span class="line">    ]</span><br><span class="line">    <span class="comment"># 用numpy来将样本数据的x，y分离开来</span></span><br><span class="line">    Xi = np.array([])</span><br><span class="line">    Yi = np.array([])</span><br><span class="line"></span><br><span class="line">    lenn = len(data)</span><br><span class="line">    sumX = <span class="number">0.0</span></span><br><span class="line">    sumY = <span class="number">0.0</span></span><br><span class="line">    sumXY = <span class="number">0.0</span></span><br><span class="line">    sumX2 = <span class="number">0.0</span></span><br><span class="line">    <span class="comment"># 手动计算w0，w1的值</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(lenn):</span><br><span class="line">        print(data[i])</span><br><span class="line">        Xi = np.append(Xi, data[i][<span class="number">0</span>])</span><br><span class="line">        Yi = np.append(Yi, data[i][<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">        sumX += data[i][<span class="number">0</span>]</span><br><span class="line">        sumY += data[i][<span class="number">1</span>]</span><br><span class="line">        sumXY += data[i][<span class="number">0</span>] * data[i][<span class="number">1</span>]</span><br><span class="line">        sumX2 += data[i][<span class="number">0</span>] * data[i][<span class="number">0</span>]</span><br><span class="line">    <span class="comment"># 这里保留5位小数</span></span><br><span class="line">    w0 = round((sumX2 * sumY - sumX * sumXY) / (lenn * sumX2 - (sumX * sumX)), <span class="number">5</span>)</span><br><span class="line">    w1 = round((lenn * sumXY - sumX * sumY) / (lenn * sumX2 - (sumX * sumX)), <span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    print(w0)</span></span><br><span class="line"><span class="string">    print(w1)</span></span><br><span class="line"><span class="string">    print(Xi)</span></span><br><span class="line"><span class="string">    print(Yi)</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 开始绘制样本点图</span></span><br><span class="line">    fig = plt.figure()</span><br><span class="line">    <span class="comment"># 指定字体，不然中文会出错</span></span><br><span class="line">    plt.rcParams[<span class="string">'font.sans-serif'</span>] = [<span class="string">'SimHei'</span>]</span><br><span class="line">    plt.scatter(Xi, Yi, color=<span class="string">"green"</span>, label=<span class="string">'样本数据'</span>, linewidth=<span class="number">2</span>)</span><br><span class="line">    plt.plot(w1, w0)</span><br><span class="line">    x = np.linspace(<span class="number">0</span>, <span class="number">8</span>)</span><br><span class="line">    y = w0 + w1 * x</span><br><span class="line">    <span class="comment"># 绘制拟合直线</span></span><br><span class="line">    plt.plot(x, y, color=<span class="string">"red"</span>, label=<span class="string">'拟合直线'</span>, linewidth=<span class="number">2</span>)</span><br><span class="line">    plt.legend(loc=<span class="string">'lower right'</span>)  <span class="comment"># 绘制图例</span></span><br><span class="line"></span><br><span class="line">    plt.show()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">linear_plot()</span><br></pre></td></tr></table></figure></p>
 <p>结果如图：</p>
 <p><img src="\images\pasted-94.png" alt="upload successful"></p>
 
@@ -974,10 +974,6 @@ top:50vh;
     
     
     
-    
-    
-    
-    
     <div class="total-archive"> 总计 : 33 </div>
     
     <div class="post-archive">
@@ -1033,12 +1029,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/25</span><a class="archive-post-title" href= "/2016/11/25/Lua元方法/" >Lua元方法</a>
+            <span class="archive-post-date">11/25</span><a class="archive-post-title" href= "/2016/11/25/Lua面向对象编程/" >Lua面向对象程序设计</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/25</span><a class="archive-post-title" href= "/2016/11/25/Lua面向对象编程/" >Lua面向对象程序设计</a>
+            <span class="archive-post-date">11/25</span><a class="archive-post-title" href= "/2016/11/25/Lua元方法/" >Lua元方法</a>
         </li>
     
     
@@ -1073,7 +1069,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua值与类型/" >Lua值与类型</a>
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua表达式/" >Lua表达式</a>
         </li>
     
     
@@ -1083,7 +1079,17 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua语法基础/" >Lua语法基础</a>
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua函数/" >Lua函数</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua值与类型/" >Lua值与类型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua变量/" >Lua变量</a>
         </li>
     
     
@@ -1093,17 +1099,7 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua函数/" >Lua函数</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua表达式/" >Lua表达式</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua变量/" >Lua变量</a>
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua语法基础/" >Lua语法基础</a>
         </li>
     
     
@@ -1194,15 +1190,21 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="Esper"><span class="iconfont-archer">&#xe606;</span>Esper</span>
+        <span class="sidebar-tag-name" data-tags="EOS"><span class="iconfont-archer">&#xe606;</span>EOS</span>
     
         <span class="sidebar-tag-name" data-tags="java"><span class="iconfont-archer">&#xe606;</span>java</span>
     
+        <span class="sidebar-tag-name" data-tags="Esper"><span class="iconfont-archer">&#xe606;</span>Esper</span>
+    
         <span class="sidebar-tag-name" data-tags="股票"><span class="iconfont-archer">&#xe606;</span>股票</span>
     
-        <span class="sidebar-tag-name" data-tags="EOS"><span class="iconfont-archer">&#xe606;</span>EOS</span>
-    
         <span class="sidebar-tag-name" data-tags="lua"><span class="iconfont-archer">&#xe606;</span>lua</span>
+    
+        <span class="sidebar-tag-name" data-tags="win32"><span class="iconfont-archer">&#xe606;</span>win32</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络工程"><span class="iconfont-archer">&#xe606;</span>网络工程</span>
+    
+        <span class="sidebar-tag-name" data-tags="TCP"><span class="iconfont-archer">&#xe606;</span>TCP</span>
     
         <span class="sidebar-tag-name" data-tags="python"><span class="iconfont-archer">&#xe606;</span>python</span>
     
@@ -1216,23 +1218,17 @@ top:50vh;
     
         <span class="sidebar-tag-name" data-tags="八卦"><span class="iconfont-archer">&#xe606;</span>八卦</span>
     
-        <span class="sidebar-tag-name" data-tags="win32"><span class="iconfont-archer">&#xe606;</span>win32</span>
-    
         <span class="sidebar-tag-name" data-tags="逆向"><span class="iconfont-archer">&#xe606;</span>逆向</span>
     
         <span class="sidebar-tag-name" data-tags="DLL"><span class="iconfont-archer">&#xe606;</span>DLL</span>
     
         <span class="sidebar-tag-name" data-tags="注入"><span class="iconfont-archer">&#xe606;</span>注入</span>
     
-        <span class="sidebar-tag-name" data-tags="MFC"><span class="iconfont-archer">&#xe606;</span>MFC</span>
-    
         <span class="sidebar-tag-name" data-tags="破解"><span class="iconfont-archer">&#xe606;</span>破解</span>
     
         <span class="sidebar-tag-name" data-tags="测试"><span class="iconfont-archer">&#xe606;</span>测试</span>
     
-        <span class="sidebar-tag-name" data-tags="网络工程"><span class="iconfont-archer">&#xe606;</span>网络工程</span>
-    
-        <span class="sidebar-tag-name" data-tags="TCP"><span class="iconfont-archer">&#xe606;</span>TCP</span>
+        <span class="sidebar-tag-name" data-tags="MFC"><span class="iconfont-archer">&#xe606;</span>MFC</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -1245,15 +1241,15 @@ top:50vh;
     
         <span class="sidebar-category-name" data-categories="lua"><span class="iconfont-archer">&#xe60a;</span>lua</span>
     
+        <span class="sidebar-category-name" data-categories="win32"><span class="iconfont-archer">&#xe60a;</span>win32</span>
+    
+        <span class="sidebar-category-name" data-categories="网络工程"><span class="iconfont-archer">&#xe60a;</span>网络工程</span>
+    
         <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
     
         <span class="sidebar-category-name" data-categories="周易"><span class="iconfont-archer">&#xe60a;</span>周易</span>
     
-        <span class="sidebar-category-name" data-categories="win32"><span class="iconfont-archer">&#xe60a;</span>win32</span>
-    
         <span class="sidebar-category-name" data-categories="逆向工程"><span class="iconfont-archer">&#xe60a;</span>逆向工程</span>
-    
-        <span class="sidebar-category-name" data-categories="网络工程"><span class="iconfont-archer">&#xe60a;</span>网络工程</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
