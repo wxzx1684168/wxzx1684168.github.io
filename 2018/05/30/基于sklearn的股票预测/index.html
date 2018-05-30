@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <meta name="description" content="">
+    <title>基于sklearn的股票预测 · 花生肉泥</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180317 as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180317 media="(max-width: 980px)"/>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        
+    <link rel="icon" href= /assets/title.ico>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    <script src="/scripts/main.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >花生肉泥 Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">基于sklearn的股票预测</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>花生肉泥 Blog</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            基于sklearn的股票预测
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "股票">股票</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "python">python</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "机器学习">机器学习</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2018/05/30</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>搞了几天终于搞定这玩意了，也大概搞清楚了一些流程，本来写了用爬虫抓股票信息，但是太慢了，所以直接用了tushare库（财经数据接口包）来获取信息，可以直接得到例如去年2017-01-01至今的数据。不过中途专门安装第三方库都搞了好久。也遇到了好多莫名其妙的问题，所幸还是一一解决了。</p>
+<p>废话不多说，直接贴代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> tushare <span class="keyword">as</span> ts</span><br><span class="line"><span class="keyword">import</span> matplotlib.dates <span class="keyword">as</span> mdates</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"><span class="keyword">from</span> matplotlib.dates <span class="keyword">import</span> AutoDateLocator</span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> style</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> preprocessing</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LinearRegression</span><br></pre></td></tr></table></figure></p>
+<p>以上是需要用到的库，其中需要注意的是如果你用的是pandas库来下载数据的话，首先，yahoo、google、edgar的数据源是用不了了的，而且0.6版本的pandas有两个问题，一是datareader方法从<strong>pandas.io.data</strong>转移到了<strong>pandas_datareader.data</strong>下，导入的时候要注意，二是0.6版本的pandas会有个“ImportError: cannot import name ‘is_list_like’”的问题，解决办法就是重新安装库<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install git+https://github.com/pydata/pandas-datareader</span><br></pre></td></tr></table></figure></p>
+<p>只有等作者在以后的版本修复一下了</p>
+<p>接下来获取股票信息<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">codeName = <span class="string">'sh601001'</span>   <span class="comment"># 股票代码</span></span><br><span class="line">starDate = <span class="string">'2017-01-01'</span>     <span class="comment"># 起始日期</span></span><br><span class="line">endDate = time.strftime(<span class="string">"%Y/%m/%d"</span>)     <span class="comment"># 结束日期 我这里默认是当天的日期     </span></span><br><span class="line">data = ts.get_hist_data(codeName, start=starDate, end=endDate)      <span class="comment"># 获取信息</span></span><br></pre></td></tr></table></figure></p>
+<p>大概格式如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">            open  high  close   low     volume  price_change  p_change    ma5  \</span><br><span class="line">date                                                                            </span><br><span class="line"><span class="number">2018</span><span class="number">-05</span><span class="number">-30</span>  <span class="number">5.35</span>  <span class="number">5.37</span>   <span class="number">5.13</span>  <span class="number">5.12</span>   <span class="number">86686.50</span>         <span class="number">-0.27</span>     <span class="number">-5.00</span>  <span class="number">5.336</span>   </span><br><span class="line"><span class="number">2018</span><span class="number">-05</span><span class="number">-29</span>  <span class="number">5.37</span>  <span class="number">5.44</span>   <span class="number">5.39</span>  <span class="number">5.36</span>   <span class="number">42680.93</span>          <span class="number">0.03</span>      <span class="number">0.56</span>  <span class="number">5.410</span>   </span><br><span class="line"><span class="number">2018</span><span class="number">-05</span><span class="number">-28</span>  <span class="number">5.33</span>  <span class="number">5.41</span>   <span class="number">5.37</span>  <span class="number">5.29</span>   <span class="number">46136.34</span>          <span class="number">0.04</span>      <span class="number">0.75</span>  <span class="number">5.468</span>   </span><br><span class="line"><span class="number">2018</span><span class="number">-05</span><span class="number">-25</span>  <span class="number">5.46</span>  <span class="number">5.50</span>   <span class="number">5.33</span>  <span class="number">5.30</span>   <span class="number">67176.92</span>         <span class="number">-0.13</span>     <span class="number">-2.38</span>  <span class="number">5.530</span>   </span><br><span class="line"><span class="number">2018</span><span class="number">-05</span><span class="number">-24</span>  <span class="number">5.46</span>  <span class="number">5.52</span>   <span class="number">5.46</span>  <span class="number">5.43</span>   <span class="number">51348.99</span>         <span class="number">-0.03</span>     <span class="number">-0.55</span>  <span class="number">5.604</span>   </span><br><span class="line"><span class="number">2018</span><span class="number">-05</span><span class="number">-23</span>  <span class="number">5.64</span>  <span class="number">5.64</span>   <span class="number">5.50</span>  <span class="number">5.43</span>  <span class="number">132375.31</span>         <span class="number">-0.18</span>     <span class="number">-3.17</span>  <span class="number">5.614</span>   </span><br><span class="line"><span class="number">2018</span><span class="number">-05</span><span class="number">-22</span>  <span class="number">5.73</span>  <span class="number">5.73</span>   <span class="number">5.68</span>  <span class="number">5.63</span>   <span class="number">79332.33</span>         <span class="number">-0.01</span>     <span class="number">-0.18</span>  <span class="number">5.612</span>   </span><br><span class="line"><span class="number">2018</span><span class="number">-05</span><span class="number">-21</span>  <span class="number">5.67</span>  <span class="number">5.74</span>   <span class="number">5.68</span>  <span class="number">5.61</span>  <span class="number">129048.71</span>         <span class="number">-0.03</span>     <span class="number">-0.53</span>  <span class="number">5.582</span>   </span><br><span class="line"><span class="number">2018</span><span class="number">-05</span><span class="number">-18</span>  <span class="number">5.53</span>  <span class="number">5.72</span>   <span class="number">5.70</span>  <span class="number">5.52</span>  <span class="number">164566.48</span>          <span class="number">0.19</span>      <span class="number">3.45</span>  <span class="number">5.548</span>   </span><br><span class="line"><span class="number">2018</span><span class="number">-05</span><span class="number">-17</span>  <span class="number">5.46</span>  <span class="number">5.54</span>   <span class="number">5.51</span>  <span class="number">5.46</span>   <span class="number">60344.20</span>          <span class="number">0.03</span>      <span class="number">0.55</span>  <span class="number">5.518</span>   </span><br><span class="line"><span class="number">2018</span><span class="number">-05</span><span class="number">-16</span>  <span class="number">5.48</span>  <span class="number">5.53</span>   <span class="number">5.49</span>  <span class="number">5.46</span>   <span class="number">55381.03</span>         <span class="number">-0.03</span>     <span class="number">-0.54</span>  <span class="number">5.518</span>   </span><br><span class="line"><span class="number">2018</span><span class="number">-05</span><span class="number">-15</span>  <span class="number">5.55</span>  <span class="number">5.55</span>   <span class="number">5.53</span>  <span class="number">5.42</span>   <span class="number">73622.78</span>          <span class="number">0.03</span>      <span class="number">0.55</span>  <span class="number">5.510</span>   </span><br><span class="line"><span class="number">2018</span><span class="number">-05</span><span class="number">-14</span>  <span class="number">5.55</span>  <span class="number">5.61</span>   <span class="number">5.51</span>  <span class="number">5.48</span>   <span class="number">85036.80</span>         <span class="number">-0.05</span>     <span class="number">-0.90</span>  <span class="number">5.480</span>   </span><br><span class="line"><span class="number">2018</span><span class="number">-05</span><span class="number">-11</span>  <span class="number">5.51</span>  <span class="number">5.62</span>   <span class="number">5.55</span>  <span class="number">5.46</span>  <span class="number">119567.14</span>          <span class="number">0.04</span>      <span class="number">0.73</span>  <span class="number">5.454</span>   </span><br><span class="line"><span class="number">2018</span><span class="number">-05</span><span class="number">-10</span>  <span class="number">5.49</span>  <span class="number">5.58</span>   <span class="number">5.51</span>  <span class="number">5.49</span>  <span class="number">110337.44</span>          <span class="number">0.05</span>      <span class="number">0.92</span>  <span class="number">5.402</span>   </span><br><span class="line"><span class="number">2018</span><span class="number">-05</span><span class="number">-09</span>  <span class="number">5.39</span>  <span class="number">5.48</span>   <span class="number">5.45</span>  <span class="number">5.38</span>  <span class="number">153947.75</span>          <span class="number">0.06</span>      <span class="number">1.11</span>  <span class="number">5.364</span>   </span><br><span class="line"><span class="number">2018</span><span class="number">-05</span><span class="number">-08</span>  <span class="number">5.40</span>  <span class="number">5.42</span>   <span class="number">5.38</span>  <span class="number">5.36</span>   <span class="number">86968.29</span>         <span class="number">-0.01</span>     <span class="number">-0.19</span>  <span class="number">5.332</span>   </span><br><span class="line"><span class="number">2018</span><span class="number">-05</span><span class="number">-07</span>  <span class="number">5.29</span>  <span class="number">5.42</span>   <span class="number">5.38</span>  <span class="number">5.29</span>  <span class="number">103588.98</span>          <span class="number">0.09</span>      <span class="number">1.70</span>  <span class="number">5.326</span>   </span><br><span class="line"><span class="number">2018</span><span class="number">-05</span><span class="number">-04</span>  <span class="number">5.28</span>  <span class="number">5.34</span>   <span class="number">5.29</span>  <span class="number">5.27</span>   <span class="number">59665.61</span>         <span class="number">-0.02</span>     <span class="number">-0.38</span>  <span class="number">5.306</span>   </span><br><span class="line"><span class="number">2018</span><span class="number">-05</span><span class="number">-03</span>  <span class="number">5.26</span>  <span class="number">5.32</span>   <span class="number">5.32</span>  <span class="number">5.23</span>   <span class="number">73446.02</span>          <span class="number">0.03</span>      <span class="number">0.57</span>  <span class="number">5.312</span>   </span><br><span class="line"><span class="number">2018</span><span class="number">-05</span><span class="number">-02</span>  <span class="number">5.29</span>  <span class="number">5.33</span>   <span class="number">5.29</span>  <span class="number">5.17</span>  <span class="number">107738.95</span>         <span class="number">-0.05</span>     <span class="number">-0.94</span>  <span class="number">5.324</span>   </span><br><span class="line"><span class="number">2018</span><span class="number">-04</span><span class="number">-27</span>  <span class="number">5.35</span>  <span class="number">5.38</span>   <span class="number">5.35</span>  <span class="number">5.29</span>   <span class="number">82541.35</span>          <span class="number">0.07</span>      <span class="number">1.33</span>  <span class="number">5.324</span>   </span><br><span class="line"><span class="number">2018</span><span class="number">-04</span><span class="number">-26</span>  <span class="number">5.33</span>  <span class="number">5.36</span>   <span class="number">5.28</span>  <span class="number">5.23</span>   <span class="number">72458.88</span>         <span class="number">-0.05</span>     <span class="number">-0.94</span>  <span class="number">5.302</span>   </span><br><span class="line"><span class="number">2018</span><span class="number">-04</span><span class="number">-25</span>  <span class="number">5.35</span>  <span class="number">5.36</span>   <span class="number">5.32</span>  <span class="number">5.30</span>   <span class="number">49497.68</span>         <span class="number">-0.07</span>     <span class="number">-1.30</span>  <span class="number">5.326</span>   </span><br><span class="line"><span class="number">2018</span><span class="number">-04</span><span class="number">-24</span>  <span class="number">5.30</span>  <span class="number">5.41</span>   <span class="number">5.38</span>  <span class="number">5.30</span>   <span class="number">86297.36</span>          <span class="number">0.08</span>      <span class="number">1.51</span>  <span class="number">5.322</span>   </span><br><span class="line">······</span><br></pre></td></tr></table></figure></p>
+<p>其中有一些数据是我们不需要的，我们需要的只有开盘价、收盘价、最高价、最低价、成交量，并计算出他的<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 构建数据集</span></span><br><span class="line">df = data[[<span class="string">'open'</span>, <span class="string">'high'</span>, <span class="string">'low'</span>, <span class="string">'close'</span>, <span class="string">'volume'</span>]]</span><br><span class="line"><span class="comment"># print(df.head())</span></span><br><span class="line">df[<span class="string">'HL_PCT'</span>] = (df[<span class="string">'high'</span>] - df[<span class="string">'low'</span>]) / df[<span class="string">'close'</span>] * <span class="number">100.0</span></span><br><span class="line"><span class="comment"># 上涨幅度（阳线）</span></span><br><span class="line">df[<span class="string">'PCT_change'</span>] = (df[<span class="string">'close'</span>] - df[<span class="string">'open'</span>]) / df[<span class="string">'open'</span>] * <span class="number">100.0</span></span><br><span class="line">df = df[[<span class="string">'close'</span>, <span class="string">'HL_PCT'</span>, <span class="string">'PCT_change'</span>, <span class="string">'volume'</span>]]</span><br></pre></td></tr></table></figure></p>
+<p>em…..其实我也不是很清楚为什么要用这两个数据来进行预测，因为我不是炒股的，但看见有人这么用就假装很懂的用上吧，这里不重要……恩….不重要……</p>
+<p>接下来进行预测</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">forecast_col = <span class="string">'close'</span></span><br><span class="line"><span class="comment"># fillna()填充nan数据，返回填充后的结果，inplace=True表示在原dataFrame中修改</span></span><br><span class="line">df.fillna(<span class="number">0</span>, inplace=<span class="keyword">True</span>)</span><br><span class="line"><span class="comment"># forecast_out表示往后预测的天数 math.ceil 将小数向整数进位</span></span><br><span class="line">forecast_out = int(math.ceil(<span class="number">0.01</span> * len(df)))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">df[<span class="string">'label'</span>] = df[forecast_col].shift(-forecast_out)</span><br><span class="line"></span><br><span class="line"><span class="comment"># print(df.shape)</span></span><br><span class="line"><span class="comment"># print(df.tail())</span></span><br><span class="line"><span class="comment"># X只需要前面四个数据</span></span><br><span class="line">X = np.array(df.drop([<span class="string">'label'</span>], <span class="number">1</span>))</span><br><span class="line"><span class="comment"># 使用preprocessing.scale()进行数据预处理</span></span><br><span class="line">X = preprocessing.scale(X)</span><br><span class="line"><span class="comment"># X_lately表示forecast_out天后的数据集，对应y值为NAN</span></span><br><span class="line">X_lately = X[:forecast_out]</span><br><span class="line">X = X[:-forecast_out]</span><br><span class="line"><span class="comment"># 将数据中带有NAN缺失值的数据删除</span></span><br><span class="line">df.dropna(inplace=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line">y = np.array(df[<span class="string">'label'</span>])</span><br><span class="line"><span class="comment"># print(y)</span></span><br><span class="line"><span class="comment"># print(X.shape)</span></span><br><span class="line"><span class="comment"># print(y.shape)</span></span><br></pre></td></tr></table></figure>
+<p>接下来使用sklearn(机器学习库)中的train_test_split()方法来进行训练，这是用来随机划分训练集和测试集的。这里要说一下的是，以前这个方法是在<strong>sklearn.cross_validation</strong>下的，现在已经转移到了<strong>sklearn.model_selection</strong>下了。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将数据集的80%作为训练，20%为测试集</span></span><br><span class="line">X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=<span class="number">0.2</span>)</span><br><span class="line">clf = LinearRegression()</span><br><span class="line">clf.fit(X_train, y_train)</span><br><span class="line">accuracy = clf.score(X_test, y_test)</span><br><span class="line">print(accuracy)</span><br></pre></td></tr></table></figure></p>
+<p>这里clf.score()的意思是正实例占所有正实例的比例，意思可以理解为准确度，理论上作为训练集的数据越多，准确度越高。而且我用了LinearRegression()做回归器，合理性有待商榷，其它的方法我也没有试验过，也许还有更合理的方法。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用训练好的clf模型去预测X_lately(X_lately表示forecast_out天后的数据集)</span></span><br><span class="line">forecast_set = clf.predict(X_lately)</span><br><span class="line">df[<span class="string">'forecast'</span>] = np.nan</span><br><span class="line"><span class="comment"># iloc通过行号索引行数据</span></span><br><span class="line">last_date = df.iloc[<span class="number">1</span>].name</span><br><span class="line">last_unix = time.mktime(time.strptime(last_date, <span class="string">'%Y-%m-%d'</span>))</span><br><span class="line">one_day = <span class="number">86400</span>  <span class="comment"># 24*60*60</span></span><br><span class="line"><span class="comment"># next_unix 22+1=23号</span></span><br><span class="line">next_unix = last_unix + one_day</span><br><span class="line"><span class="comment"># 为预测数据添加时间戳</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> forecast_set:</span><br><span class="line">    next_unix += <span class="number">86400</span></span><br><span class="line">    next_date = datetime.datetime.fromtimestamp(next_unix)</span><br><span class="line">    next_dateStr = next_date.strftime(<span class="string">"%Y-%m-%d"</span>)</span><br><span class="line">    df.loc[next_dateStr] = [np.nan <span class="keyword">for</span> _ <span class="keyword">in</span> range(len(df.columns) - <span class="number">1</span>)] + [i]</span><br></pre></td></tr></table></figure></p>
+<p>这里将预测出来的forecast_out天后的数据添加到总数据当中，并添加好时间戳。</p>
+<p>到这里为止，我们所有的数据都准备完成了(下载数据→分析→训练→验证→预测→整合)，接下来就是使用matplotlib库来画图了<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 生成横纵坐标信息</span></span><br><span class="line">data_time = df.index</span><br><span class="line">data_time_translation = [datetime.datetime.strptime(d, <span class="string">'%Y-%m-%d'</span>).date() <span class="keyword">for</span> d <span class="keyword">in</span> data_time]</span><br><span class="line">data_close = df[<span class="string">'close'</span>].values</span><br><span class="line">data_forecast = df[<span class="string">'forecast'</span>].values</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取端点坐标</span></span><br><span class="line">data_forecastP = len(data_forecast[~np.isnan(data_forecast)])</span><br><span class="line"></span><br><span class="line">Xi = [data_time_translation[<span class="number">0</span>], data_time_translation[-data_forecastP]]</span><br><span class="line">Yi = [data_close[<span class="number">0</span>], data_forecast[-data_forecastP]]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置时间坐标轴</span></span><br><span class="line">plt.gca().xaxis.set_major_formatter(mdates.DateFormatter(<span class="string">'%Y-%m-%d'</span>))  <span class="comment"># 显示时间坐标的格式</span></span><br><span class="line">autodates = AutoDateLocator()  <span class="comment"># 时间间隔自动选取</span></span><br><span class="line">plt.gca().xaxis.set_major_locator(autodates)</span><br></pre></td></tr></table></figure></p>
+<p>由于我们将原始数据画一条线，预测的数据用另一条线代替，所以会造成两条线中间是断开的，这里计算出了原始数据线的末尾点和预测线的开始点，用第三条线连接起来（其实只是为了好看）</p>
+<p>最后画图<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 绘制原始数据线</span></span><br><span class="line">plt.plot(data_time_translation, data_close, color=<span class="string">'r'</span>, label=<span class="string">'原始数据'</span>, lw=<span class="number">1.5</span>)</span><br><span class="line"><span class="comment"># 绘制预测走势线</span></span><br><span class="line">plt.plot(data_time_translation, data_forecast, color=<span class="string">'b'</span>, label=<span class="string">'预测走势'</span>, lw=<span class="number">1.5</span>)</span><br><span class="line"><span class="comment"># 将上面两条线连接起来</span></span><br><span class="line">plt.plot(Xi, Yi, color=<span class="string">'b'</span>, lw=<span class="number">1.5</span>)</span><br><span class="line">plt.gcf().autofmt_xdate()  <span class="comment"># 自动旋转日期标记</span></span><br><span class="line">plt.rcParams[<span class="string">'font.sans-serif'</span>] = [<span class="string">'SimHei'</span>]	<span class="comment"># 设置字体，不然无法显示中文</span></span><br><span class="line">plt.grid(<span class="keyword">True</span>)	<span class="comment"># 显示网格</span></span><br><span class="line">plt.axis(<span class="string">"tight"</span>)	<span class="comment"># 修改x、y坐标的范围让所有的数据显示出来</span></span><br><span class="line">plt.xlabel(<span class="string">'日期'</span>)	<span class="comment"># 横坐标说明</span></span><br><span class="line">plt.ylabel(<span class="string">'价格'</span>)	<span class="comment"># 纵坐标说明</span></span><br><span class="line">plt.title(<span class="string">'股票代码：'</span> + codeName)	<span class="comment"># 标题</span></span><br><span class="line">plt.legend(loc=<span class="string">'lower left'</span>)	<span class="comment"># 显示图例</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></p>
+<p>最终结果如下：</p>
+<p><img src="\images\pasted-96.png" alt="upload successful"></p>
+<p>放大，放大，再放大！</p>
+<p><img src="\images\pasted-97.png" alt="upload successful"></p>
+<p>其中红线是真实数据，蓝线是通过机器预测出来的数剧，最后附上forecast_out(预测天数)和accuracy(准确率)的值<br><img src="\images\pasted-98.png" alt="upload successful"><br>好了，这个基于sklearn的股票预测就完成了。不过应该不会有人真的按照这个结果去买股吧，毕竟影响股票价格的因素太多了，不是单单能通过机器预测出来的，娱乐娱乐就好了。</p>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">下一篇文章</div>
+                <a href= "/2018/05/27/python最小二乘法/" title= python最小二乘法 >
+                    <div class="prevTitle">python最小二乘法</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+<div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        // id: "基于sklearn的股票预测", // 可选。默认为 location.href
+        owner: 'wxzx1684168',
+        repo: 'wxzx1684168.github.io',
+        oauth: {
+            client_id: '7280d255a529324c9198',
+            client_secret: '89fdf02f804bf55f75f10ff82fb9f433b7e336e6',
+        },
+    })
+    gitment.render('container')
+
+</script>
+
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:575645523@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/wxzx1684168" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/example_qr.png" />
+                </span>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer qq" title=qq>
+                  
+                  <img class="profile-qr" src="/assets/qq_qr.jpg" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+        <font color="f5f5f5">
+		<span id="busuanzi_container_site_uv">UV: <span id="busuanzi_value_site_uv"></span>
+        </span>
+		</font>
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">归档</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">标签</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">类别</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> 总计 : 34 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/30</span><a class="archive-post-title" href= "/2018/05/30/基于sklearn的股票预测/" >基于sklearn的股票预测</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/27</span><a class="archive-post-title" href= "/2018/05/27/python最小二乘法/" >python最小二乘法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2018/04/22/测试测试/" >测试测试</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/23</span><a class="archive-post-title" href= "/2017/08/23/周易-占卦方式/" >周易-占卦方式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/22</span><a class="archive-post-title" href= "/2017/08/22/周易-2基本象征/" >周易-2基本象征</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/21</span><a class="archive-post-title" href= "/2017/08/21/周易-1基本概念/" >周易-1基本概念</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2016 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/25</span><a class="archive-post-title" href= "/2016/11/25/Lua元方法/" >Lua元方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/25</span><a class="archive-post-title" href= "/2016/11/25/Lua面向对象编程/" >Lua面向对象程序设计</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/24</span><a class="archive-post-title" href= "/2016/11/24/Lua循环优化/" >Lua循环优化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/23</span><a class="archive-post-title" href= "/2016/11/23/Lua匹配符/" >Lua匹配符</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2016/11/09/Lua中-和/" >Lua中.和:</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2016/11/08/Lua标准库-string库/" >Lua标准库-string库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2016/11/08/Lua标准库-math库/" >Lua标准库-math库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2016/11/08/Lua标准库-table库/" >Lua标准库-table库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua值与类型/" >Lua值与类型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua元表/" >Lua元表</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua函数/" >Lua函数</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua语法基础/" >Lua语法基础</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua变量/" >Lua变量</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua表达式/" >Lua表达式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua模块与包/" >Lua模块与包</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua语句段/" >Lua语句段</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/27</span><a class="archive-post-title" href= "/2016/09/27/Epl语句/" >Epl语句</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/进程模型/" >进程模型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/Esper-Demo/" >Esper Demo</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/15</span><a class="archive-post-title" href= "/2016/06/15/注入DLL/" >注入DLL</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/31</span><a class="archive-post-title" href= "/2016/05/31/破解MFCApplication1/" >破解MFCApplication1</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/26</span><a class="archive-post-title" href= "/2016/05/26/Win32基本程序概念/" >Win32基本程序概念</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/25</span><a class="archive-post-title" href= "/2016/05/25/破解MFC弹出窗口/" >破解MFC弹出窗口</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/18</span><a class="archive-post-title" href= "/2016/05/18/分析TCP协议/" >分析TCP协议</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2015 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/23</span><a class="archive-post-title" href= "/2015/07/23/EOS创建Helloworld/" >EOS创建Helloworld</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/22</span><a class="archive-post-title" href= "/2015/03/22/验证用户是否登陆的拦截器/" >验证用户是否登陆的拦截器</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/22</span><a class="archive-post-title" href= "/2015/02/22/JAVA/" >Java中使用中文转化为拼音</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2000 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2000/01/01/hello-world/" >Hello World</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="Esper"><span class="iconfont-archer">&#xe606;</span>Esper</span>
+    
+        <span class="sidebar-tag-name" data-tags="java"><span class="iconfont-archer">&#xe606;</span>java</span>
+    
+        <span class="sidebar-tag-name" data-tags="股票"><span class="iconfont-archer">&#xe606;</span>股票</span>
+    
+        <span class="sidebar-tag-name" data-tags="lua"><span class="iconfont-archer">&#xe606;</span>lua</span>
+    
+        <span class="sidebar-tag-name" data-tags="EOS"><span class="iconfont-archer">&#xe606;</span>EOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="python"><span class="iconfont-archer">&#xe606;</span>python</span>
+    
+        <span class="sidebar-tag-name" data-tags="数学"><span class="iconfont-archer">&#xe606;</span>数学</span>
+    
+        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络工程"><span class="iconfont-archer">&#xe606;</span>网络工程</span>
+    
+        <span class="sidebar-tag-name" data-tags="TCP"><span class="iconfont-archer">&#xe606;</span>TCP</span>
+    
+        <span class="sidebar-tag-name" data-tags="周易"><span class="iconfont-archer">&#xe606;</span>周易</span>
+    
+        <span class="sidebar-tag-name" data-tags="易经"><span class="iconfont-archer">&#xe606;</span>易经</span>
+    
+        <span class="sidebar-tag-name" data-tags="八卦"><span class="iconfont-archer">&#xe606;</span>八卦</span>
+    
+        <span class="sidebar-tag-name" data-tags="逆向"><span class="iconfont-archer">&#xe606;</span>逆向</span>
+    
+        <span class="sidebar-tag-name" data-tags="DLL"><span class="iconfont-archer">&#xe606;</span>DLL</span>
+    
+        <span class="sidebar-tag-name" data-tags="注入"><span class="iconfont-archer">&#xe606;</span>注入</span>
+    
+        <span class="sidebar-tag-name" data-tags="测试"><span class="iconfont-archer">&#xe606;</span>测试</span>
+    
+        <span class="sidebar-tag-name" data-tags="破解"><span class="iconfont-archer">&#xe606;</span>破解</span>
+    
+        <span class="sidebar-tag-name" data-tags="MFC"><span class="iconfont-archer">&#xe606;</span>MFC</span>
+    
+        <span class="sidebar-tag-name" data-tags="win32"><span class="iconfont-archer">&#xe606;</span>win32</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="java"><span class="iconfont-archer">&#xe60a;</span>java</span>
+    
+        <span class="sidebar-category-name" data-categories="lua"><span class="iconfont-archer">&#xe60a;</span>lua</span>
+    
+        <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
+    
+        <span class="sidebar-category-name" data-categories="网络工程"><span class="iconfont-archer">&#xe60a;</span>网络工程</span>
+    
+        <span class="sidebar-category-name" data-categories="周易"><span class="iconfont-archer">&#xe60a;</span>周易</span>
+    
+        <span class="sidebar-category-name" data-categories="逆向工程"><span class="iconfont-archer">&#xe60a;</span>逆向工程</span>
+    
+        <span class="sidebar-category-name" data-categories="win32"><span class="iconfont-archer">&#xe60a;</span>win32</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: 'ZhouXin'
+    }
+</script>
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    <script src="/node_modules/live2d-widget/node_modules/live2d-widget/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"node_modules/live2d-widget/","pluginJsPath":"node_modules/live2d-widget/lib/","pluginModelPath":"node_modules/live2d-widget-model-koharu/assets/","model":{"jsonPath":"/node_modules/live2d-widget/node_modules/live2d-widget-model-koharu/assets/koharu.model.json"},"mobile":{"show":true,"scale":0.2},"react":{"opacityDefault":1,"opacityOnHover":0},"display":{"superSample":1}});</script></body>
+</html>
+
+
