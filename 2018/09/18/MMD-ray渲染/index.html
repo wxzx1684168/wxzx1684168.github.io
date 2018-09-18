@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <meta name="description" content="">
+    <title>MMD-ray渲染 · 花生肉泥</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180317 as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180317 media="(max-width: 980px)"/>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        
+    <link rel="icon" href= /assets/title.ico>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    <script src="/scripts/main.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >花生肉泥 Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">MMD-ray渲染</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>花生肉泥 Blog</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            MMD-ray渲染
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+                <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "MMD">MMD</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "渲染">渲染</a>
+    
+</div>
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2018/09/18</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>用到的软件：</p>
+<p>MikuMikudance Ver.9.26 / MikuMikuEffect Ver.0.37</p>
+<p>用到的MME:</p>
+<p>ray-mmd-1.5.0 / AutoLuminous4 / Diffusion7 / SSAO / Workingfloor2_v004 / XDOF</p>
+<h1 id="第一步：载入模型以及场景"><a href="#第一步：载入模型以及场景" class="headerlink" title="第一步：载入模型以及场景"></a>第一步：载入模型以及场景</h1><p>首先打开MMD软件，界面如下：</p>
+<p><img src="\images\pasted-99.png" alt="upload successful"></p>
+<p>选择模型操作→载入(或者直接将模型拖入软件中间)</p>
+<p><img src="\images\pasted-100.png" alt="upload successful"></p>
+<p>最终结果如下：</p>
+<p><img src="\images\pasted-101.png" alt="upload successful"></p>
+<p>可以看到 其中c10402-boness2是琪亚娜模型，Stage_Concert是背景舞台的模型<br><img src="\images\pasted-102.png" alt="upload successful"></p>
+<h1 id="第二步：载入渲染工具"><a href="#第二步：载入渲染工具" class="headerlink" title="第二步：载入渲染工具"></a>第二步：载入渲染工具</h1><p>这里使用的是ray渲染，详细信息可以关注<a href="https://github.com/ray-cast/ray-mmd" target="_blank" rel="noopener">ray的github地址</a></p>
+<p>下载完解压以后是如下界面</p>
+<p><img src="\images\pasted-103.png" alt="upload successful"></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">文件名</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Extension</td>
+<td style="text-align:left">除主渲染以外的一些独立的MME特效文件</td>
+</tr>
+<tr>
+<td style="text-align:left">Fog</td>
+<td style="text-align:left">对场景添加大气雾，地面雾的雾气特效</td>
+</tr>
+<tr>
+<td style="text-align:left">Lighting</td>
+<td style="text-align:left">除主光源以外的额外多光源，可以支持点光源，聚光灯，区域光，IES等</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Main</strong></td>
+<td style="text-align:left"><strong>MME的Main标签栏中必须挂载的特效文件</strong></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Materials</strong></td>
+<td style="text-align:left"><strong>对不同的模型给于不同的材质，达到不同的质感</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Outline</td>
+<td style="text-align:left">当启用绘制轮廓线时，用于设置物体外轮廓线粗细以及颜色</td>
+</tr>
+<tr>
+<td style="text-align:left">Shader</td>
+<td style="text-align:left">渲染库内部的公用代码，不需要了解</td>
+</tr>
+<tr>
+<td style="text-align:left">Shadow</td>
+<td style="text-align:left">用于主光源的阴影渲染，以及控制SSAO强度的fx文件</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>Skybox</strong></td>
+<td style="text-align:left"><strong>天空盒，详细说明请参考此链接</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">Tools</td>
+<td style="text-align:left">制作天空盒和IES光源需要用到的执行文件</td>
+</tr>
+<tr>
+<td style="text-align:left">LICENSE.txt</td>
+<td style="text-align:left">基于MIT的发行协议，README_chs.md 有详细的中文说明</td>
+</tr>
+<tr>
+<td style="text-align:left">ray.conf</td>
+<td style="text-align:left">Ray-MMD 的配置文件，修改后需要打开ray.fx对它保存一下用于通知MMD再次编译</td>
+</tr>
+<tr>
+<td style="text-align:left">ray.fx</td>
+<td style="text-align:left">Ray-MMD 的Effect文件，通过ray.conf来禁用启用一些特效</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>ray.x</strong></td>
+<td style="text-align:left"><strong>MME允许通过读取x文件绑定的fx文件，从而对模型进行渲染</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">ray_advanced.conf</td>
+<td style="text-align:left">Ray-MMD 的配置文件的微调，通常情况下不需要修改</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>ray_controller.pmx</strong></td>
+<td style="text-align:left"><strong>实时的对 Ray-MMD 进行参数调整</strong></td>
+</tr>
+<tr>
+<td style="text-align:left">README.md</td>
+<td style="text-align:left">语言编写的英文版自述文件，用于在Github展示</td>
+</tr>
+<tr>
+<td style="text-align:left">README_chs.md</td>
+<td style="text-align:left">语言编写的中文版自述文件，用于在Github展示</td>
+</tr>
+</tbody>
+</table>
+<p>（以上加粗部分是本次需要用到的文件）</p>
+<p>在载入ray之前先要对MMD进行一些设定：</p>
+<p><img src="\images\pasted-105.png" alt="upload successful"><br>将坐标轴显示和抗锯齿取消勾选(ray自带抗锯齿，如果MMD的抗锯齿是打开的话，可能会出现模型拖影的问题)</p>
+<p>接下来把ray文件夹中的ray.x以及ray_controller.pmx拖入MMD中，也可从左下角模型操作→载入</p>
+<p>然后将Skybox中的天空球随便选一个载入MMD，这里我选择的是Skybox→Time of day→Time of day.pmx</p>
+<p>效果如下所示：</p>
+<p><img src="\images\pasted-108.png" alt="upload successful"></p>
+<p>接下来选择背景→模型描画顺序，将天空球(此处名字是time of day)调整到第一位。</p>
+<p><img src="\images\pasted-109.png" alt="upload successful"><br><img src="\images\pasted-110.png" alt="upload successful"></p>
+<p>然后需要对刚刚导入的模型，天空球等进行一些基本的设定，选择右上角的MMEffect打开MME控制面板</p>
+<p><img src="\images\pasted-111.png" alt="upload successful"></p>
+<p>在Main面板中，将背景模型和人物模型的Effect file设置为Main→main.fx。<br><img src="\images\pasted-112.png" alt="upload successful"></p>
+<p>然后打开EnvLightMap面板，将天空球的Effect file设置为Skybox→Helipad GoldenHour→Sky with lighting.fx<br><img src="\images\pasted-113.png" alt="upload successful"></p>
+<h1 id="第三步：载入额外的特效"><a href="#第三步：载入额外的特效" class="headerlink" title="第三步：载入额外的特效"></a>第三步：载入额外的特效</h1><p>这里讲前文提到的AutoLuminous4 / Diffusion7 / SSAO / Workingfloor2_v004 / XDOF这几个特效载入进去，其中：</p>
+<p>AutoLuminous4 - 自发光</p>
+<p>Diffusion7 - 柔滑</p>
+<p>SSAO - 阴影加强(也可用ray实现)</p>
+<p>Workingfloor2_v004 - 地板反光特效</p>
+<p>XDOF - 背景虚化</p>
+<p>基本上以上的5个特效都是我通常会添加的特效</p>
+<p>选择附件操作→载入，或者直接将.x文件拖入MMD即可<br><img src="\images\pasted-114.png" alt="upload successful"></p>
+<p>全部载入后效果如下</p>
+<p><img src="\images\pasted-115.png" alt="upload successful"><br>接下来将详细设置每个特效的参数</p>
+<h1 id="第四步：特效参数设置"><a href="#第四步：特效参数设置" class="headerlink" title="第四步：特效参数设置"></a>第四步：特效参数设置</h1><h2 id="1、AutoLuminous4"><a href="#1、AutoLuminous4" class="headerlink" title="1、AutoLuminous4"></a>1、AutoLuminous4</h2><p><img src="\images\pasted-116.png" alt="upload successful"><br>其中：Si：发光强度、Tr：扩散强度、X:光芒射出数量、Y:辉度调整、Rx：光芒角度调整、Ry：光芒长度、Rz：闪烁周期</p>
+<p>这里我只调整了一下发光强度，更加详细的参数设定可以自行咨询百度：</p>
+<p><img src="\images\pasted-118.png" alt="upload successful"><br><img src="\images\pasted-117.png" alt="upload successful"><br>(上Si:1.0 下Si:1.5)</p>
+<p>接下来打开MME面板的AL_EmitterRT面板，右键模型展开，选择背后披风的材质，将自发光取消，不然会有如下图1一样的刺眼的光<br><img src="\images\pasted-120.png" alt="upload successful"><br><img src="\images\pasted-119.png" alt="upload successful"></p>
+<h2 id="2、Diffusion7"><a href="#2、Diffusion7" class="headerlink" title="2、Diffusion7"></a>2、Diffusion7</h2><p><img src="\images\pasted-121.png" alt="upload successful"><br>其中XYZ对应色彩RGB Si:大小，其内置参数可以打开diffusion7.fx进行详细调整，这里我就不动了。</p>
+<p><img src="\images\pasted-122.png" alt="upload successful"><br><img src="\images\pasted-123.png" alt="upload successful"><br>(上无 下有)</p>
+<h2 id="3、SSAO"><a href="#3、SSAO" class="headerlink" title="3、SSAO"></a>3、SSAO</h2><p>加入SSAO(阴影)后会使人物更有层次感</p>
+<p><img src="\images\pasted-124.png" alt="upload successful"><br><img src="\images\pasted-125.png" alt="upload successful"><br>(上无 下有)</p>
+<p>可以看出人物周边有一些黑色的线，这里需要先把模型操作选中模型，然后选择轮廓线大小<br><img src="\images\pasted-126.png" alt="upload successful"><br>改为0即可</p>
+<p><img src="\images\pasted-127.png" alt="upload successful"><br><img src="\images\pasted-128.png" alt="upload successful"></p>
+<h2 id="4、Workingfloor2-v004"><a href="#4、Workingfloor2-v004" class="headerlink" title="4、Workingfloor2_v004"></a>4、Workingfloor2_v004</h2><p>这个插件是实现地板反光特效<br><img src="\images\pasted-129.png" alt="upload successful"><br><img src="\images\pasted-130.png" alt="upload successful"><br>(上修改前 下修改后)</p>
+<p><img src="\images\pasted-131.png" alt="upload successful"><br>默认Si、Tr是1，Si范围太小，Tr反射强度太大，我修改为了Si=10,Tr=0.25</p>
+<h2 id="5、XDOF"><a href="#5、XDOF" class="headerlink" title="5、XDOF"></a>5、XDOF</h2><p>XDOF背景虚化</p>
+<p><img src="\images\pasted-132.png" alt="upload successful"><br><img src="\images\pasted-133.png" alt="upload successful"><br>(上Si=1 下Si=5)</p>
+<p>其中Si是控制虚化强度，按自己喜好设定就好，其中要注意的是<br><img src="\images\pasted-134.png" alt="upload successful"><br>载入按钮下面选择模型，绑定一个骨骼，这个虚化就会以绑定的骨骼为中心虚化背景，不然的话可能会出现背景和人物一起虚化了的情况</p>
+<h1 id="第五步：人物材质"><a href="#第五步：人物材质" class="headerlink" title="第五步：人物材质"></a>第五步：人物材质</h1><p>以上步骤完成后可以看到场景基本上可以了，接下来就要对人物各个部位进行材质修改</p>
+<p>首先打开MME中MeteriaMap面板，右键模型选择展开，就可以看到这个模型的所有贴图，接下来就要对各个贴图赋予适合的材质，其中可以勾选贴图前面的复选框查看修改的部位在哪里。<br><img src="\images\pasted-135.png" alt="upload successful"></p>
+<p>双击贴图后面的effict file从ray文件夹的Materials中选择材质。</p>
+<p><img src="\images\pasted-136.png" alt="upload successful"></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">文件夹</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">ClearCoat</td>
+<td style="text-align:left">模拟物体涂上一层透明清漆的双层材质，例如车漆</td>
+</tr>
+<tr>
+<td style="text-align:left">Cloth</td>
+<td style="text-align:left">模拟布料的反射，内置有白色黑色以及根据贴图确定颜色</td>
+</tr>
+<tr>
+<td style="text-align:left">Editor</td>
+<td style="text-align:left">可以通过PMX文件来略微调整材质的属性</td>
+</tr>
+<tr>
+<td style="text-align:left">Emissive</td>
+<td style="text-align:left">使物体产生自发光，材质并不会产生光源照亮周围场景</td>
+</tr>
+<tr>
+<td style="text-align:left">Hair</td>
+<td style="text-align:left">简单的头发材质</td>
+</tr>
+<tr>
+<td style="text-align:left">Metallic</td>
+<td style="text-align:left">金属，如金，银，铜，铁</td>
+</tr>
+<tr>
+<td style="text-align:left">Programmable</td>
+<td style="text-align:left">水和打湿的材质</td>
+</tr>
+<tr>
+<td style="text-align:left">Skin</td>
+<td style="text-align:left">模拟皮肤的材质</td>
+</tr>
+<tr>
+<td style="text-align:left">Subsurface</td>
+<td style="text-align:left">模拟物体具体半透明特性的材质，如玉器</td>
+</tr>
+<tr>
+<td style="text-align:left">Transparent</td>
+<td style="text-align:left">透明材质，适用于眼镜，护目镜，玻璃等</td>
+</tr>
+<tr>
+<td style="text-align:left">Video</td>
+<td style="text-align:left">可以将屏幕渲染的结果作为贴图来使用，需要先放置Extension目录中的DummyScreen.x文件</td>
+</tr>
+<tr>
+<td style="text-align:left">material_2.0.fx</td>
+<td style="text-align:left">所以模型默认时的材质文件，可以通过它来创造属于你自己的材质</td>
+</tr>
+<tr>
+<td style="text-align:left">material_skybox.fx</td>
+<td style="text-align:left">所有天空盒模型都必须使用此文件</td>
+</tr>
+<tr>
+<td style="text-align:left">material_common_2.0.fxsub</td>
+<td style="text-align:left">每一个材质文件都必须包含一个material_common_2.0.fxsub文件,它是所有材质内部实现的代码</td>
+</tr>
+<tr>
+<td style="text-align:left">README.md</td>
+<td style="text-align:left">英文版的材质说明文件，你可以在Github上预览</td>
+</tr>
+<tr>
+<td style="text-align:left">README_chs.md</td>
+<td style="text-align:left">中文版的材质说明文件，你可以在Github上预览</td>
+</tr>
+</tbody>
+</table>
+<p><img src="\images\pasted-137.png" alt="upload successful"></p>
+<p><img src="\images\pasted-138.png" alt="upload successful"></p>
+<p><img src="\images\pasted-139.png" alt="upload successful"></p>
+<p><img src="\images\pasted-140.png" alt="upload successful"></p>
+<p><img src="\images\pasted-141.png" alt="upload successful"></p>
+<p><img src="\images\pasted-142.png" alt="upload successful"></p>
+<p>附上材质设定，仅供参考<br><img src="\images\pasted-143.png" alt="upload successful"><br><img src="\images\pasted-144.png" alt="upload successful"></p>
+<h1 id="第六步：全局调整"><a href="#第六步：全局调整" class="headerlink" title="第六步：全局调整"></a>第六步：全局调整</h1><p><strong>注意：所有操作完成以后都要点击注册按钮，不然操作无效</strong></p>
+<p><img src="\images\pasted-145.png" alt="upload successful"><br>首先在模型操作中选择之前载入的ray控制器，然后在表情操作中细微调整各个选项，注意的是，调整完以后一定要切换回<img src="\images\pasted-146.png" alt="upload successful">照明模式下才是最终效果。</p>
+<p><img src="\images\pasted-147.png" alt="upload successful"><br>SunLight+/-：调整太阳光的强度，即天空盒光源强度</p>
+<p>SunShadowR/G/B：调整太阳光生成的影子的颜色</p>
+<p>SunShadowV-：降低阴影覆盖区域的明度，让阳光照不到的地方更黑，不过会损失细节。</p>
+<p>MultiLight+/-： 调节ray自带各种光源亮度</p>
+<p>SSAO：屏幕空间环境光遮蔽强度</p>
+<p>SSAORadius：调整SSAO制造的阴影的半径大小</p>
+<p>SSDO：可以理解为SSAO加强版，使明暗过度更柔和，更有层次感</p>
+<p>SSSS：次表面散射强度-是光射入非金属材质后在内部发生散射，最后射出物体并进入视野中产生的现象，是指光从表面进入物体经过内部散射，然后又通过物体表面的其他顶点出射的光线传递过程。类似玉器的半透明材质，当光线进入在内部散射造成一种明亮的感觉，和Materials文件中Subsurface材质</p>
+<p><img src="\images\pasted-148.png" alt="upload successful"><br>testmode：单独测试每个栏目具体效果，一般不用</p>
+<p>其余均为ray自带镜头参数，如果要使用需要在ray.conf里打开bokenh选项，一般都用其它MME例如XDOF等代替更方便</p>
+<p><img src="\images\pasted-149.png" alt="upload successful"><br>BloomThreshold：产生泛光的阀值，光斑，泛光强度，当材质反射光大于这个值时生成泛光</p>
+<p>BloomRadius：泛光的半径</p>
+<p>BloomColorAllH：泛光颜色</p>
+<p>BloomColorAllS：饱和度</p>
+<p>BloomColorAllV：明度</p>
+<p>一般提高阀值，提高明度，降低半径，可以使光斑更亮而且不会因为范围大遮住人物。(AutoLuminous4插件中，调节.x文件，2-十字光斑，1-一字光斑)</p>
+<p>Vignette：暗角</p>
+<p>Dispersion：将色彩分离为三原色</p>
+<p><img src="\images\pasted-150.png" alt="upload successful"><br>Contrast：对比度</p>
+<p>Saturation：饱和度</p>
+<p>Gamma：伽马值</p>
+<p>temperature：色温</p>
+<p>BalanceR/G/B：色彩平衡</p>
+<h1 id="第七步：输出"><a href="#第七步：输出" class="headerlink" title="第七步：输出"></a>第七步：输出</h1><h2 id="1、输出图像"><a href="#1、输出图像" class="headerlink" title="1、输出图像"></a>1、输出图像</h2><p>首先选择 显示→导出尺寸<br><img src="\images\pasted-154.png" alt="upload successful">根据自己电脑性能选择大小</p>
+<p>然后点击文件→图像文件导出即可<br><img src="\images\pasted-155.png" alt="upload successful"></p>
+<h2 id="2、输出动画"><a href="#2、输出动画" class="headerlink" title="2、输出动画"></a>2、输出动画</h2><p>一样先限定导出尺寸，然后你还需要一个动作文件，当各项都调好以后选择文件→AVI文件导出</p>
+<p><img src="\images\pasted-156.png" alt="upload successful"><br>选择好帧率，录制帧（也就是你要输出动画的开头帧和结束帧），<strong>不要选WAVE导出</strong>，视频压缩选择未压缩的话会占用很大的硬盘空间(30G左右，视你导出的帧数大小而定)</p>
+<p> 附一张最终效果图<br><img src="\images\pasted-157.png" alt="upload successful"></p>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">下一篇文章</div>
+                <a href= "/2018/05/30/基于sklearn的股票预测/" title= 基于sklearn的股票预测 >
+                    <div class="prevTitle">基于sklearn的股票预测</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+<div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        // id: "MMD-ray渲染", // 可选。默认为 location.href
+        owner: 'wxzx1684168',
+        repo: 'wxzx1684168.github.io',
+        oauth: {
+            client_id: '7280d255a529324c9198',
+            client_secret: '89fdf02f804bf55f75f10ff82fb9f433b7e336e6',
+        },
+    })
+    gitment.render('container')
+
+</script>
+
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:575645523@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/wxzx1684168" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/example_qr.png" />
+                </span>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer qq" title=qq>
+                  
+                  <img class="profile-qr" src="/assets/qq_qr.jpg" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+        <font color="f5f5f5">
+		<span id="busuanzi_container_site_uv">UV: <span id="busuanzi_value_site_uv"></span>
+        </span>
+		</font>
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#第一步：载入模型以及场景"><span class="toc-number">1.</span> <span class="toc-text">第一步：载入模型以及场景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第二步：载入渲染工具"><span class="toc-number">2.</span> <span class="toc-text">第二步：载入渲染工具</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第三步：载入额外的特效"><span class="toc-number">3.</span> <span class="toc-text">第三步：载入额外的特效</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第四步：特效参数设置"><span class="toc-number">4.</span> <span class="toc-text">第四步：特效参数设置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、AutoLuminous4"><span class="toc-number">4.1.</span> <span class="toc-text">1、AutoLuminous4</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、Diffusion7"><span class="toc-number">4.2.</span> <span class="toc-text">2、Diffusion7</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、SSAO"><span class="toc-number">4.3.</span> <span class="toc-text">3、SSAO</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4、Workingfloor2-v004"><span class="toc-number">4.4.</span> <span class="toc-text">4、Workingfloor2_v004</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5、XDOF"><span class="toc-number">4.5.</span> <span class="toc-text">5、XDOF</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第五步：人物材质"><span class="toc-number">5.</span> <span class="toc-text">第五步：人物材质</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第六步：全局调整"><span class="toc-number">6.</span> <span class="toc-text">第六步：全局调整</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#第七步：输出"><span class="toc-number">7.</span> <span class="toc-text">第七步：输出</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、输出图像"><span class="toc-number">7.1.</span> <span class="toc-text">1、输出图像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、输出动画"><span class="toc-number">7.2.</span> <span class="toc-text">2、输出动画</span></a></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">归档</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">标签</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">类别</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> 总计 : 35 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/18</span><a class="archive-post-title" href= "/2018/09/18/MMD-ray渲染/" >MMD-ray渲染</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/30</span><a class="archive-post-title" href= "/2018/05/30/基于sklearn的股票预测/" >基于sklearn的股票预测</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/27</span><a class="archive-post-title" href= "/2018/05/27/python最小二乘法/" >python最小二乘法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2018/04/22/测试测试/" >测试测试</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/23</span><a class="archive-post-title" href= "/2017/08/23/周易-占卦方式/" >周易-占卦方式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/22</span><a class="archive-post-title" href= "/2017/08/22/周易-2基本象征/" >周易-2基本象征</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/21</span><a class="archive-post-title" href= "/2017/08/21/周易-1基本概念/" >周易-1基本概念</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2016 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/25</span><a class="archive-post-title" href= "/2016/11/25/Lua面向对象编程/" >Lua面向对象程序设计</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/25</span><a class="archive-post-title" href= "/2016/11/25/Lua元方法/" >Lua元方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/24</span><a class="archive-post-title" href= "/2016/11/24/Lua循环优化/" >Lua循环优化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/23</span><a class="archive-post-title" href= "/2016/11/23/Lua匹配符/" >Lua匹配符</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2016/11/09/Lua中-和/" >Lua中.和:</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2016/11/08/Lua标准库-string库/" >Lua标准库-string库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2016/11/08/Lua标准库-math库/" >Lua标准库-math库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2016/11/08/Lua标准库-table库/" >Lua标准库-table库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua语法基础/" >Lua语法基础</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua值与类型/" >Lua值与类型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua元表/" >Lua元表</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua函数/" >Lua函数</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua变量/" >Lua变量</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua表达式/" >Lua表达式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua模块与包/" >Lua模块与包</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua语句段/" >Lua语句段</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/27</span><a class="archive-post-title" href= "/2016/09/27/Epl语句/" >Epl语句</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/进程模型/" >进程模型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/Esper-Demo/" >Esper Demo</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/15</span><a class="archive-post-title" href= "/2016/06/15/注入DLL/" >注入DLL</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/31</span><a class="archive-post-title" href= "/2016/05/31/破解MFCApplication1/" >破解MFCApplication1</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/26</span><a class="archive-post-title" href= "/2016/05/26/Win32基本程序概念/" >Win32基本程序概念</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/25</span><a class="archive-post-title" href= "/2016/05/25/破解MFC弹出窗口/" >破解MFC弹出窗口</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/18</span><a class="archive-post-title" href= "/2016/05/18/分析TCP协议/" >分析TCP协议</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2015 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/23</span><a class="archive-post-title" href= "/2015/07/23/EOS创建Helloworld/" >EOS创建Helloworld</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/22</span><a class="archive-post-title" href= "/2015/03/22/验证用户是否登陆的拦截器/" >验证用户是否登陆的拦截器</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/22</span><a class="archive-post-title" href= "/2015/02/22/JAVA/" >Java中使用中文转化为拼音</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2000 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2000/01/01/hello-world/" >Hello World</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="EOS"><span class="iconfont-archer">&#xe606;</span>EOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="java"><span class="iconfont-archer">&#xe606;</span>java</span>
+    
+        <span class="sidebar-tag-name" data-tags="Esper"><span class="iconfont-archer">&#xe606;</span>Esper</span>
+    
+        <span class="sidebar-tag-name" data-tags="股票"><span class="iconfont-archer">&#xe606;</span>股票</span>
+    
+        <span class="sidebar-tag-name" data-tags="lua"><span class="iconfont-archer">&#xe606;</span>lua</span>
+    
+        <span class="sidebar-tag-name" data-tags="win32"><span class="iconfont-archer">&#xe606;</span>win32</span>
+    
+        <span class="sidebar-tag-name" data-tags="python"><span class="iconfont-archer">&#xe606;</span>python</span>
+    
+        <span class="sidebar-tag-name" data-tags="数学"><span class="iconfont-archer">&#xe606;</span>数学</span>
+    
+        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络工程"><span class="iconfont-archer">&#xe606;</span>网络工程</span>
+    
+        <span class="sidebar-tag-name" data-tags="TCP"><span class="iconfont-archer">&#xe606;</span>TCP</span>
+    
+        <span class="sidebar-tag-name" data-tags="周易"><span class="iconfont-archer">&#xe606;</span>周易</span>
+    
+        <span class="sidebar-tag-name" data-tags="易经"><span class="iconfont-archer">&#xe606;</span>易经</span>
+    
+        <span class="sidebar-tag-name" data-tags="八卦"><span class="iconfont-archer">&#xe606;</span>八卦</span>
+    
+        <span class="sidebar-tag-name" data-tags="逆向"><span class="iconfont-archer">&#xe606;</span>逆向</span>
+    
+        <span class="sidebar-tag-name" data-tags="DLL"><span class="iconfont-archer">&#xe606;</span>DLL</span>
+    
+        <span class="sidebar-tag-name" data-tags="注入"><span class="iconfont-archer">&#xe606;</span>注入</span>
+    
+        <span class="sidebar-tag-name" data-tags="测试"><span class="iconfont-archer">&#xe606;</span>测试</span>
+    
+        <span class="sidebar-tag-name" data-tags="破解"><span class="iconfont-archer">&#xe606;</span>破解</span>
+    
+        <span class="sidebar-tag-name" data-tags="MFC"><span class="iconfont-archer">&#xe606;</span>MFC</span>
+    
+        <span class="sidebar-tag-name" data-tags="MMD"><span class="iconfont-archer">&#xe606;</span>MMD</span>
+    
+        <span class="sidebar-tag-name" data-tags="渲染"><span class="iconfont-archer">&#xe606;</span>渲染</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="java"><span class="iconfont-archer">&#xe60a;</span>java</span>
+    
+        <span class="sidebar-category-name" data-categories="lua"><span class="iconfont-archer">&#xe60a;</span>lua</span>
+    
+        <span class="sidebar-category-name" data-categories="win32"><span class="iconfont-archer">&#xe60a;</span>win32</span>
+    
+        <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
+    
+        <span class="sidebar-category-name" data-categories="网络工程"><span class="iconfont-archer">&#xe60a;</span>网络工程</span>
+    
+        <span class="sidebar-category-name" data-categories="周易"><span class="iconfont-archer">&#xe60a;</span>周易</span>
+    
+        <span class="sidebar-category-name" data-categories="逆向工程"><span class="iconfont-archer">&#xe60a;</span>逆向工程</span>
+    
+        <span class="sidebar-category-name" data-categories="MMD"><span class="iconfont-archer">&#xe60a;</span>MMD</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: 'ZhouXin'
+    }
+</script>
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    <script src="/node_modules/live2d-widget/node_modules/live2d-widget/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"node_modules/live2d-widget/","pluginJsPath":"node_modules/live2d-widget/lib/","pluginModelPath":"node_modules/live2d-widget-model-koharu/assets/","model":{"jsonPath":"/node_modules/live2d-widget/node_modules/live2d-widget-model-koharu/assets/koharu.model.json"},"mobile":{"show":true,"scale":0.2},"react":{"opacityDefault":1,"opacityOnHover":0},"display":{"superSample":1}});</script></body>
+</html>
+
+
