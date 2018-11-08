@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <meta name="description" content="">
+    <title>数据结构-图的遍历 · 花生肉泥</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180317 as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" type="text/css" href= /css/mobile.css?v=20180317 media="(max-width: 980px)"/>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        
+    <link rel="icon" href= /assets/title.ico>
+    <script>
+        (function (w) {
+            "use strict";
+            // rel=preload support test
+            if (!w.loadCSS) {
+                w.loadCSS = function () { };
+            }
+            // define on the loadCSS obj
+            var rp = loadCSS.relpreload = {};
+            // rel=preload feature support test
+            // runs once and returns a function for compat purposes
+            rp.support = (function () {
+                var ret;
+                try {
+                    ret = w.document.createElement("link").relList.supports("preload");
+                } catch (e) {
+                    ret = false;
+                }
+                return function () {
+                    return ret;
+                };
+            })();
+
+            // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+            // then change that media back to its intended value on load
+            rp.bindMediaToggle = function (link) {
+                // remember existing media attr for ultimate state, or default to 'all'
+                var finalMedia = link.media || "all";
+
+                function enableStylesheet() {
+                    link.media = finalMedia;
+                }
+
+                // bind load handlers to enable media
+                if (link.addEventListener) {
+                    link.addEventListener("load", enableStylesheet);
+                } else if (link.attachEvent) {
+                    link.attachEvent("onload", enableStylesheet);
+                }
+
+                // Set rel and non-applicable media type to start an async request
+                // note: timeout allows this to happen async to let rendering continue in IE
+                setTimeout(function () {
+                    link.rel = "stylesheet";
+                    link.media = "only x";
+                });
+                // also enable media after 3 seconds,
+                // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+                setTimeout(enableStylesheet, 3000);
+            };
+
+            // loop through link elements in DOM
+            rp.poly = function () {
+                // double check this to prevent external calls from running
+                if (rp.support()) {
+                    return;
+                }
+                var links = w.document.getElementsByTagName("link");
+                for (var i = 0; i < links.length; i++) {
+                    var link = links[i];
+                    // qualify links to those with rel=preload and as=style attrs
+                    if (link.rel === "preload" && link.getAttribute("as") === "style" && !link.getAttribute("data-loadcss")) {
+                        // prevent rerunning on link
+                        link.setAttribute("data-loadcss", true);
+                        // bind listeners to toggle media back
+                        rp.bindMediaToggle(link);
+                    }
+                }
+            };
+
+            // if unsupported, run the polyfill
+            if (!rp.support()) {
+                // run once at least
+                rp.poly();
+
+                // rerun poly on an interval until onload
+                var run = w.setInterval(rp.poly, 500);
+                if (w.addEventListener) {
+                    w.addEventListener("load", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                } else if (w.attachEvent) {
+                    w.attachEvent("onload", function () {
+                        rp.poly();
+                        w.clearInterval(run);
+                    });
+                }
+            }
+            // commonjs
+            if (typeof exports !== "undefined") {
+                exports.loadCSS = loadCSS;
+            }
+            else {
+                w.loadCSS = loadCSS;
+            }
+        }(typeof global !== "undefined" ? global : this));
+    </script>
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    <script src="/scripts/main.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >花生肉泥 Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">数据结构-图的遍历</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>花生肉泥 Blog</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            数据结构-图的遍历
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2015/01/08</span>
+                
+                <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                    <span class="iconfont-archer">&#xe602;</span>
+                    <span id="busuanzi_value_page_pv"></span>
+                </span>
+                
+                <span class="shareWrapper">
+                    <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                    <span class="shareText">Share</span>
+                    <ul class="shareList">
+                        <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                            <div class="share-qrcode"></div>
+                        </li>
+                        <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                        <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                        <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                        <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                    </ul>
+                </span>
+            </div>
+        
+    </div>
+</div>
+        <script>
+  // load webfont-loader async, and add callback function
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+  
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntroTags = document.getElementsByClassName('post-intro-tags')[0],
+        postIntroMeat = document.getElementsByClassName('post-intro-meta')[0];
+      if (postIntroTags) {
+        postIntroTags.classList.add('post-fade-in');
+      }
+      if (postIntroMeat) {
+        postIntroMeat.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  async("https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", asyncCb)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="1、相关原理"><a href="#1、相关原理" class="headerlink" title="1、相关原理"></a>1、相关原理</h2><h3 id="1-深度优先搜索法﹕"><a href="#1-深度优先搜索法﹕" class="headerlink" title="(1)深度优先搜索法﹕"></a>(1)深度优先搜索法﹕</h3><p>深度优先搜索法是树的先根遍历的推广，它的基本思想是：从图G的某个顶点v0出发，访问v0，然后选择一个与v0相邻且没被访问过的顶点vi访问，再从vi出发选择一个与vi相邻且未被访问的顶点vj进行访问，依次继续。如果当前被访问过的顶点的所有邻接顶点都已被访问，则退回到已被访问的顶点序列中最后一个拥有未被访问的相邻顶点的顶点w，从w出发按同样的方法向前遍历，直到图中所有顶点都被访问。其递归算法如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">　　Boolean visited[MAX_VERTEX_NUM]; //访问标志数组</span><br><span class="line">　　Status (*VisitFunc)(int v); //VisitFunc是访问函数，对图的每个顶点调用该函数</span><br><span class="line">　　void DFSTraverse (Graph G, Status(*Visit)(int v))&#123;</span><br><span class="line">　　VisitFunc = Visit;</span><br><span class="line">　　<span class="keyword">for</span>(v=<span class="number">0</span>; v&lt;G.vexnum; ++v)</span><br><span class="line">　　visited[v] = FALSE; //访问标志数组初始化</span><br><span class="line">　　<span class="keyword">for</span>(v=<span class="number">0</span>; v&lt;G.vexnum; ++v)</span><br><span class="line">　　<span class="keyword">if</span>(!visited[v])</span><br><span class="line">　　DFS(G, v); //对尚未访问的顶点调用DFS</span><br><span class="line">　　&#125;</span><br><span class="line">　　void DFS(Graph G, int v)&#123; //从第v个顶点出发递归地深度优先遍历图G</span><br><span class="line">　　visited[v]=TRUE; VisitFunc(v); //访问第v个顶点</span><br><span class="line">　　<span class="keyword">for</span>(w=FirstAdjVex(G,v); w&gt;=<span class="number">0</span>; w=NextAdjVex(G,v,w))</span><br><span class="line">　　//FirstAdjVex返回v的第一个邻接顶点，若顶点在G中没有邻接顶点，则返回空（<span class="number">0</span>）。</span><br><span class="line">　　//若w是v的邻接顶点，NextAdjVex返回v的（相对于w的）下一个邻接顶点。</span><br><span class="line">　　//若w是v的最后一个邻接点，则返回空（<span class="number">0</span>）。</span><br><span class="line">　　<span class="keyword">if</span>(!visited[w])</span><br><span class="line">　　DFS(G, w); //对v的尚未访问的邻接顶点w调用DFS</span><br><span class="line">　　&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-广度优先搜索法﹕"><a href="#2-广度优先搜索法﹕" class="headerlink" title="(2)广度优先搜索法﹕"></a>(2)广度优先搜索法﹕</h3><p>图的广度优先搜索是树的按层次遍历的推广，它的基本思想是：首先访问初始点vi，并将其标记为已访问过，接着访问vi的所有未被访问过的邻接点vi1,vi2,…, vi t，并均标记已访问过，然后再按照vi1,vi2,…, vi t的次序，访问每一个顶点的所有未被访问过的邻接点，并均标记为已访问过，依次类推，直到图中所有和初始点vi有路径相通的顶点都被访问过为止。其非递归算法如下：<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">　　Boolean visited[MAX_VERTEX_NUM]; <span class="comment">//访问标志数组</span></span><br><span class="line">　　Status (*VisitFunc)(<span class="keyword">int</span> v); <span class="comment">//VisitFunc是访问函数，对图的每个顶点调用该函数</span></span><br><span class="line">　　void BFSTraverse (Graph G, Status(*Visit)(int v))&#123;</span><br><span class="line">　　VisitFunc = Visit;</span><br><span class="line">　　<span class="keyword">for</span>(v=<span class="number">0</span>; v&lt;G.vexnum, ++v)</span><br><span class="line">　　visited[v] = FALSE;</span><br><span class="line">　　initQueue(Q); <span class="comment">//置空辅助队列Q</span></span><br><span class="line">　　<span class="keyword">for</span>(v=<span class="number">0</span>; v&lt;G.vexnum; ++v)</span><br><span class="line">　　<span class="keyword">if</span>(!visited[v])&#123;</span><br><span class="line">　　visited[v]=TRUE; VisitFunc(v);</span><br><span class="line">　　EnQueue(Q, v); <span class="comment">//v入队列</span></span><br><span class="line">　　<span class="keyword">while</span>(!QueueEmpty(Q))&#123;</span><br><span class="line">　　DeQueue(Q, u); <span class="comment">//队头元素出队并置为u</span></span><br><span class="line">　　<span class="keyword">for</span>(w=FirstAdjVex(G,u); w&gt;=<span class="number">0</span>; w=NextAdjVex(G,u,w))</span><br><span class="line">　　<span class="keyword">if</span>(!Visited[w])&#123; <span class="comment">//w为u的尚未访问的邻接顶点</span></span><br><span class="line">　　Visited[w]=TRUE; VisitFunc(w);</span><br><span class="line">　　EnQueue(Q, w);</span><br><span class="line">　　&#125;</span><br><span class="line">　　&#125;</span><br><span class="line">　　&#125;</span><br><span class="line">　　&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="\images\pasted-233.png" alt="upload successful"></p>
+<h2 id="2、详细设计"><a href="#2、详细设计" class="headerlink" title="2、详细设计"></a>2、详细设计</h2><h3 id="1-邻接表的存储表示"><a href="#1-邻接表的存储表示" class="headerlink" title="1.邻接表的存储表示"></a>1.邻接表的存储表示</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">int visited[30];</span><br><span class="line"># define MAX_VERTEX_NUM 30</span><br><span class="line"># define OK 1</span><br><span class="line">//typedef int VertexType;</span><br><span class="line">typedef int InfoType;</span><br><span class="line">//表节点</span><br><span class="line">typedef struct ArcNode //弧</span><br><span class="line">&#123;</span><br><span class="line"> int adjvex;</span><br><span class="line">    struct ArcNode *nextarc;</span><br><span class="line">&#125;ArcNode;</span><br><span class="line">//头节点</span><br><span class="line">typedef struct VNode//表头</span><br><span class="line">&#123;</span><br><span class="line"> int data;</span><br><span class="line">    ArcNode *firstarc;//指向第一条依附该定点的弧的指针</span><br><span class="line">&#125;VNode,AdjList[MAX_VERTEX_NUM];</span><br></pre></td></tr></table></figure>
+<h3 id="2-图的构建"><a href="#2-图的构建" class="headerlink" title="2.图的构建"></a>2.图的构建</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">typedef struct//图</span><br><span class="line">&#123;  </span><br><span class="line"> AdjList vertices;</span><br><span class="line">    int vexnum,arcnum;//顶点数，弧数</span><br><span class="line">    int kind;//图的种类标志</span><br><span class="line">&#125;ALGraph;</span><br><span class="line">//邻接表存储表示</span><br><span class="line">//图的创建</span><br><span class="line">void CreateDG(ALGraph &amp;G)</span><br><span class="line">&#123;  </span><br><span class="line"> int k,i,v1;</span><br><span class="line">    cout&lt;&lt;endl&lt;&lt;<span class="string">"请输入结点个数: "</span>;</span><br><span class="line">    cin&gt;&gt;G.vexnum;//节点数</span><br><span class="line"> </span><br><span class="line">    cout&lt;&lt;<span class="string">"请输入弧的个数: "</span>;</span><br><span class="line">    cin&gt;&gt;G.arcnum; //弧数</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=G.vexnum;i++)//初使化表头</span><br><span class="line">    &#123; </span><br><span class="line">  G.vertices[i].data=i; //初始化顶点值</span><br><span class="line">     G.vertices[i].firstarc=NULL;//初始化指针</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">for</span>(k=<span class="number">1</span>;k&lt;=G.vexnum;k++) //输入边</span><br><span class="line">   &#123; </span><br><span class="line">    </span><br><span class="line">    int v2;</span><br><span class="line">       cout&lt;&lt;<span class="string">"请输入与结点"</span>&lt;&lt;k&lt;&lt;<span class="string">"相邻的边数:"</span>;</span><br><span class="line">    cin&gt;&gt;v2;</span><br><span class="line">    cout&lt;&lt;<span class="string">"请输入与第"</span>&lt;&lt;k&lt;&lt;<span class="string">"个结点相连的结点编号: "</span>;</span><br><span class="line">    cin&gt;&gt;v1;</span><br><span class="line">    ArcNode *p;</span><br><span class="line">    p=(ArcNode*)malloc(sizeof(ArcNode));</span><br><span class="line">    <span class="keyword">if</span>(!p) exit(<span class="number">-1</span>);</span><br><span class="line">    p-&gt;adjvex=v1;</span><br><span class="line">    p-&gt;nextarc=NULL;</span><br><span class="line">    G.vertices[k].firstarc=p;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(int i=<span class="number">1</span>;i&lt;v2;i++)</span><br><span class="line">    &#123;</span><br><span class="line">     int m;</span><br><span class="line">     cout&lt;&lt;<span class="string">"请输入与第"</span>&lt;&lt;k&lt;&lt;<span class="string">"个结点相连的结点编号: "</span>;</span><br><span class="line">           cin&gt;&gt;m;</span><br><span class="line"></span><br><span class="line">           ArcNode *q;</span><br><span class="line">           q=(ArcNode *)malloc(sizeof(ArcNode));//动态指针</span><br><span class="line">           <span class="keyword">if</span>(!q) exit(<span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">           q-&gt;adjvex=m;  //顶点给P</span><br><span class="line">     q-&gt;nextarc=NULL;</span><br><span class="line">           p-&gt;nextarc=q;</span><br><span class="line">        p=q;</span><br><span class="line">        //free(q);</span><br><span class="line">    &#125;</span><br><span class="line">       //free(p);</span><br><span class="line">   &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-深度优先遍历"><a href="#3-深度优先遍历" class="headerlink" title="3.深度优先遍历"></a>3.深度优先遍历</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">void DFS (ALGraph G,int v )//深度搜索</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"> visited[v]=<span class="number">1</span>;</span><br><span class="line"> cout&lt;&lt;G.vertices[v].data&lt;&lt;<span class="string">"  "</span>;</span><br><span class="line"> ArcNode *x;</span><br><span class="line"> x=(ArcNode*)malloc(sizeof(ArcNode));</span><br><span class="line"> <span class="keyword">if</span>(!x) exit(<span class="number">-1</span>);</span><br><span class="line"> x=G.vertices[v].firstarc;</span><br><span class="line"> int w;</span><br><span class="line"> for (;x;x=x-&gt;nextarc)</span><br><span class="line"> &#123;   w=x-&gt;adjvex;</span><br><span class="line">  <span class="keyword">if</span>(visited[w]==<span class="number">0</span>)</span><br><span class="line">   DFS(G,w);</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void DFSB (ALGraph G,int v)//深度搜索的边集</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"> visited[v]=<span class="number">1</span>;</span><br><span class="line"> ArcNode *y;</span><br><span class="line"> y=(ArcNode*)malloc(sizeof(ArcNode));</span><br><span class="line"> <span class="keyword">if</span>(!y) exit(<span class="number">-1</span>);</span><br><span class="line"> y=G.vertices[v].firstarc;</span><br><span class="line"> int u=G.vertices[v].data;</span><br><span class="line"> int w;</span><br><span class="line"> for(;y;y=y-&gt;nextarc)</span><br><span class="line"> &#123;   w=y-&gt;adjvex;</span><br><span class="line">  <span class="keyword">if</span>(visited[w]==<span class="number">0</span>)</span><br><span class="line">  &#123;</span><br><span class="line">   cout&lt;&lt;u&lt;&lt;<span class="string">"---&gt;"</span>&lt;&lt;w&lt;&lt;endl;</span><br><span class="line">   DFSB(G,w);</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">typedef struct QNode</span><br><span class="line">&#123;</span><br><span class="line"> int data;</span><br><span class="line"> QNode *next;</span><br><span class="line">&#125;QNode,*QueuePtr;</span><br><span class="line"></span><br><span class="line">typedef struct</span><br><span class="line">&#123;</span><br><span class="line"> QueuePtr front;</span><br><span class="line"> QueuePtr rear;</span><br><span class="line">&#125;LinkQueue;</span><br></pre></td></tr></table></figure>
+<h3 id="4-广度优先遍历"><a href="#4-广度优先遍历" class="headerlink" title="4.广度优先遍历"></a>4.广度优先遍历</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">void BFS(ALGraph G,int v)//广度搜索</span><br><span class="line">&#123;</span><br><span class="line"> </span><br><span class="line"> int u;</span><br><span class="line"> LinkQueue Q;</span><br><span class="line"> InitQueue(Q);</span><br><span class="line"> <span class="keyword">if</span>(visited[v]==<span class="number">0</span>)</span><br><span class="line"> &#123;</span><br><span class="line">  visited[v]=<span class="number">1</span>;</span><br><span class="line">  cout&lt;&lt;G.vertices[v].data&lt;&lt;<span class="string">"  "</span>;</span><br><span class="line">  EnQueue(Q,v);</span><br><span class="line">  <span class="keyword">while</span>(QueueEmpty(Q)!=<span class="number">1</span>)</span><br><span class="line">  &#123;</span><br><span class="line">   DeQueue(Q,u);</span><br><span class="line">   ArcNode *z;</span><br><span class="line">   z=(ArcNode*)malloc(sizeof(ArcNode));</span><br><span class="line">      <span class="keyword">if</span>(!z) exit(<span class="number">-1</span>);</span><br><span class="line">   z=G.vertices[u].firstarc;</span><br><span class="line">   int w;</span><br><span class="line">            for(;z;z=z-&gt;nextarc)</span><br><span class="line">   &#123;   w=z-&gt;adjvex;</span><br><span class="line">    <span class="keyword">if</span>(visited[w]==<span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">     visited[w]=<span class="number">1</span>;</span><br><span class="line">     cout&lt;&lt;w&lt;&lt;<span class="string">"  "</span>;</span><br><span class="line">     EnQueue(Q,w);</span><br><span class="line">    &#125;</span><br><span class="line">   &#125;</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void BFSB (ALGraph G,int v)//广度搜索的边集</span><br><span class="line">&#123;</span><br><span class="line"> </span><br><span class="line"> int u;</span><br><span class="line"> LinkQueue Q;</span><br><span class="line"> InitQueue(Q);</span><br><span class="line"> <span class="keyword">if</span>(visited[v]==<span class="number">0</span>)</span><br><span class="line"> &#123;</span><br><span class="line">  visited[v]=<span class="number">1</span>;</span><br><span class="line">  EnQueue(Q,v);</span><br><span class="line">  <span class="keyword">while</span>(QueueEmpty(Q)!=<span class="number">1</span>)</span><br><span class="line">  &#123;</span><br><span class="line">   DeQueue(Q,u);</span><br><span class="line">   ArcNode *r;</span><br><span class="line">   r=(ArcNode*)malloc(sizeof(ArcNode));</span><br><span class="line">   <span class="keyword">if</span>(!r) exit(<span class="number">-1</span>);</span><br><span class="line">   r=G.vertices[u].firstarc;</span><br><span class="line">   int w;</span><br><span class="line">   for(;r!=NULL;r=r-&gt;nextarc)</span><br><span class="line">   &#123;   w=r-&gt;adjvex;</span><br><span class="line">    <span class="keyword">if</span>(visited[w]==<span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">     visited[w]=<span class="number">1</span>;</span><br><span class="line">     cout&lt;&lt;u&lt;&lt;<span class="string">"---&gt;"</span>&lt;&lt;w&lt;&lt;endl;</span><br><span class="line">     EnQueue(Q,w);</span><br><span class="line">    &#125;</span><br><span class="line">   &#125;</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="5-主函数"><a href="#5-主函数" class="headerlink" title="5.主函数"></a>5.主函数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line"> int i;</span><br><span class="line"> ALGraph G;</span><br><span class="line">    CreateDG(G);</span><br><span class="line"> int x;</span><br><span class="line"> cout&lt;&lt;<span class="string">"请输入结点数:"</span>;</span><br><span class="line"> cin&gt;&gt;x;</span><br><span class="line"> cout&lt;&lt;<span class="string">"邻接表为："</span>&lt;&lt;endl;</span><br><span class="line"> <span class="keyword">for</span>(int j=<span class="number">1</span>;j&lt;=x;j++)</span><br><span class="line"> &#123;</span><br><span class="line">  cout&lt;&lt;G.vertices[j].data&lt;&lt;<span class="string">"  "</span>;</span><br><span class="line">  ArcNode *p;</span><br><span class="line">  p=(ArcNode*)malloc(sizeof(ArcNode));</span><br><span class="line">  <span class="keyword">if</span>(!p) exit(<span class="number">-1</span>);</span><br><span class="line">  p=G.vertices[j].firstarc;</span><br><span class="line">  <span class="keyword">while</span>(p)</span><br><span class="line">  &#123;</span><br><span class="line">   cout&lt;&lt;p-&gt;adjvex&lt;&lt;"  ";</span><br><span class="line">   p=p-&gt;nextarc;</span><br><span class="line">  &#125;</span><br><span class="line">  cout&lt;&lt;endl;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> cout&lt;&lt;<span class="string">"请输入第一个要访问的结点序号："</span>&lt;&lt;endl;</span><br><span class="line"> int n;</span><br><span class="line"> cin&gt;&gt;n;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="keyword">for</span>( i=<span class="number">0</span>;i&lt;<span class="number">30</span>;i++)</span><br><span class="line">  visited[i]=<span class="number">0</span>;</span><br><span class="line"> cout&lt;&lt;<span class="string">"广度搜索："</span>&lt;&lt;endl;</span><br><span class="line"> BFS(G,n);</span><br><span class="line"></span><br><span class="line"> <span class="keyword">for</span>( i=<span class="number">0</span>;i&lt;<span class="number">30</span>;i++)</span><br><span class="line">  visited[i]=<span class="number">0</span>;</span><br><span class="line"> cout&lt;&lt;endl;</span><br><span class="line"> cout&lt;&lt;<span class="string">"边集："</span>&lt;&lt;endl;</span><br><span class="line"> BFSB(G,n);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>( i=<span class="number">0</span>;i&lt;<span class="number">30</span>;i++)</span><br><span class="line">  visited[i]=<span class="number">0</span>;</span><br><span class="line"> cout&lt;&lt;<span class="string">"深度搜索："</span>&lt;&lt;endl;</span><br><span class="line"> DFS(G,n);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>( i=<span class="number">0</span>;i&lt;<span class="number">30</span>;i++)</span><br><span class="line">  visited[i]=<span class="number">0</span>;</span><br><span class="line"> cout&lt;&lt;endl;</span><br><span class="line"> cout&lt;&lt;<span class="string">"边集："</span>&lt;&lt;endl;</span><br><span class="line"> DFSB(G,n);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">    //system(<span class="string">"pause"</span>);</span><br><span class="line"> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3、测试结果"><a href="#3、测试结果" class="headerlink" title="3、测试结果"></a>3、测试结果</h2><h3 id="主界面"><a href="#主界面" class="headerlink" title="主界面"></a>主界面</h3><p><img src="\images\pasted-234.png" alt="upload successful"><br>输入结点个数以及边数，构建图。（如上图，节点个数10，边数11）</p>
+<h3 id="功能模块"><a href="#功能模块" class="headerlink" title="功能模块"></a>功能模块</h3><h4 id="Test-1-10节点，11条边"><a href="#Test-1-10节点，11条边" class="headerlink" title="Test_1(10节点，11条边)"></a>Test_1(10节点，11条边)</h4><p><img src="\images\pasted-235.png" alt="upload successful"></p>
+<h5 id="邻接表为："><a href="#邻接表为：" class="headerlink" title="邻接表为："></a>邻接表为：</h5><p><img src="\images\pasted-236.png" alt="upload successful"><br>如图，左列1~10分别为结点编号。横表分别为对应结点相邻点的结点编号（如结点1与结点2、3、4相邻）</p>
+<h5 id="广度优先遍历为："><a href="#广度优先遍历为：" class="headerlink" title="广度优先遍历为："></a>广度优先遍历为：</h5><p><img src="\images\pasted-237.png" alt="upload successful"><br>如图，以用户指定的“1”结点为顶点进行广度优先遍历。所经路径及其顺序如图边集所示。</p>
+<h5 id="深度优先遍历为："><a href="#深度优先遍历为：" class="headerlink" title="深度优先遍历为："></a>深度优先遍历为：</h5><p><img src="\images\pasted-238.png" alt="upload successful">如图，以用户指定的“1”结点为顶点进行深度优先遍历。所经路径及其顺序如图边集所示。</p>
+<h4 id="Test-2"><a href="#Test-2" class="headerlink" title="Test_2"></a>Test_2</h4><p><img src="\images\pasted-239.png" alt="upload successful"></p>
+<h5 id="邻接表为：-1"><a href="#邻接表为：-1" class="headerlink" title="邻接表为："></a>邻接表为：</h5><p><img src="\images\pasted-240.png" alt="upload successful"></p>
+<h5 id="广度优先遍历为：-1"><a href="#广度优先遍历为：-1" class="headerlink" title="广度优先遍历为："></a>广度优先遍历为：</h5><p><img src="\images\pasted-241.png" alt="upload successful"></p>
+<h5 id="深度优先遍历为：-1"><a href="#深度优先遍历为：-1" class="headerlink" title="深度优先遍历为："></a>深度优先遍历为：</h5><p><img src="\images\pasted-242.png" alt="upload successful"></p>
+<h4 id="Test-3"><a href="#Test-3" class="headerlink" title="Test_3"></a>Test_3</h4><p><img src="\images\pasted-243.png" alt="upload successful"></p>
+<h5 id="邻接表为：-2"><a href="#邻接表为：-2" class="headerlink" title="邻接表为："></a>邻接表为：</h5><p><img src="\images\pasted-244.png" alt="upload successful"></p>
+<h5 id="广度优先遍历为：-2"><a href="#广度优先遍历为：-2" class="headerlink" title="广度优先遍历为："></a>广度优先遍历为：</h5><p><img src="\images\pasted-245.png" alt="upload successful"></p>
+<h5 id="深度优先遍历为：-2"><a href="#深度优先遍历为：-2" class="headerlink" title="深度优先遍历为："></a>深度优先遍历为：</h5><p><img src="\images\pasted-246.png" alt="upload successful"></p>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">上一篇文章</div>
+                <a href= "/2015/02/22/JAVA/" title= Java中使用中文转化为拼音 >
+                    <div class="nextTitle">Java中使用中文转化为拼音</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">下一篇文章</div>
+                <a href= "/2000/01/01/hello-world/" title= Hello World >
+                    <div class="prevTitle">Hello World</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+<div id="container"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+    var gitment = new Gitment({
+        // id: "数据结构-图的遍历", // 可选。默认为 location.href
+        owner: 'wxzx1684168',
+        repo: 'wxzx1684168.github.io',
+        oauth: {
+            client_id: '7280d255a529324c9198',
+            client_secret: '89fdf02f804bf55f75f10ff82fb9f433b7e336e6',
+        },
+    })
+    gitment.render('container')
+
+</script>
+
+    <!--PC版-->
+
+    <!--PC版-->
+
+
+    
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:575645523@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/wxzx1684168" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/example_qr.png" />
+                </span>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer qq" title=qq>
+                  
+                  <img class="profile-qr" src="/assets/qq_qr.jpg" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+        <font color="f5f5f5">
+		<span id="busuanzi_container_site_uv">UV: <span id="busuanzi_value_site_uv"></span>
+        </span>
+		</font>
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、相关原理"><span class="toc-number">1.</span> <span class="toc-text">1、相关原理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-深度优先搜索法﹕"><span class="toc-number">1.1.</span> <span class="toc-text">(1)深度优先搜索法﹕</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-广度优先搜索法﹕"><span class="toc-number">1.2.</span> <span class="toc-text">(2)广度优先搜索法﹕</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、详细设计"><span class="toc-number">2.</span> <span class="toc-text">2、详细设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-邻接表的存储表示"><span class="toc-number">2.1.</span> <span class="toc-text">1.邻接表的存储表示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-图的构建"><span class="toc-number">2.2.</span> <span class="toc-text">2.图的构建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-深度优先遍历"><span class="toc-number">2.3.</span> <span class="toc-text">3.深度优先遍历</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-广度优先遍历"><span class="toc-number">2.4.</span> <span class="toc-text">4.广度优先遍历</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-主函数"><span class="toc-number">2.5.</span> <span class="toc-text">5.主函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3、测试结果"><span class="toc-number">3.</span> <span class="toc-text">3、测试结果</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#主界面"><span class="toc-number">3.1.</span> <span class="toc-text">主界面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#功能模块"><span class="toc-number">3.2.</span> <span class="toc-text">功能模块</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Test-1-10节点，11条边"><span class="toc-number">3.2.1.</span> <span class="toc-text">Test_1(10节点，11条边)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#邻接表为："><span class="toc-number">3.2.1.1.</span> <span class="toc-text">邻接表为：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#广度优先遍历为："><span class="toc-number">3.2.1.2.</span> <span class="toc-text">广度优先遍历为：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#深度优先遍历为："><span class="toc-number">3.2.1.3.</span> <span class="toc-text">深度优先遍历为：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Test-2"><span class="toc-number">3.2.2.</span> <span class="toc-text">Test_2</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#邻接表为：-1"><span class="toc-number">3.2.2.1.</span> <span class="toc-text">邻接表为：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#广度优先遍历为：-1"><span class="toc-number">3.2.2.2.</span> <span class="toc-text">广度优先遍历为：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#深度优先遍历为：-1"><span class="toc-number">3.2.2.3.</span> <span class="toc-text">深度优先遍历为：</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Test-3"><span class="toc-number">3.2.3.</span> <span class="toc-text">Test_3</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#邻接表为：-2"><span class="toc-number">3.2.3.1.</span> <span class="toc-text">邻接表为：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#广度优先遍历为：-2"><span class="toc-number">3.2.3.2.</span> <span class="toc-text">广度优先遍历为：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#深度优先遍历为：-2"><span class="toc-number">3.2.3.3.</span> <span class="toc-text">深度优先遍历为：</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">归档</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">标签</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">类别</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> 总计 : 45 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/18</span><a class="archive-post-title" href= "/2018/09/18/MMD-ray渲染/" >MMD-ray渲染</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/30</span><a class="archive-post-title" href= "/2018/05/30/基于sklearn的股票预测/" >基于sklearn的股票预测</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/27</span><a class="archive-post-title" href= "/2018/05/27/python最小二乘法/" >python最小二乘法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/22</span><a class="archive-post-title" href= "/2018/04/22/测试测试/" >测试测试</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/23</span><a class="archive-post-title" href= "/2017/08/23/周易-占卦方式/" >周易-占卦方式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/22</span><a class="archive-post-title" href= "/2017/08/22/周易-2基本象征/" >周易-2基本象征</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/21</span><a class="archive-post-title" href= "/2017/08/21/周易-1基本概念/" >周易-1基本概念</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2016 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/25</span><a class="archive-post-title" href= "/2016/11/25/Lua面向对象编程/" >Lua面向对象程序设计</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/25</span><a class="archive-post-title" href= "/2016/11/25/Lua元方法/" >Lua元方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/24</span><a class="archive-post-title" href= "/2016/11/24/Lua循环优化/" >Lua循环优化</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/23</span><a class="archive-post-title" href= "/2016/11/23/Lua匹配符/" >Lua匹配符</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/09</span><a class="archive-post-title" href= "/2016/11/09/Lua中-和/" >Lua中.和:</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2016/11/08/Lua标准库-string库/" >Lua标准库-string库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2016/11/08/Lua标准库-math库/" >Lua标准库-math库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2016/11/08/Lua标准库-table库/" >Lua标准库-table库</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua元表/" >Lua元表</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua值与类型/" >Lua值与类型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua语法基础/" >Lua语法基础</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua表达式/" >Lua表达式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua模块与包/" >Lua模块与包</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua函数/" >Lua函数</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua变量/" >Lua变量</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua语句段/" >Lua语句段</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/27</span><a class="archive-post-title" href= "/2016/09/27/Epl语句/" >Epl语句</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/Esper-Demo/" >Esper Demo</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/进程模型/" >进程模型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/29</span><a class="archive-post-title" href= "/2016/06/29/应用层协议分析/" >应用层协议分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/19</span><a class="archive-post-title" href= "/2016/06/19/传输层协议分析/" >传输层协议分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/15</span><a class="archive-post-title" href= "/2016/06/15/注入DLL/" >注入DLL</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/31</span><a class="archive-post-title" href= "/2016/05/31/破解MFCApplication1/" >破解MFCApplication1</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/26</span><a class="archive-post-title" href= "/2016/05/26/Win32基本程序概念/" >Win32基本程序概念</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/26</span><a class="archive-post-title" href= "/2016/05/26/IGP路由协议分析/" >IGP路由协议分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/25</span><a class="archive-post-title" href= "/2016/05/25/破解MFC弹出窗口/" >破解MFC弹出窗口</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/19</span><a class="archive-post-title" href= "/2016/05/19/ICMP-协议分析/" >ICMP 协议分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/18</span><a class="archive-post-title" href= "/2016/05/18/分析TCP协议/" >分析TCP协议</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/05</span><a class="archive-post-title" href= "/2016/05/05/网络通信分析/" >网络通信分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2016/04/21/ARP-协议分析实验/" >ARP 协议分析实验</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/07</span><a class="archive-post-title" href= "/2016/04/07/IP协议分析/" >IP协议分析</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2015 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/18</span><a class="archive-post-title" href= "/2015/11/18/交换机及路由器综合应用/" >交换机及路由器综合应用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/23</span><a class="archive-post-title" href= "/2015/07/23/EOS创建Helloworld/" >EOS创建Helloworld</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/16</span><a class="archive-post-title" href= "/2015/06/16/中小型网络规划/" >中小型网络规划</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/22</span><a class="archive-post-title" href= "/2015/03/22/验证用户是否登陆的拦截器/" >验证用户是否登陆的拦截器</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/22</span><a class="archive-post-title" href= "/2015/02/22/JAVA/" >Java中使用中文转化为拼音</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2015/01/08/数据结构-图的遍历/" >数据结构-图的遍历</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2000 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/01</span><a class="archive-post-title" href= "/2000/01/01/hello-world/" >Hello World</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="TCP-IP"><span class="iconfont-archer">&#xe606;</span>TCP-IP</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
+    
+        <span class="sidebar-tag-name" data-tags="EOS"><span class="iconfont-archer">&#xe606;</span>EOS</span>
+    
+        <span class="sidebar-tag-name" data-tags="java"><span class="iconfont-archer">&#xe606;</span>java</span>
+    
+        <span class="sidebar-tag-name" data-tags="Esper"><span class="iconfont-archer">&#xe606;</span>Esper</span>
+    
+        <span class="sidebar-tag-name" data-tags="股票"><span class="iconfont-archer">&#xe606;</span>股票</span>
+    
+        <span class="sidebar-tag-name" data-tags="lua"><span class="iconfont-archer">&#xe606;</span>lua</span>
+    
+        <span class="sidebar-tag-name" data-tags="win32"><span class="iconfont-archer">&#xe606;</span>win32</span>
+    
+        <span class="sidebar-tag-name" data-tags="python"><span class="iconfont-archer">&#xe606;</span>python</span>
+    
+        <span class="sidebar-tag-name" data-tags="数学"><span class="iconfont-archer">&#xe606;</span>数学</span>
+    
+        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络工程"><span class="iconfont-archer">&#xe606;</span>网络工程</span>
+    
+        <span class="sidebar-tag-name" data-tags="TCP"><span class="iconfont-archer">&#xe606;</span>TCP</span>
+    
+        <span class="sidebar-tag-name" data-tags="周易"><span class="iconfont-archer">&#xe606;</span>周易</span>
+    
+        <span class="sidebar-tag-name" data-tags="易经"><span class="iconfont-archer">&#xe606;</span>易经</span>
+    
+        <span class="sidebar-tag-name" data-tags="八卦"><span class="iconfont-archer">&#xe606;</span>八卦</span>
+    
+        <span class="sidebar-tag-name" data-tags="测试"><span class="iconfont-archer">&#xe606;</span>测试</span>
+    
+        <span class="sidebar-tag-name" data-tags="MFC"><span class="iconfont-archer">&#xe606;</span>MFC</span>
+    
+        <span class="sidebar-tag-name" data-tags="破解"><span class="iconfont-archer">&#xe606;</span>破解</span>
+    
+        <span class="sidebar-tag-name" data-tags="逆向"><span class="iconfont-archer">&#xe606;</span>逆向</span>
+    
+        <span class="sidebar-tag-name" data-tags="DLL"><span class="iconfont-archer">&#xe606;</span>DLL</span>
+    
+        <span class="sidebar-tag-name" data-tags="注入"><span class="iconfont-archer">&#xe606;</span>注入</span>
+    
+        <span class="sidebar-tag-name" data-tags="MMD"><span class="iconfont-archer">&#xe606;</span>MMD</span>
+    
+        <span class="sidebar-tag-name" data-tags="渲染"><span class="iconfont-archer">&#xe606;</span>渲染</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="实验"><span class="iconfont-archer">&#xe60a;</span>实验</span>
+    
+        <span class="sidebar-category-name" data-categories="java"><span class="iconfont-archer">&#xe60a;</span>java</span>
+    
+        <span class="sidebar-category-name" data-categories="lua"><span class="iconfont-archer">&#xe60a;</span>lua</span>
+    
+        <span class="sidebar-category-name" data-categories="win32"><span class="iconfont-archer">&#xe60a;</span>win32</span>
+    
+        <span class="sidebar-category-name" data-categories="python"><span class="iconfont-archer">&#xe60a;</span>python</span>
+    
+        <span class="sidebar-category-name" data-categories="网络工程"><span class="iconfont-archer">&#xe60a;</span>网络工程</span>
+    
+        <span class="sidebar-category-name" data-categories="周易"><span class="iconfont-archer">&#xe60a;</span>周易</span>
+    
+        <span class="sidebar-category-name" data-categories="逆向工程"><span class="iconfont-archer">&#xe60a;</span>逆向工程</span>
+    
+        <span class="sidebar-category-name" data-categories="MMD"><span class="iconfont-archer">&#xe60a;</span>MMD</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: '/',
+        author: 'ZhouXin'
+    }
+</script>
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+    
+    <script src="/node_modules/live2d-widget/node_modules/live2d-widget/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"pluginRootPath":"node_modules/live2d-widget/","pluginJsPath":"node_modules/live2d-widget/lib/","pluginModelPath":"node_modules/live2d-widget-model-koharu/assets/","model":{"jsonPath":"/node_modules/live2d-widget/node_modules/live2d-widget-model-koharu/assets/koharu.model.json"},"mobile":{"show":true,"scale":0.2},"react":{"opacityDefault":1,"opacityOnHover":0},"display":{"superSample":1}});</script></body>
+</html>
+
+

@@ -616,29 +616,32 @@ A ^ 2 输出 100
     
     
         <article class="index-post">
-            <a class="abstract-title" href = "/2016/06/15/注入DLL/" >
+            <a class="abstract-title" href = "/2016/06/29/应用层协议分析/" >
                 
-                    <span>注入DLL</span>
+                    <span>应用层协议分析</span>
             </a>
             <div class="abstract-content">
-                查看PE文件IMAGE_NT_HEADERS下IMAGE_OPTIONAL_HEDER的 IMPORT Table的值
-由上图可知 IDT的地址(RVA)为84CC (在PEView中设置视图选项为RVA)TestView.exe的IDT存在于.rdara节区。IDT是有IMAGE_IMPORT-descriptor(简称IID)结构体组成的数组，且数组末尾以NULL结构体结束。由于每个导入的DLL文件都对应1个IID结构体（每个IID结构体的大小为14个字节） 所以图中整个IID区域为RVA:84CC~852F(8530？ 84cc+64)
-在PEView工具栏中视图改为File Of...
+                通过实验捕获DHCP协议（分析客户端获取IP四个过程）,捕获DNS协议，了解DNS协议的关键字段,捕获Telnet协议，了解交互式数据流特点以及安全性问题,捕获FTP协议，了解（PORT模式和PASV模式区别）以及安全性问题
+1、通过搭建如下拓扑，捕获Client获取IP地址过程的四个DHCP数据包
+
+
+2、打开“DNS（UDP–解析163）.pkt”和“DNS（UDP–解析Google）.pkt”数据包，分析DNS解析过程，了解DNS中的关键字段。
+DNS有两种类型的报文，查询和响应。
+查询报文：一个首部和若干个问题记录。
+响应报文：包括一个首部和若干个问题记录，回答记录，授权记录和附...
             </div>
             <div class="abstract-post-meta">
                 <!-- date  -->
                 <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/06/15</span>
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/06/29</span>
                 </div>
                 <!-- tags  -->
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "逆向">逆向</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "TCP-IP">TCP-IP</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "DLL">DLL</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "注入">注入</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "网络">网络</a>
     
 </div>
                 
@@ -648,7 +651,7 @@ A ^ 2 输出 100
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <a class="extend prev" rel="prev" href="/archives/2016/">&#60; PREV</a><a class="page-number" href="/archives/2016/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/2016/page/3/">3</a><a class="extend next" rel="next" href="/archives/2016/page/3/">NEXT &#62;</a>
+        <a class="extend prev" rel="prev" href="/archives/2016/">&#60; PREV</a><a class="page-number" href="/archives/2016/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/2016/page/3/">3</a><a class="page-number" href="/archives/2016/page/4/">4</a><a class="extend next" rel="next" href="/archives/2016/page/3/">NEXT &#62;</a>
     </nav>
     
 </main>
@@ -1245,7 +1248,169 @@ A ^ 2 输出 100
     
     
     
-    <div class="total-archive"> 总计 : 35 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> 总计 : 45 </div>
     
     <div class="post-archive">
     
@@ -1350,7 +1515,7 @@ A ^ 2 输出 100
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua语法基础/" >Lua语法基础</a>
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua元表/" >Lua元表</a>
         </li>
     
     
@@ -1360,7 +1525,17 @@ A ^ 2 输出 100
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua元表/" >Lua元表</a>
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua语法基础/" >Lua语法基础</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua表达式/" >Lua表达式</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua模块与包/" >Lua模块与包</a>
         </li>
     
     
@@ -1371,16 +1546,6 @@ A ^ 2 输出 100
     
         <li class="archive-post-item">
             <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua变量/" >Lua变量</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua模块与包/" >Lua模块与包</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua表达式/" >Lua表达式</a>
         </li>
     
     
@@ -1405,6 +1570,16 @@ A ^ 2 输出 100
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">06/29</span><a class="archive-post-title" href= "/2016/06/29/应用层协议分析/" >应用层协议分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/19</span><a class="archive-post-title" href= "/2016/06/19/传输层协议分析/" >传输层协议分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">06/15</span><a class="archive-post-title" href= "/2016/06/15/注入DLL/" >注入DLL</a>
         </li>
     
@@ -1420,12 +1595,37 @@ A ^ 2 输出 100
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">05/26</span><a class="archive-post-title" href= "/2016/05/26/IGP路由协议分析/" >IGP路由协议分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">05/25</span><a class="archive-post-title" href= "/2016/05/25/破解MFC弹出窗口/" >破解MFC弹出窗口</a>
         </li>
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">05/19</span><a class="archive-post-title" href= "/2016/05/19/ICMP-协议分析/" >ICMP 协议分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">05/18</span><a class="archive-post-title" href= "/2016/05/18/分析TCP协议/" >分析TCP协议</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/05</span><a class="archive-post-title" href= "/2016/05/05/网络通信分析/" >网络通信分析</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/21</span><a class="archive-post-title" href= "/2016/04/21/ARP-协议分析实验/" >ARP 协议分析实验</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/07</span><a class="archive-post-title" href= "/2016/04/07/IP协议分析/" >IP协议分析</a>
         </li>
     
     
@@ -1439,7 +1639,17 @@ A ^ 2 输出 100
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">11/18</span><a class="archive-post-title" href= "/2015/11/18/交换机及路由器综合应用/" >交换机及路由器综合应用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">07/23</span><a class="archive-post-title" href= "/2015/07/23/EOS创建Helloworld/" >EOS创建Helloworld</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/16</span><a class="archive-post-title" href= "/2015/06/16/中小型网络规划/" >中小型网络规划</a>
         </li>
     
     
@@ -1450,6 +1660,11 @@ A ^ 2 输出 100
     
         <li class="archive-post-item">
             <span class="archive-post-date">02/22</span><a class="archive-post-title" href= "/2015/02/22/JAVA/" >Java中使用中文转化为拼音</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2015/01/08/数据结构-图的遍历/" >数据结构-图的遍历</a>
         </li>
     
     
@@ -1470,6 +1685,10 @@ A ^ 2 输出 100
   </div>
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="TCP-IP"><span class="iconfont-archer">&#xe606;</span>TCP-IP</span>
+    
+        <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
     
         <span class="sidebar-tag-name" data-tags="EOS"><span class="iconfont-archer">&#xe606;</span>EOS</span>
     
@@ -1499,17 +1718,17 @@ A ^ 2 输出 100
     
         <span class="sidebar-tag-name" data-tags="八卦"><span class="iconfont-archer">&#xe606;</span>八卦</span>
     
+        <span class="sidebar-tag-name" data-tags="测试"><span class="iconfont-archer">&#xe606;</span>测试</span>
+    
+        <span class="sidebar-tag-name" data-tags="MFC"><span class="iconfont-archer">&#xe606;</span>MFC</span>
+    
+        <span class="sidebar-tag-name" data-tags="破解"><span class="iconfont-archer">&#xe606;</span>破解</span>
+    
         <span class="sidebar-tag-name" data-tags="逆向"><span class="iconfont-archer">&#xe606;</span>逆向</span>
     
         <span class="sidebar-tag-name" data-tags="DLL"><span class="iconfont-archer">&#xe606;</span>DLL</span>
     
         <span class="sidebar-tag-name" data-tags="注入"><span class="iconfont-archer">&#xe606;</span>注入</span>
-    
-        <span class="sidebar-tag-name" data-tags="测试"><span class="iconfont-archer">&#xe606;</span>测试</span>
-    
-        <span class="sidebar-tag-name" data-tags="破解"><span class="iconfont-archer">&#xe606;</span>破解</span>
-    
-        <span class="sidebar-tag-name" data-tags="MFC"><span class="iconfont-archer">&#xe606;</span>MFC</span>
     
         <span class="sidebar-tag-name" data-tags="MMD"><span class="iconfont-archer">&#xe606;</span>MMD</span>
     
@@ -1521,6 +1740,8 @@ A ^ 2 输出 100
 </div>
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="实验"><span class="iconfont-archer">&#xe60a;</span>实验</span>
     
         <span class="sidebar-category-name" data-categories="java"><span class="iconfont-archer">&#xe60a;</span>java</span>
     
