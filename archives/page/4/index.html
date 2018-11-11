@@ -300,6 +300,42 @@
     
     
         <article class="index-post">
+            <a class="abstract-title" href = "/2016/05/31/破解MFCApplication1/" >
+                
+                    <span>破解MFCApplication1</span>
+            </a>
+            <div class="abstract-content">
+                方法一：字符串查找首先用ollydbg打开我们要破解的软件
+
+按F9使程序运行起来
+我们想要知道点击”买入“按钮以后，程序调用了什么方法实现的。接下来开始破解：首先点击“买入”按钮，可以看到
+接下来我们通过
+中文引擎搜索，搜索我们刚才看到有有关信息，例如“Hello”
+然后双击这个地址，跳转到MFVAppli中：
+首先就在当下设置一个断点（F2），然后重新开始，点击“买入”按钮时，就会暂停到如下界面
+按F8单步调试，发现到01316703    FF15 70C23201   call dword ptr ds:[&lt;&amp;USER32.MessageBoxA&gt;]     ...
+            </div>
+            <div class="abstract-post-meta">
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2016/05/31</span>
+                </div>
+                <!-- tags  -->
+                
+                <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "逆向">逆向</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "破解">破解</a>
+    
+</div>
+                
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
             <a class="abstract-title" href = "/2016/05/26/Win32基本程序概念/" >
                 
                     <span>Win32基本程序概念</span>
@@ -393,11 +429,11 @@ F9软件运行起来以后，查看窗口界面：
                 
                 <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "MFC">MFC</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "逆向">逆向</a>
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "破解">破解</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "逆向">逆向</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "MFC">MFC</a>
     
 </div>
                 
@@ -608,40 +644,6 @@ VLAN3中的所有主机的缺省网关为：10.1.3.1
         <a class="post-tag" href="javascript:void(0);" data-tags = "TCP-IP">TCP-IP</a>
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "网络">网络</a>
-    
-</div>
-                
-            </div>
-        </article>
-    
-    
-    
-        <article class="index-post">
-            <a class="abstract-title" href = "/2015/07/23/EOS创建Helloworld/" >
-                
-                    <span>EOS创建Helloworld</span>
-            </a>
-            <div class="abstract-content">
-                1、打开EOS Studio 软件
-2、创建项目选择[文件/新建/EOS项目]菜单，系统弹出”新建EOS项目”向导。选择创建”空项目”，点击&lt;下一步&gt;按钮，弹出”新建EOS项目”界面，如下图所示。
-
-配置项目信息。将”项目名称”修改为”helloworld”，其他的参数不需要修改。单击&lt;完成&gt;按钮。系统返回EOS开发透视图，创建的项目显示在”资源管理器”视图中，如下图所示。
-
-3、创建构建包打开”创建构件包”向导。选中”helloworld”项目，单击鼠标右键，选择[创建/构件包]快捷菜单项。系统弹出”新建构件包”界面，如下图所示。
-修改配置信息。将”构件包名”修...
-            </div>
-            <div class="abstract-post-meta">
-                <!-- date  -->
-                <div class="abstract-date">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2015/07/23</span>
-                </div>
-                <!-- tags  -->
-                
-                <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "EOS">EOS</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "java">java</a>
     
 </div>
                 
@@ -1410,7 +1412,30 @@ VLAN3中的所有主机的缺省网关为：10.1.3.1
     
     
     
-    <div class="total-archive"> 总计 : 45 </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> 总计 : 48 </div>
     
     <div class="post-archive">
     
@@ -1500,12 +1525,12 @@ VLAN3中的所有主机的缺省网关为：10.1.3.1
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2016/11/08/Lua标准库-string库/" >Lua标准库-string库</a>
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2016/11/08/Lua标准库-math库/" >Lua标准库-math库</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2016/11/08/Lua标准库-math库/" >Lua标准库-math库</a>
+            <span class="archive-post-date">11/08</span><a class="archive-post-title" href= "/2016/11/08/Lua标准库-string库/" >Lua标准库-string库</a>
         </li>
     
     
@@ -1520,7 +1545,22 @@ VLAN3中的所有主机的缺省网关为：10.1.3.1
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua变量/" >Lua变量</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua模块与包/" >Lua模块与包</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua值与类型/" >Lua值与类型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua函数/" >Lua函数</a>
         </li>
     
     
@@ -1535,21 +1575,6 @@ VLAN3中的所有主机的缺省网关为：10.1.3.1
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua模块与包/" >Lua模块与包</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua函数/" >Lua函数</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua变量/" >Lua变量</a>
-        </li>
-    
-    
-        <li class="archive-post-item">
             <span class="archive-post-date">11/07</span><a class="archive-post-title" href= "/2016/11/07/Lua语句段/" >Lua语句段</a>
         </li>
     
@@ -1560,12 +1585,17 @@ VLAN3中的所有主机的缺省网关为：10.1.3.1
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/进程模型/" >进程模型</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/Esper-Demo/" >Esper Demo</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">09/26</span><a class="archive-post-title" href= "/2016/09/26/进程模型/" >进程模型</a>
+            <span class="archive-post-date">07/11</span><a class="archive-post-title" href= "/2016/07/11/基于JAVA的闽江学院实验室设备管理系统/" >基于JAVA的闽江学院实验室设备管理系统</a>
         </li>
     
     
@@ -1649,7 +1679,17 @@ VLAN3中的所有主机的缺省网关为：10.1.3.1
     
     
         <li class="archive-post-item">
+            <span class="archive-post-date">06/30</span><a class="archive-post-title" href= "/2015/06/30/学生信息管理系统-swing/" >简易学生信息管理系统(swing)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
             <span class="archive-post-date">06/16</span><a class="archive-post-title" href= "/2015/06/16/中小型网络规划/" >中小型网络规划</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/07</span><a class="archive-post-title" href= "/2015/05/07/JAVA电子办公系统/" >JAVA电子办公系统</a>
         </li>
     
     
@@ -1686,13 +1726,13 @@ VLAN3中的所有主机的缺省网关为：10.1.3.1
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
+        <span class="sidebar-tag-name" data-tags="java"><span class="iconfont-archer">&#xe606;</span>java</span>
+    
         <span class="sidebar-tag-name" data-tags="TCP-IP"><span class="iconfont-archer">&#xe606;</span>TCP-IP</span>
     
         <span class="sidebar-tag-name" data-tags="网络"><span class="iconfont-archer">&#xe606;</span>网络</span>
     
         <span class="sidebar-tag-name" data-tags="EOS"><span class="iconfont-archer">&#xe606;</span>EOS</span>
-    
-        <span class="sidebar-tag-name" data-tags="java"><span class="iconfont-archer">&#xe606;</span>java</span>
     
         <span class="sidebar-tag-name" data-tags="Esper"><span class="iconfont-archer">&#xe606;</span>Esper</span>
     
@@ -1718,17 +1758,17 @@ VLAN3中的所有主机的缺省网关为：10.1.3.1
     
         <span class="sidebar-tag-name" data-tags="八卦"><span class="iconfont-archer">&#xe606;</span>八卦</span>
     
-        <span class="sidebar-tag-name" data-tags="测试"><span class="iconfont-archer">&#xe606;</span>测试</span>
-    
-        <span class="sidebar-tag-name" data-tags="MFC"><span class="iconfont-archer">&#xe606;</span>MFC</span>
-    
-        <span class="sidebar-tag-name" data-tags="破解"><span class="iconfont-archer">&#xe606;</span>破解</span>
-    
         <span class="sidebar-tag-name" data-tags="逆向"><span class="iconfont-archer">&#xe606;</span>逆向</span>
     
         <span class="sidebar-tag-name" data-tags="DLL"><span class="iconfont-archer">&#xe606;</span>DLL</span>
     
         <span class="sidebar-tag-name" data-tags="注入"><span class="iconfont-archer">&#xe606;</span>注入</span>
+    
+        <span class="sidebar-tag-name" data-tags="测试"><span class="iconfont-archer">&#xe606;</span>测试</span>
+    
+        <span class="sidebar-tag-name" data-tags="破解"><span class="iconfont-archer">&#xe606;</span>破解</span>
+    
+        <span class="sidebar-tag-name" data-tags="MFC"><span class="iconfont-archer">&#xe606;</span>MFC</span>
     
         <span class="sidebar-tag-name" data-tags="MMD"><span class="iconfont-archer">&#xe606;</span>MMD</span>
     
@@ -1741,9 +1781,9 @@ VLAN3中的所有主机的缺省网关为：10.1.3.1
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="实验"><span class="iconfont-archer">&#xe60a;</span>实验</span>
-    
         <span class="sidebar-category-name" data-categories="java"><span class="iconfont-archer">&#xe60a;</span>java</span>
+    
+        <span class="sidebar-category-name" data-categories="实验"><span class="iconfont-archer">&#xe60a;</span>实验</span>
     
         <span class="sidebar-category-name" data-categories="lua"><span class="iconfont-archer">&#xe60a;</span>lua</span>
     
